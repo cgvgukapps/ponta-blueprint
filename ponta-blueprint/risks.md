@@ -1,0 +1,48 @@
+# Ponta Risk Register
+
+See [README.md](README.md) for the document index. This is the master list of gaps identified in a product-strategy review of the blueprint, what's been done about each, and what's still consciously deferred. Treat this as a living document — re-review it before major milestones (first design partner, first paid contract, first hire), not just once.
+
+## How to read this table
+
+- **Severity**: how much damage this does if ignored — *Critical* (could invalidate the whole plan or cause serious legal/trust harm), *High* (would seriously constrain the business or damage a customer relationship), *Medium* (a real gap, manageable if caught in time).
+- **Status**: *Resolved by plan* (a concrete, proportionate approach now exists in a document), *Accepted risk* (a deliberate choice not to solve this yet, with reasoning), *Open* (still needs a decision).
+
+| # | Risk | Severity | Status | Resolution |
+|---|---|---|---|---|
+| 1 | Competitive differentiation unvalidated | Critical | Resolved by plan (finding: confirmed high overlap with SkillCorner Game Intelligence especially) | [competitive-landscape.md](competitive-landscape.md) |
+| 2 | No go-to-market / customer acquisition motion | Critical | Resolved by plan | [go-to-market.md](go-to-market.md) |
+| 3 | Player data rights & sports-data legal exposure | Critical | Resolved by plan (sequenced legal engagement, not solved outright — inherently ongoing) | [legal-compliance.md](legal-compliance.md) |
+| 4 | No model/formula versioning or backfill strategy | High | Resolved by plan | [engine-governance.md](engine-governance.md#modelformula-versioning-and-backfill) |
+| 5 | Engine validity unproven outside adult pro football (youth, GK, set-pieces) | High | Resolved by plan (scoped out for v1, not solved) | [engine-governance.md](engine-governance.md#player-population-validity-scoping) |
+| 6 | No data-quality gate before a match reaches a customer | High | Resolved by plan | [engine-governance.md](engine-governance.md#data-quality-gate-before-a-match-reaches-a-customer) |
+| 7 | API governance undefined (versioning, keys, rate limits) | Medium | Resolved by plan | [operations.md](operations.md#api-governance) |
+| 8 | No data lifecycle / termination policy | Medium | Resolved by plan | [legal-compliance.md](legal-compliance.md#data-retention--termination) + [operations.md](operations.md#data-lifecycle--termination) |
+| 9 | Solo-operator operational resilience undefined | Medium | Resolved by plan | [operations.md](operations.md#operational-resilience-for-a-solo-operator) |
+| 10 | No unit economics / cost modeling | Medium | Resolved by plan (methodology defined; real numbers still to be run) | [operations.md](operations.md#unit-economics) |
+| 11 | Cross-provider player identity unaddressed | Low → superseded | Accepted for Tier 1; **now a Tier 2/3 capability** (Matrix Reconcile), validated on synthetic data only | [engine-governance.md](engine-governance.md#cross-provider-player-identity-an-explicit-non-goal-for-v1) |
+| 12 | Accessibility, responsive/mobile, internationalization unaddressed in frontend | Low | Accepted risk — explicit v1 scope statement | [frontend.md](frontend.md#v1-scope-boundaries) |
+| 13 | **AI hallucination / ungrounded claims** — an LLM states something about a named player or decision that the data does not support | Critical | Resolved by plan (typed tools only, mandatory citations, runtime citation verifier, golden-question CI set); residual risk is permanent and must be monitored | [ai-layer.md](ai-layer.md#evaluation-how-we-know-the-ai-is-grounded), [engine-governance.md](engine-governance.md#ai-governance) |
+| 14 | **LLM provider data handling and re-identification** — prompts leave Ponta's infrastructure; pseudonyms (`home_2`) are not anonymity for a known fixture | High | Resolved by plan (no-training/limited-retention provider, DPA sub-processor listing, context minimisation); depends on actually signing those terms | [legal-compliance.md](legal-compliance.md#ai-and-health-adjacent-data), [ai-layer.md](ai-layer.md#pseudonymisation-and-llm-providers) |
+| 15 | **Overclaiming fatigue / medical insight** — "distinguishes tactical error from neuromuscular fatigue", "fatigue risk alerts" outrun a weak, largely between-player research signal and cross into medical-adjacent claims | Critical | Resolved by plan (association-only, confidence-banded claim policy; no injury-risk wording); needs legal review before any load-linked output ships | [engine-governance.md](engine-governance.md#claim-policy-for-physiological-and-load-related-output), [roadmap_v2.md](roadmap_v2.md#feature-3-fitness-reconciled-decision-quality-physical-load--decision-timeline) |
+| 16 | **Tier 3 (and load-based Tier 2) depends on unvalidated fusion and unbuilt ingestion** — no real paired data; heart-rate/IMU channels currently ignored; per-player baselines need multi-session history | High | Open — mitigated by shipping Tier 1 first and running validation in parallel; the flagship claim stays "in development" until real paired data exists | [data-tiers.md](data-tiers.md#what-must-be-true-before-tier-3-can-ship) |
+| 17 | **Tier 2 calibration may be impossible without an overlap window** — unpaired sources (clean vendor switch; training GPS vs match optical) give nothing to fit a curve to | High | Open — overlap window added as an explicit design-partner ask; no-overlap case limited to identity/threshold alignment and discontinuity flagging | [data-tiers.md](data-tiers.md#tier-2--two-unpaired-sources) |
+| 18 | **Engineering scope growth for a solo builder** — new monorepo, Parquet/DuckDB, worker, AI layer, evaluation harness, web app all at once | High | Open — sequenced (Tier 1 first, Tier 2/3 deferred until data exists, no calendar dates); revisit before each phase | [roadmap.md](roadmap.md) |
+| 19 | **Parquet tenant isolation** — Row-Level Security does not protect files in object storage; a path bug could leak one club's data to another | Critical | Resolved by plan (API is the only reader, builds paths itself, per-org prefix, automated cross-tenant test in CI); must be implemented before any real customer data | [architecture.md](architecture.md#storage-hybrid-by-access-pattern) |
+| 20 | **Plaiq-via-Matrix changes the numbers** — routing tracking through Matrix's normalised schema may alter Plaiq outputs relative to the prototype's direct-ingest path | Medium | Resolved by plan (golden equivalence test; any difference recorded as an `engine_version` change) | [architecture.md](architecture.md#plaiqs-input-through-matrix-with-an-equivalence-test) |
+| 21 | **LLM cost and abuse** — unbounded interactive queries create unbounded spend; provider outages | Medium | Resolved by plan (caps, rate/spend limits, fail-soft, fallback adapter); real numbers still to be measured | [operations.md](operations.md#llm-costs-and-ai-operations) |
+| 22 | **Test-count overstatement** — "964 tests" overstates the safety net (582 are one parametrised ring-distance test; ~382 behavioural) | Low | Resolved by plan (new tests required for semantic builder, parity, equivalence, isolation, AI golden set; do not cite 964 as coverage) | [architecture.md](architecture.md#monorepo-and-repo-strategy) |
+
+## Notes on severity that changed after research
+
+Risk #1 was written up initially as "unknown, needs checking." After the competitive teardown in `competitive-landscape.md`, it's now a *confirmed* finding, not a hypothesis — SkillCorner's Game Intelligence product already ships something very close to PLAIQ's core engine, at commercial scale, across 250+ teams. This is the single most consequential finding across this entire review, and it should be resolved (via the validation plan in that document) before further investment in the architecture/features/frontend build order.
+
+## What "resolved by plan" means and doesn't mean
+
+For most items here, "resolved by plan" means a proportionate, realistic *approach* now exists — not that the underlying problem has been made to disappear. Legal exposure (#3) and engine validity (#5) in particular are ongoing concerns to manage, not one-time fixes. The purpose of this register is to make sure nothing on this list is *silently* unaddressed — every item now has an owner document and a stated next action, even where that action is "accept this limitation and say so plainly."
+
+## Notes added with the AI-native revision
+
+- Risks 13–22 are new. Three of them (13, 15, 19) are rated Critical because each can cause serious trust, legal or confidentiality harm and none can be fully "resolved" — they are controlled by tested guardrails that must keep passing, not solved once.
+- Risk #1 (competitive differentiation) is unchanged in substance but its framing shifts: the question is now whether *grounded, cited, parity-honest AI over vendor-agnostic data* is differentiated, which [competitive-landscape.md](competitive-landscape.md#what-the-ai-native-pivot-does-and-does-not-change) treats as another hypothesis to validate, not a settled advantage.
+- The Matrix-specific risks in `Matrix.md` (ToS exposure of fusing vendors' data, health-adjacent data, vendor response, harder engineering bet) still apply and are now tied to Tier 2/3 specifically; Tier 1 carries none of the fusion-related legal exposure.
+- Review this register before each roadmap phase boundary, and before the first LLM call touches real customer data.
