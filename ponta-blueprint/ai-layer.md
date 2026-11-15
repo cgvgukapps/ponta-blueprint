@@ -23,40 +23,46 @@ The product's trust position follows from this: *show your work, no black box* (
 
 ## The semantic football event
 
-`plaiq_engine/semantic_builder.py` compiles tracking and event data into one row per action. This is the bridge between deterministic math and language. Sections are **conditional on the data tier** — a section the match's data cannot support is absent or `null` with a reason, never zero-filled.
+`plaiq_engine/semantic_builder.py` compiles tracking and event data into one row per action: passes (including scored failed passes), carries, off-ball runs and defensive actions. This is the bridge between deterministic math and language. Sections are **conditional on the data tier** — a section the match's data cannot support is absent or `null` with a reason, never zero-filled.
+
+*(Revised 15 November 2026 to match the implemented builder; see `ponta-platform/EXTRACTION_REPORT.md`. The first draft's differences are listed after the notes below.)* The Parquet file stores flat columns (`actor_player_ref`, `dq_score` …) so the typed query tool can filter them directly; this is the nested view (`semantic_builder.nested_record`). Values are illustrative.
 
 ```json
 {
   "schema_version": "1.0",
-  "engine_version": "plaiq-x.y.z / matrix-x.y.z",
-  "event_id": "evt_99482",
-  "match_id": "m_…",
-  "timestamp_s": 4102.4,
-  "minute_display": "68:22",
+  "engine_version": "plaiq-0.1.0 / matrix-0.1.0",
+  "event_id": "evt_metrica_3_01042",
+  "match_id": "metrica_3",
+  "timestamp_s": 5336.4,
+  "minute_display": "88:56",
   "period": 2,
-  "actor": { "player_ref": "home_2", "role": "RB" },
+  "actor": { "player_ref": "home_6", "role": null },
   "action": {
     "type": "pass",
     "outcome": "completed",
     "target_player_ref": "home_4",
-    "inferred_intended_ref": "home_4",
-    "inference_confidence": 0.98
+    "inferred_intended_ref": null,
+    "inference_confidence": null
   },
   "spatial_intelligence": {
-    "dq_score": 0.51,
-    "dq_band": "Poor",
+    "dq_score": 0.64,
+    "dq_band": "suboptimal",
+    "chosen_option_pov": 0.27,
     "best_option_player_ref": "home_10",
-    "best_option_dq_score": 0.92,
+    "best_option_pov": 0.42,
     "xt_delta": -0.014,
-    "opposition_pressure_index": 0.84,
+    "movement_value": null,
+    "opposition_pressure": 7.0,
     "pitch_zone": "right_half_space_middle_third",
-    "mode": "full_tracking"
+    "mode": "full_tracking",
+    "not_scored": false,
+    "not_scored_reason": null
   },
   "physiological_context": null,
   "quality_gate": {
-    "frame_confidence": 0.96,
-    "sensor_drift_detected": false,
-    "parity": { "spatial_intelligence": "Full", "physiological_context": "Blocked" }
+    "ball_detected": true,
+    "players_observed": 22,
+    "parity": { "spatial_intelligence": "full", "physiological_context": "blocked" }
   }
 }
 ```
@@ -70,6 +76,11 @@ Notes that differ from a naïve reading of this schema:
 - **`physiological_context` is `null` unless the match has a physiological source and the fields exist.** When populated (Tier 3, or Tier 2 workload views), its fields are things like rolling acceleration/deceleration load and acute sprint distance. Fields expressed *relative to a baseline* (e.g. "% of baseline") exist **only** when that player has enough multi-session history to define one; otherwise the field is absent, not estimated. These channels do not exist in the engine today (see [data-tiers.md](data-tiers.md#what-must-be-true-before-tier-3-can-ship)), so this section is a target schema, not a description of current output.
 - **`engine_version` and `schema_version`** are carried on every row, consistent with [engine-governance.md](engine-governance.md#modelformula-versioning-and-backfill), so a brief can be traced to the exact math that produced it.
 - Goalkeepers and set-pieces are `not_scored` with a reason, per the population-validity rules in `engine-governance.md`.
+- **`opposition_pressure` is the engine's 1 to 10 scale** (1v1 pressure on the actor at the start frame), not a 0 to 1 index. Named thresholds shown to users must be stated on this scale.
+- **`inference_confidence`** is the engine's category for an inferred receiver (`strong`, `medium`, `weak`), not a number.
+- **`quality_gate`** carries `ball_detected` and `players_observed` for a single source. A per-frame confidence score exists only when Matrix reconciles two or more sources; it will be added for Tier 2 and 3.
+
+**Changed from the first draft of this schema:** `best_option_dq_score` dropped (it would always be 1.0 by construction), replaced by `best_option_pov` and `chosen_option_pov`; `opposition_pressure_index` (0 to 1) renamed `opposition_pressure` on the engine's scale; `frame_confidence` and `sensor_drift_detected` replaced by `ball_detected` and `players_observed` for single-source matches; `movement_value`, `not_scored` and `not_scored_reason` added; band names are lower case.
 
 ## Storage the AI layer reads
 
@@ -99,7 +110,7 @@ A coach asks, for example: *"Show me second-half turnovers where our midfielders
 3. **Response.** A short summary plus a playlist of matching events, each a pitch-replay chip rendered from `trajectories.parquet` by the frontend (the LLM never touches the coordinates).
 4. **Refusal path.** If a question maps to no available filter, the agent says what it can filter on rather than approximating.
 
-Ambiguous terms ("high pressure", "under load") resolve to **named, documented thresholds** shown to the user (e.g. "high pressure = pressure index ≥ 0.7, per the engine's bands"), not to model improvisation.
+Ambiguous terms ("high pressure", "under load") resolve to **named, documented thresholds** shown to the user (for example "high pressure = 1v1 pressure of 7 or more on the engine's 1 to 10 scale"). The engine defines no such threshold today: each one must be chosen, documented and versioned before the AI layer uses it, not to model improvisation.
 
 ### 3. Data-quality and parity gate (onboarding assistant)
 

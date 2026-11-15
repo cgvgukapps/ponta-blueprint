@@ -74,9 +74,7 @@ Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated 
 
 ## Open decisions
 
-- **Extraction baseline:** accept the characterised Metrica differences (recommended) or treat the carry near-tie as an engine-validity item. See `ponta-platform/EXTRACTION_REPORT.md`.
-- **SkillCorner Data check:** Full (measured) or Degraded (the prototype's panel) for pass option value and event ΔV, given that the open data contains tracking-derived shots.
-- **Semantic schema:** update `ai-layer.md` for the builder's deviations (flat columns, no `best_option_dq_score`, pressure on the engine's 1 to 10 scale, categorical inference confidence).
+- ~~Extraction baseline, SkillCorner Data check, semantic schema.~~ Decided 15 November 2026: the characterised Metrica differences are the baseline (`engine_version` unchanged; the carry near-tie is noted for the engine-validity work); the SkillCorner Data check follows the measured data (pass option value and event ΔV Full, shot quality Blocked); `ai-layer.md` updated to the implemented schema. Follow-up: the UI prototype's glossary still says "pressure index ≥ 0.7"; the engine's pressure is 1 to 10 and has no named threshold yet.
 
 - **Provider list on the website:** the v2 page lists Second Spectrum as supported; the engine record has it fixture-tested only and the hard rule allows four providers. Change the page or revise the rule with a reason.
 - **Evidence-gate thresholds (E1 to E3)** in [roadmap.md](roadmap.md#evidence-gates-proposed-15-november-2026-founder-to-confirm-the-thresholds): confirm or change.
