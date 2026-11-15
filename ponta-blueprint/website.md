@@ -151,6 +151,9 @@ Sticky at every width, including phones.
 - **No Ponta privacy policy** of our own. The form links Formspree's. `legal-compliance.md` does not yet cover website forms; the on-page promise ("we'll use your details only to reply to you") is a public commitment and should stay true.
 - **FAQ data-handling questions held** until a founder + lawyer answer exists. Do not publish "what do we need to send you?" / "what happens to our data?" until that exists.
 - **Sign in** stays disabled until the product is reachable.
+- **Provider list versus the engine record (open decision, 15 November 2026).** The v2 page lists Second Spectrum among supported providers. Its adapter exists but is tested on synthetic fixtures only; the planning repo's hard rule is that only Metrica, SkillCorner, StatsBomb and STATSports are real, and others are "Coming soon". Either the page changes or the rule is revised with a recorded reason. Not changed here: the website repo owns its copy and ledger.
+- **Continuity wording.** The Security and data card says "keep your history" on a provider switch. The FAQ correctly says reconciliation works best with an overlap; the card should carry the same condition.
+- **Chips ahead of the product.** "Early access" on the workflows is a recorded decision (O2) and is safe only while the site is `noindex`; tie any removal of `noindex` to gate G2.
 
 ## When
 

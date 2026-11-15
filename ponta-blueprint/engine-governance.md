@@ -51,6 +51,16 @@ The unifying principle: an explicit "not scored, here's why" is always better th
 
 `features.md`'s cross-match identity gap is scoped to reconciling the same player *within one provider's data* across multiple matches (StatsBomb's stable IDs make this tractable; tracking-only providers need name-based reconciliation). A harder, separate problem — reconciling the same human if a customer connects **two different providers** for overlapping matches (e.g., StatsBomb events and a Second Spectrum upload for the same fixture) — is out of scope for v1. State this plainly as a known limitation rather than attempting a fragile heuristic solution prematurely; it's a rare case for most customers, who realistically standardize on one primary data vendor.
 
+## Construct validity and reliability of Decision Quality (added 15 November 2026)
+
+The AI layer's citation verifier proves that a statement matches a row. It does not prove that the row measures a good decision. The engine's math is specified and tested, but nothing yet shows that Decision Quality agrees with expert judgement, and the website's internal notes record two cautions: the rating bands were tuned on the same match used for the worked example, and the passer is the best option in about 65% of the scored passes. Treat those as open questions until a study answers them.
+
+- **Expert agreement study.** Two or three analysts rate about 100 decisions blind (the pass, the alternatives, no engine score shown). Report agreement with the engine's band and rank. Recruit through design partners; it doubles as a credibility artefact for the discovery calls. Run it on matches the bands were not tuned on.
+- **Per-player reliability.** A DQ Rating is the mean of one match's scored decisions. Show the decision count and an interval beside it, and do not rank players from a single match. Check split-half reliability across matches once cross-match identity exists.
+- **Notable-event recall.** The brief's deterministic selection should be compared with what an analyst would flag for the same match; record how many of their moments it surfaces.
+- **Coverage.** Report the share of events scoreable per match (see [data-tiers.md](data-tiers.md#analytics-parity-report)).
+- **Wording until then.** No claim that Decision Quality is accurate or predictive. It is a defined, explainable score.
+
 ## AI governance
 
 The AI-native revision ([ai-layer.md](ai-layer.md)) adds three things that need the same "proportionate, not enterprise" governance as the engines: Matrix's own models, the semantic schema, and the LLM layer. None requires a separate registry service at this scale — a version field, a changelog and a test set each.

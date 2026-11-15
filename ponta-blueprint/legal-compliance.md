@@ -64,6 +64,15 @@ This keeps legal spend proportional to actual risk exposure at each stage, rathe
 - **Not a data-ingest path.** The form is name / email / optional providers / message. It does not accept file uploads. "We'll show you what Matrix returns" is a conversation, not an invitation to send player tracking files through Formspree. The FAQ questions "What do we need to send you?" and "What happens to our data?" are correctly **held** until a founder + lawyer answer exists.
 - **Open-data naming.** The live proof and Plaiq worked example name Metrica and SkillCorner. Licence terms for that reuse are still unverified; accepted as non-blocking at launch, still needs a real check (see [website.md](website.md)).
 
+## Vendor licence check before the first real export
+
+*Added 15 November 2026.* The earlier plan reads vendor terms before the first paid contract. A concierge pilot (see [roadmap.md](roadmap.md#phase-2--tier-1-pipeline-and-ai-workflows)) receives a real export earlier than that, and a free pilot is still a third-party processing act. Before any prospect sends a real export:
+
+- Read each supported vendor's customer terms for restrictions on giving licensed data, or data derived from it, to a third-party processor. Single-source use is not exempt: this applies to Tier 1.
+- Check whether derived events sent to an LLM provider are allowed under the same terms, in addition to the sub-processor requirements below.
+- Ask the prospect, in the first call, whether their licence permits it. Get the answer in writing with the export.
+- Keep the Track A open-data position separate: licence terms for the Metrica and SkillCorner open samples are still unverified (gate G3 in [website-v2-plan.md](website-v2-plan.md)).
+
 ## AI and health-adjacent data
 
 *Added with the AI-native revision. Nothing here is legal advice; these are the questions the fixed-scope lawyer consultation above must now also cover, and the triggers for each.*
@@ -96,3 +105,4 @@ The defamation-adjacent and FIFPro-type exposure for named-player ratings (above
 | Before first heart-rate/IMU ingestion from a real customer | Health-data legal review; lawful basis and player-rights process |
 | Before building Tier 2/3 against real data | Vendor ToS review for derived/fused datasets |
 | Before shipping any fatigue/load-linked AI output | Medical-claims language and terms reviewed |
+| Before the first real export from a prospect (including a free concierge pilot) | Vendor licence check on third-party processing and on sending derived events to an LLM provider; written confirmation from the prospect |

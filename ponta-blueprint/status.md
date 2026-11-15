@@ -70,10 +70,14 @@ Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated 
 
 - **Track V (validation):** design-partner outreach; the three data asks (one export, an overlap window, a paired match). Optional: write `soccertrack-validation-task.md` and update the Tier 3 gate status in `data-tiers.md` (offered, not requested).
 - **Legal gates** in [roadmap.md](roadmap.md#track-l--legal-and-compliance-runs-alongside-each-item-gated-to-a-trigger): basic ToS before the first pilot; LLM sub-processor terms before any real customer data reaches an LLM.
-- **Website:** still open are licence checks for Metrica and SkillCorner (G3), lawyer review of the held items (G4), `/security`, `/privacy`, `/terms` pages, the G6 re-decision on fusion wording, and hero artwork that still shows two engines. Cloudflare deploy status has not been confirmed.
+- **Website:** still open are licence checks for Metrica and SkillCorner (G3), lawyer review of the held items (G4), `/security`, `/privacy`, `/terms` pages, the G6 re-decision on fusion wording, and hero artwork that still shows two engines. Cloudflare deploy confirmed 15 November 2026: pontahq.com returns 200 with `noindex, nofollow`.
 
 ## Open decisions
 
+- **Provider list on the website:** the v2 page lists Second Spectrum as supported; the engine record has it fixture-tested only and the hard rule allows four providers. Change the page or revise the rule with a reason.
+- **Evidence-gate thresholds (E1 to E3)** in [roadmap.md](roadmap.md#evidence-gates-proposed-15-november-2026-founder-to-confirm-the-thresholds): confirm or change.
+- **Lead wedge** (single-export brief or fragmentation and provider transition): decided by discovery calls, see [go-to-market.md](go-to-market.md#two-wedges-one-to-lead-with-added-15-november-2026).
+- **Facade decisions** (input form for `MatchAnalysis`, rendering helpers, private-name wrappers): parked pending the strategy review; recommendations are in `ponta-platform/docs/MATCH_ANALYSIS_INVENTORY.md`.
 - LLM provider and model (blocks Phase 2).
 - Whether event-only analysis ships in the first release.
 - Ask Ponta pricing: capped, metered or bundled.
@@ -85,6 +89,10 @@ Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated 
 ## Docs that now disagree with the evidence
 
 None known. Reconciled on 15 November 2026: `roster/` placement ([architecture.md](architecture.md), [platform-extraction-task.md](platform-extraction-task.md)), Next.js versus Vite ([architecture.md](architecture.md), [README.md](README.md), [roadmap.md](roadmap.md); noted as undecided, not resolved), home and away tokens ([visual-design.md](visual-design.md), [frontend-design-brief-v1.md](frontend-design-brief-v1.md)), and the decision-quality scale ([ai-layer.md](ai-layer.md)). Still to do in brief v2: the prototype's status colours (values not recorded here), and remaining "Next.js" wording in `architecture.md` and `website.md`, which is covered by the note rather than rewritten.
+
+## Strategy review, 15 November 2026
+
+Read all documents and the live site. Changes made in the blueprint: evidence gates E1 to E3 and a concierge step before the platform ([roadmap.md](roadmap.md)); two wedges ([go-to-market.md](go-to-market.md)); construct validity and coverage ([engine-governance.md](engine-governance.md), [data-tiers.md](data-tiers.md), [platform-extraction-task.md](platform-extraction-task.md)); vendor licence check before the first real export ([legal-compliance.md](legal-compliance.md)); risks 23 to 26 ([risks.md](risks.md)); stale test and function counts corrected ([architecture.md](architecture.md)); brief persona fixed ([frontend.md](frontend.md)); three website flags recorded ([website.md](website.md)). The website repo was not changed.
 
 ## Strategy gaps found but not acted on
 

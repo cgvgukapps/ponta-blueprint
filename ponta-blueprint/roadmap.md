@@ -47,6 +47,18 @@ An earlier draft of the new strategy placed real paired-data validation last, af
 - **Tier 2:** go/no-go on building reconcile productisation when a real overlap window exists and validates (or fails to).
 - **Tier 3:** go/no-go on building fitness-reconciled analysis when a real paired match exists, the physiological ingestion is built, and the legal review is complete. A "no" on either does not affect Tier 1.
 
+## Evidence gates (proposed 15 November 2026; founder to confirm the thresholds)
+
+The strategy review found that no build phase waits on customer evidence, although [competitive-landscape.md](competitive-landscape.md) calls the SkillCorner overlap the most consequential finding and asks for it to be resolved before further investment. These gates make that explicit. A gate is a check on spend, not a calendar date.
+
+| Gate | Evidence required | Spend it unlocks |
+|---|---|---|
+| **E1** | At least 8 discovery calls held, with the wedge question, the "intercepted pass" question and a price anchor asked in each; the answers recorded. | Phase 2 platform build (upload connector, worker, API). Phase 1 engine work is not gated: it keeps the validation record usable whatever the answer. |
+| **E2** | At least one prospect has sent a real export and received a Parity Report and a cited brief (the concierge step in Phase 2). | Phase 3 web app. |
+| **E3** | A design partner has used a brief on a real match and said what they would pay, or why not. | Any Tier 2 or Tier 3 engineering; any billing work. |
+
+If E1 produces no clear wedge, follow the three outcomes already listed in [competitive-landscape.md](competitive-landscape.md#validation-plan-do-this-before-building-more-product).
+
 ## Track L — Legal and compliance (runs alongside, each item gated to a trigger)
 
 Triggers from [legal-compliance.md](legal-compliance.md), restated as gates on the build:
@@ -82,6 +94,7 @@ Execution spec: [platform-extraction-task.md](platform-extraction-task.md).
 
 **Runs:** after Phase 1's exit; the data-quality gate and preview are built with the pipeline, not after it.
 
+0. **Concierge step (before the platform):** run a real prospect's export locally through the engines and send back the Parity Report and a cited brief as a static page, founder-run, as Matrix Normalise already is. It exercises the real-vendor schema assumption, tests whether the brief is useful, and meets gate E2 before auth, RLS and the worker exist.
 1. Universal file-upload connector → worker → both Parquet artifacts → slim Postgres row and Parity Report. Tier 1 for optical (SkillCorner, Metrica), event-only (StatsBomb) and GPS-physical-only (STATSports).
 2. **AI workflows over the semantic store** ([ai-workflows-task.md](ai-workflows-task.md)): post-match brief, typed-tool natural-language explorer, parity gate assistant — **with the citation verifier, golden question set and adversarial tests from the first commit**, not added later.
 3. LLM provider adapter, audit logging, rate/spend limits ([operations.md](operations.md#llm-costs-and-ai-operations)).

@@ -26,7 +26,7 @@ flowchart TB
     shell --> settings
 ```
 
-**Match AI Brief.** The landing screen for a processed match: a one-page brief for coaching/medical staff with confidence badges and a header stating the match's data tier and its Degraded/Blocked metrics. Every bullet is a **citation chip** (`event_id`, timestamp, confidence) that opens Pitch Replay at that moment. Nothing on this screen is uncited. It is also the shareable/printable artifact — design it as a page that exports well, which is the first step toward the report export gap noted in `features.md`.
+**Match AI Brief.** The landing screen for a processed match: a one-page brief for coaching and analysis staff (physiological content appears only at Tier 3 and is not medical advice) with confidence badges and a header stating the match's data tier and its Degraded/Blocked metrics. Every bullet is a **citation chip** (`event_id`, timestamp, confidence) that opens Pitch Replay at that moment. Nothing on this screen is uncited. It is also the shareable/printable artifact — design it as a page that exports well, which is the first step toward the report export gap noted in `features.md`.
 
 **Pitch Replay.** Descends from the prototype's Analysis / Event Explorer mode: a pitch canvas with toggleable overlays (control zones, value heatmap, pass corridors, carry alternatives), a frame/event scrubber and a player table. Frames are read from `trajectories.parquet` through the API; on-demand overlays use the Redis-cached overlay endpoints. It can be opened from a brief citation, an Ask Ponta result, or the library.
 

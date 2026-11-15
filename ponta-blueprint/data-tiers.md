@@ -79,6 +79,7 @@ Rules, which are also enforced in the AI layer ([ai-layer.md](ai-layer.md#parity
 - Every AI response reads the Parity Report and per-frame confidence first.
 - A Degraded or Blocked metric is disclosed in the response, not silently dropped or substituted.
 - Event-only decision-quality scores are displayed as a structurally different confidence class, not as the same number with a smaller badge (resolving the open question in `features.md` Part 2).
+- The report carries a **coverage figure** alongside each state: the share of events the engine could actually score for this match, with the cause of the gap (for example ball not detected in 26.4% of frames in the SkillCorner golden match and 32.2% in Metrica Game 3, goalkeeper and set-piece events not scored). A metric labelled Full on a match where a third of events are unscoreable would otherwise hide a large hole.
 - The Parity Report is also the **onboarding gate**: after upload, the app tells the club what it can and cannot do with this data, and what a second source would unlock. This is the commercial bridge from Tier 1 to Tiers 2 and 3.
 
 ## How this changes the old product map

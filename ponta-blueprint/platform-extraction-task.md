@@ -59,6 +59,7 @@ Implement `AnalyticsParityReport` per [data-tiers.md](data-tiers.md#analytics-pa
 - Event-only: decision quality **Degraded**, flagged as a separate confidence class.
 - Optical at low frame rate or high dropout: affected metrics **Degraded** with the measured figure in the reason.
 - No physiological source: any load/fatigue metric **Blocked**.
+- Report a **coverage figure** per metric family: the share of events scoreable and the cause of the gap (ball not detected, goalkeeper, set piece), measured, not estimated. Test it against the golden matches (ball undetected in 32.2% of Metrica Game 3 frames and 26.4% of the SkillCorner match).
 - Generalise the existing SkillCorner "Analytics Parity" logic in `app.py` rather than re-deriving it; its Full/Degraded/Blocked classification for SkillCorner must be reproduced exactly (test it).
 
 ### 6. `plaiq_engine/semantic_builder.py`

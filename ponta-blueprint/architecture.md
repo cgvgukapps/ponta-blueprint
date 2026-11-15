@@ -6,7 +6,7 @@ See [README.md](README.md) for the baseline assumptions this document builds on 
 
 ## Guiding principle
 
-The prototype already contains a real asset worth protecting: a well-tested, well-specified analytics core (`analytics/`, `ingestion/`, `roster/`, `statsbomb/`, `pitch_config.py` in `PONTA-PROTOTYPE/` — 159 passing tests, a 1,100-line living spec in `ANALYTICS_SPECIFICATION.md`). The architecture's job is to **cut a clean seam between that engine and the Streamlit UI**, then build a proper product around the engine — not to rewrite the math, and not to over-engineer infra for a scale you don't have yet.
+The prototype already contains a real asset worth protecting: a well-tested, well-specified analytics core (`analytics/`, `ingestion/`, `roster/`, `statsbomb/`, `pitch_config.py` in `PONTA-PROTOTYPE/` — 964 passing tests (about 382 behavioural), a 1,100-line living spec in `ANALYTICS_SPECIFICATION.md`). The architecture's job is to **cut a clean seam between that engine and the Streamlit UI**, then build a proper product around the engine — not to rewrite the math, and not to over-engineer infra for a scale you don't have yet.
 
 Everything below is chosen to minimize ops burden for a solo builder: managed services over self-hosted, a modular monolith over microservices, and synchronous simplicity wherever the batch-only requirement allows it.
 
@@ -167,7 +167,7 @@ class MatchAnalysis:
     def player_timeline(self, player_id) -> ...
 ```
 
-This formalizes what `app.py` currently does ad hoc via ~30 imported functions, and is the single highest-leverage step: it's the prerequisite for the API, the worker, *and* any future licensing/API-product angle, without touching the underlying formulas. Existing 159 tests keep protecting correctness through the move.
+This formalizes what `app.py` currently does ad hoc via 58 imported names (inventoried in `ponta-platform/docs/MATCH_ANALYSIS_INVENTORY.md`; about half are core analysis, the rest rendering and roster helpers), and is the single highest-leverage step: it's the prerequisite for the API, the worker, *and* any future licensing/API-product angle, without touching the underlying formulas. The carried-over prototype tests keep protecting correctness through the move.
 
 ### 2. API service (FastAPI, modular monolith — not microservices)
 

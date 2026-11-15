@@ -44,6 +44,19 @@ Screen every warm intro for all three at once, as before. **The Parity Report is
 
 **What to say, and not say, about the AI.** Lead with *grounded and explainable* — every statement links to a replay and a confidence — not with "AI-powered". Incumbents can add chat on their own data; the differentiator to test in discovery calls is whether cross-vendor, cited, parity-honest answers change how a buyer talks about trust ([competitive-landscape.md](competitive-landscape.md#what-the-ai-native-pivot-does-and-does-not-change)). Do not pitch Tier 3 as available, as real-time, or as separating tactical error from fatigue; pitch it as in development and association-only.
 
+## Two wedges, one to lead with (added 15 November 2026)
+
+The pitch and the product ship in a different order. The public call to action ("using data from more than one provider, or about to switch?") and the Matrix ICP above describe a **Tier 2** problem, which has no real overlap data. The hero promises fused physical and tactical analysis, which is **Tier 3**. What ships first is **Tier 1**: one export in, a Parity Report and a cited brief out.
+
+| Wedge | Buyer | What they get first | Evidence status |
+|---|---|---|---|
+| **A. Single-export brief** | Small analyst team with one provider, priced out of incumbents (for example a SkillCorner or Metrica club) | Parity Report, cited brief, replay, explainable Decision Quality | Engine proven; value of the brief untested |
+| **B. Fragmentation and provider transition** | Club with two systems or mid-switch, multi-team organisation, federation, consultancy | Reconcile, workload continuity | Synthetic only; needs an overlap window |
+
+**Do not choose by argument.** Ask both sets of questions in every discovery call and let the answers decide which to lead with. Until then wedge A is what the first product serves, and wedge B stays an early-access conversation. The website's pilot form already captures role, data stack and primary goal; use it as the structured intake for warm introductions (the site is `noindex`, so introductions are the only traffic).
+
+**Add to every discovery call:** the intercepted-pass question and a price anchor; whether the club's vendor licence allows sending exports to a third-party processor (see [legal-compliance.md](legal-compliance.md#vendor-licence-check-before-the-first-real-export)); and who owns any video the club would want linked to a brief.
+
 ## The founder-led motion
 
 At solo/bootstrapped scale, this is directly founder-led sales, not a repeatable outbound machine:
