@@ -2,7 +2,7 @@
 
 **Last updated:** 15 November 2026. This is the living pick-up note: read it first when resuming. Update it at the end of each working session. For the plan itself see [roadmap.md](roadmap.md); for the build spec see [platform-extraction-task.md](platform-extraction-task.md).
 
-**One-line state:** Phase 1 engine work is done and pushed (15 November 2026). The shareable match page (brief v2, 5.3) exists: a single-file, offline page of the data check, coverage and rule-selected moments, built from real engine output for SkillCorner 1886347 (generated outside the repos). Commits `ponta-platform` `930d652` and `ponta-platform-ui` `01cb9cc`, not yet pushed. Next: the rest of Phase 1 (Supabase, FastAPI, storage), gated by evidence gate E1 (discovery calls); the page is ready for the concierge step.
+**One-line state:** Phase 1 engine work is done and pushed (15 November 2026). The shareable match page (brief v2, 5.3) exists: a single-file, offline page of the data check, coverage and rule-selected moments, built from real engine output for SkillCorner 1886347 (generated outside the repos). Commits `ponta-platform` `930d652` and `ponta-platform-ui` `01cb9cc`, pushed. Next: the rest of Phase 1 (Supabase, FastAPI, storage), gated by evidence gate E1 (discovery calls); the page is ready for the concierge step.
 
 ## Repositories
 
