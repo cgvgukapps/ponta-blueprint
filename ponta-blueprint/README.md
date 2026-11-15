@@ -35,6 +35,7 @@ A design/laydown exercise for taking the validated **PONTA-PROTOTYPE** (Matrix a
 
 **Start here:**
 
+- [status.md](status.md) — **living handoff note**: current state, repo positions, ordered next steps, open decisions, gotchas. Read first when resuming.
 - [roadmap.md](roadmap.md) — the revised, phased plan (extraction → AI workflows → web app, with validation and legal running in parallel, not last).
 - [data-tiers.md](data-tiers.md) — Tier 1/2/3, the Parity Report, and exactly what must be true before each tier's headline claim is honest.
 - [ai-layer.md](ai-layer.md) — the AI-native design: semantic events, the workflows, grounding rules, pseudonymisation, evaluation.
@@ -66,6 +67,7 @@ A design/laydown exercise for taking the validated **PONTA-PROTOTYPE** (Matrix a
 
 - [features.md](features.md) — product scope: shared core, AI workflows, persona use, sequencing.
 - [frontend.md](frontend.md) — **Ponta Frontend**: Match AI Brief, Pitch Replay, Ask Ponta, Parity onboarding gate.
+- [frontend-design-brief-v1.md](frontend-design-brief-v1.md) — the prompt for an external agent to prototype the dark platform UI (v1; revise after reviewing the prototype).
 - [website.md](website.md) — **Ponta Website**: current built site, and the launch positioning for one AI-native product.
 - [website-v2-plan.md](website-v2-plan.md) — the refactor plan for the launch version of the website: decisions, section map, workstreams, launch gates.
 - [visual-design.md](visual-design.md) — visual language and brand.
