@@ -2,7 +2,7 @@
 
 **Last updated:** 15 November 2026. This is the living pick-up note: read it first when resuming. Update it at the end of each working session. For the plan itself see [roadmap.md](roadmap.md); for the build spec see [platform-extraction-task.md](platform-extraction-task.md).
 
-**One-line state:** Phase 1 has started. The prototype is frozen and tagged, golden outputs are captured, the `ponta-platform` skeleton is pushed, and a clickable UI prototype exists in its own repo. **Engine code has been moved (uncommitted in `ponta-platform`, 15 November 2026) and 973 tests pass.** The next action is to review and commit that move, then the facades, equivalence test, `parity.py` and `semantic_builder.py`.
+**One-line state:** Phase 1 is under way. The prototype is frozen and tagged, golden outputs are captured, and the engine code has been moved into `ponta-platform` (commit `8603dd7`), with lint clean and CI green (`36ef7d8`, 15 November 2026). 973 tests pass locally. The next action is the facades, the equivalence test, `parity.py` and `semantic_builder.py`.
 
 ## Repositories
 
@@ -10,7 +10,7 @@
 |---|---|---|---|
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`, tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final` |
-| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `9443109` (preflight `e6a62c1`, then skeleton) |
+| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `36ef7d8` (move `8603dd7`, then lint and CI-skip changes) |
 | UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `4bd8e52`, tag `prototype-v0.1` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main`, v2 live, still `noindex` |
 
@@ -39,7 +39,7 @@
 
 ### A. Finish the extraction (`platform-extraction-task.md`, steps 2 to 7)
 
-**Progress, 15 November 2026 (working tree of `ponta-platform`, not yet committed):** items 1 and 2 below are done apart from the points listed here. Import-graph check passes. 973 tests pass (964 carried from the prototype plus the 9 skeleton tests), none deleted, skipped or weakened. By location: `matrix_engine` 245, `plaiq_engine` 673, repo-level 55 (46 cross-engine, 9 import-graph). Layout: `matrix_engine/ingestion/` and `matrix_engine/pitch_config.py`; `plaiq_engine/{analytics,statsbomb,roster,ingestion/statsbomb_io}`. Added `matrix_engine/sample_data.py` (resolver: `PONTA_SAMPLE_DATA`, default `../PONTA-PROTOTYPE/sample-data`) and a local CSV loader in `roster/build_roster.py` in place of `replay.load_game`. `test_skillcorner_io.py` and `test_ss_roster.py` sit in `tests/cross_engine/` because they import `roster`; shared fixture builders are in `tests/support/`. The three path checks in `test_statsports_provider.py` now use the real repo root, so the "nothing from this dataset in the repo" scans still cover the whole repo. **Still open:** `prev_event` in `resolve_identities` (not touched yet); about 243 ruff errors in the moved code (not fixed, to avoid editing engine files in the same change); no commit made.
+**Progress, 15 November 2026 (pushed to `ponta-platform` `main`, head `36ef7d8`):** items 1 and 2 below are done apart from the points listed here. Import-graph check passes. 973 tests pass (964 carried from the prototype plus the 9 skeleton tests), none deleted or weakened. By location: `matrix_engine` 245, `plaiq_engine` 673, repo-level 55 (46 cross-engine, 9 import-graph). Layout: `matrix_engine/ingestion/` and `matrix_engine/pitch_config.py`; `plaiq_engine/{analytics,statsbomb,roster,ingestion/statsbomb_io}`. Added `matrix_engine/sample_data.py` (resolver: `PONTA_SAMPLE_DATA`, default `../PONTA-PROTOTYPE/sample-data`) and a local CSV loader in `roster/build_roster.py` in place of `replay.load_game`. `test_skillcorner_io.py` and `test_ss_roster.py` sit in `tests/cross_engine/` because they import `roster`; shared fixture builders are in `tests/support/`. The three path checks in `test_statsports_provider.py` now use the real repo root, so the "nothing from this dataset in the repo" scans still cover the whole repo. **Lint:** safe ruff fixes applied; the remaining style rules are ignored in `ruff.toml` with a note (not endorsed; remove entries when the code is next changed). **CI (item 3, decided):** CI is green. Data-dependent tests skip when the sample data is absent (CI: 841 passed, 132 skipped, by the local no-data run; the exact CI counts were not read). The full run is the local gate: `PONTA_REQUIRE_SAMPLE_DATA=1 pytest -q` expects 973 passed, 0 skipped. Revisit when gate G3 (Metrica and SkillCorner licences) is settled. **Still open:** `prev_event` in `resolve_identities` (not touched yet).
 
 1. **Split and move the code** (imports rewritten only, no maths changes):
    - `matrix_engine`: `ingestion/{metrica_io, epts_io, metrica_velocities, skillcorner_io, second_spectrum_io, genius_events_io}`, the existing `matrix_engine/*` modules (`confidence`, `export`, `fusion`, `identity`, `quality`, `schema`, `sync`, `providers`, `testing`), and `pitch_config`.
@@ -48,7 +48,7 @@
    - Resolve the unused `prev_event` parameter of `resolve_identities` (remove with call sites, or keep deliberately, and say which).
    - Git history for moved files: decided to skip (`git filter-repo` not installed; full history lives in the prototype at the tag). Revisit only if wanted.
 2. **Carry all tests over.** None deleted, skipped or weakened. Report counts before and after, by package. Tests find sample data relative to the repo root: add a resolver that reads `PONTA_SAMPLE_DATA`, defaulting to `../PONTA-PROTOTYPE/sample-data`. Do not copy the data into the repo (licence terms for Metrica and SkillCorner are unresolved, gate G3). The STATSports tests fetch a 51 MB unlicensed export to a pytest temp directory; that data must never enter the repo.
-3. **Decide how CI gets the sample data,** or accept that data-dependent tests are gated by the local full run. CI is currently unverified (see gotchas).
+3. ~~Decide how CI gets the sample data.~~ Done: skip in CI, full run is the local gate (see Progress above).
 4. **Add the facades:** `MatrixPipeline.run()` over the existing flow (`providers → sync → identity → sync(refine) → fusion → confidence → quality → export`), and `MatchAnalysis` over the roughly 30 functions `app.py` imports (inventory them first).
 5. **Plaiq-via-Matrix equivalence test** against the golden outputs. Set an explicit, justified tolerance; compare on natural keys, never row order; use `np.allclose` for surfaces and report the maximum difference. Characterise every difference beyond tolerance as an `engine_version` decision; do not edit formulas.
 6. **`parity.py`:** the Parity Report. Locate the SkillCorner "Analytics Parity" logic in `app.py`; the new code must reproduce its classification exactly (test it). Rules: GPS-only blocks opposition pressure and control; event-only degrades decision quality; low frame rate or high dropout degrades with the measured figure; no physiological source blocks load and fatigue metrics.
@@ -102,7 +102,7 @@ Prototype tests use the prototype's own interpreter: `cd /Users/cicerovieira/PON
 
 ## Gotchas
 
-- **CI has not been observed on GitHub.** Check the Actions tab on `ponta-platform`.
+- **CI is observed and green** (run 4, `36ef7d8`). It skips the sample-data tests, so a green CI does not cover the whole suite. Run `PONTA_REQUIRE_SAMPLE_DATA=1 pytest -q` locally before relying on a change. `gh` is not installed; read runs with `curl https://api.github.com/repos/cgvgukapps/ponta-platform/actions/runs`.
 - **Install both engine packages in one pip command,** so the local packages resolve each other and pip never looks up an internal name on the public index (distribution names are prefixed `ponta-`).
 - **Do not commit `*.egg-info`** (now git-ignored).
 - **Sandbox:** writes outside the workspace folder need elevated permissions. Pushes to `main` are held for your approval and need a retry with the approval request. Process listing (`ps`) is blocked.
