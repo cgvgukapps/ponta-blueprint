@@ -4,7 +4,7 @@ Self-contained task for a coding agent. It starts from the cleaned `PONTA-PROTOT
 
 ## Context
 
-`PONTA-PROTOTYPE` (`/Users/cicerovieira/PONTA-PROTOTYPE`) holds two engines that share ingestion code: the Plaiq decision-quality engine (`analytics/`, `statsbomb/`, plus `ingestion/` and `roster/`) and the Matrix engine (`matrix_engine/`, which wraps `ingestion/` and `roster/` one-directionally). A 4,600-line Streamlit `app.py` drives Plaiq. The product strategy has changed to one AI-native app: grounded AI reads **semantic football events** produced by the deterministic engines, and every match gets a **Parity Report**. This task extracts the engines into a new monorepo and adds those two missing pieces (`parity.py`, `semantic_builder.py`).
+`PONTA-PROTOTYPE` (`/Users/cicerovieira/PONTA-PROTOTYPE`) holds two engines that share ingestion code: the Plaiq decision-quality engine (`analytics/`, `statsbomb/`, plus `ingestion/` and `roster/`) and the Matrix engine (`matrix_engine/`, which wraps `ingestion/` one-directionally; it never imports `roster/`, see the import-graph finding in [status.md](status.md)). A 4,600-line Streamlit `app.py` drives Plaiq. The product strategy has changed to one AI-native app: grounded AI reads **semantic football events** produced by the deterministic engines, and every match gets a **Parity Report**. This task extracts the engines into a new monorepo and adds those two missing pieces (`parity.py`, `semantic_builder.py`).
 
 The prototype suite is **964 passing tests** — but 582 of those are one parametrised ring-distance test, so the behavioural core is about 382. "All 964 green" proves the extraction preserved behaviour; it does not prove the new pieces work. They need their own tests.
 
@@ -37,8 +37,8 @@ A new repo `/Users/cicerovieira/ponta-platform` (name fixed) containing installa
 
 Starting proposal (verify with an import-graph check before moving anything; adjust and justify in the report):
 
-- `matrix_engine/adapters/`: `ingestion/{metrica_io,epts_io,metrica_velocities,skillcorner_io,second_spectrum_io,genius_events_io}.py` and the existing `matrix_engine/providers/*` (which already wrap them), plus `pitch_config.py` and the roster/identity code Matrix needs (`roster/`).
-- `plaiq_engine/`: `analytics/`, `statsbomb/`, `ingestion/statsbomb_io.py` (event-only path).
+- `matrix_engine/adapters/`: `ingestion/{metrica_io,epts_io,metrica_velocities,skillcorner_io,second_spectrum_io,genius_events_io}.py` and the existing `matrix_engine/providers/*` (which already wrap them), plus `pitch_config.py` (both engines import it). *(Revised: `roster/` was originally listed here. The import-graph check shows Matrix never imports it and it imports Plaiq's `DEFAULT_PROFILE`, so `roster/` moves to `plaiq_engine` instead; `roster.build_roster` lazily imports `replay.load_game`, which is not ported, so it needs a local CSV loader. Recorded in `ponta-platform/docs/ARCHITECTURE.md`.)*
+- `plaiq_engine/`: `analytics/`, `statsbomb/`, `roster/`, `ingestion/statsbomb_io.py` (event-only path).
 - `matrix_engine/pipeline.py`: a `MatrixPipeline.run(...) -> UnifiedTrackingDataset` façade over the existing `UnifiedTrackingEngine` flow (`providers → sync → identity → sync(refine) → fusion → confidence → quality → export`), behaviour-identical.
 - `plaiq_engine/match_analysis.py`: a `MatchAnalysis` façade exposing what `app.py` currently calls ad hoc (inventory those ~30 imported functions first and list them in the report): pressure, control, value surface, `event_pov`, `event_decision_quality`, movement value, player timeline. Wrap, don't rewrite.
 - Resolve the open item from the cleanup report: the unused `prev_event` parameter of `resolve_identities` — remove it with its call sites or keep it deliberately, and say which.

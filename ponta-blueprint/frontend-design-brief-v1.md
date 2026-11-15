@@ -95,6 +95,8 @@ These are **proposals** for you to refine; expose them as CSS custom properties 
 
 **Analytics colour semantics (these must mean the same thing on every screen):**
 
+*(v1 values below. The prototype built from this brief changed them: home is `#d6293d` and away is teal. Reconcile in brief v2; the final away colour is still open.)*
+
 | Meaning | Starting value |
 |---|---|
 | Home team | `#E63946` |

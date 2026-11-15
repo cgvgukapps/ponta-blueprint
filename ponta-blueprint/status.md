@@ -80,12 +80,9 @@ Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated 
 - Final dark palette, away-team colour, heat gradient, filled versus outlined primary buttons, Plotly versus Canvas for the pitch.
 - Public naming of Matrix and Plaiq; the IP-protection call on publishing `ANALYTICS_SPECIFICATION.md`.
 
-## Docs that now disagree with the evidence (reconcile when convenient)
+## Docs that now disagree with the evidence
 
-- `architecture.md` and `platform-extraction-task.md` put `roster/` under `matrix_engine`; the evidence says `plaiq_engine` (finding 1).
-- `frontend.md` and `architecture.md` say Next.js; the prototype is Vite.
-- `visual-design.md` and the brief hold token values the UI prototype changed (home and away colours, status colours).
-- Anything that assumes decision quality is a 0 to 1 ratio (finding 4).
+None known. Reconciled on 15 November 2026: `roster/` placement ([architecture.md](architecture.md), [platform-extraction-task.md](platform-extraction-task.md)), Next.js versus Vite ([architecture.md](architecture.md), [README.md](README.md), [roadmap.md](roadmap.md); noted as undecided, not resolved), home and away tokens ([visual-design.md](visual-design.md), [frontend-design-brief-v1.md](frontend-design-brief-v1.md)), and the decision-quality scale ([ai-layer.md](ai-layer.md)). Still to do in brief v2: the prototype's status colours (values not recorded here), and remaining "Next.js" wording in `architecture.md` and `website.md`, which is covered by the note rather than rewritten.
 
 ## Strategy gaps found but not acted on
 

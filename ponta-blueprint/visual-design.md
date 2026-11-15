@@ -63,7 +63,7 @@ This is what pontahq.com actually is. Full copy and section order live in [websi
 | Inline links (white page) | `#1558C9` | AA on the card tint |
 | Inline links (dark) | `#4A90FB` | AA on `#0A0A0A` |
 
-The product's colour semantics still hold for Ponta Frontend (`#E63946` home, `#1D8CF8` away, `#FFD700` event, pitch green, heat gradients). They stay out of website chrome except the Plaiq rating-band colours above.
+The product's colour semantics still hold for Ponta Frontend (`#E63946` home, `#1D8CF8` away, `#FFD700` event, pitch green, heat gradients). *(Superseded in part: the UI prototype `prototype-v0.1` changed these. Home is `#d6293d` and away is teal, resolving the away-blue versus brand-blue collision, and its status colours also differ. The final values are an open decision; see [status.md](status.md#open-decisions).)* They stay out of website chrome except the Plaiq rating-band colours above.
 
 ## The structure transfers too, relabelled
 

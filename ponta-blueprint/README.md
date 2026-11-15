@@ -1,6 +1,6 @@
 # Ponta Production Blueprint
 
-A design/laydown exercise for taking the validated **PONTA-PROTOTYPE** (Matrix and Plaiq engines plus a Streamlit app) to a multi-tenant, **AI-native** B2B SaaS product. The website ([pontahq.com](https://pontahq.com)) is **deployed but unannounced** (friends-only URL, old pre-pivot copy); the product stack described here (API, workers, semantic store, AI layer, web app) has not been built. This blueprint is architecture, scope, sequencing and risk review, for discussion.
+A design/laydown exercise for taking the validated **PONTA-PROTOTYPE** (Matrix and Plaiq engines plus a Streamlit app) to a multi-tenant, **AI-native** B2B SaaS product. The website ([pontahq.com](https://pontahq.com)) is **deployed but unannounced** (`noindex`; v2 one-product copy on `main`); the product stack described here (API, workers, semantic store, AI layer, web app) has not been built. This blueprint is architecture, scope, sequencing and risk review, for discussion.
 
 ## Strategy as of this revision: one AI-native product
 
@@ -24,7 +24,7 @@ A design/laydown exercise for taking the validated **PONTA-PROTOTYPE** (Matrix a
 - **Business model:** B2B SaaS, multi-tenant, bring-your-own-data.
 - **Latency:** post-match / post-session batch only. No real-time claims anywhere — including AI output.
 - **Scale:** small initial scale — optimise for speed to market over headroom.
-- **Frontend:** Next.js/React web app (**Ponta Frontend**, [frontend.md](frontend.md)) replacing Streamlit; distinct from the public site (**Ponta Website**, [website.md](website.md)).
+- **Frontend:** React web app (**Ponta Frontend**, [frontend.md](frontend.md)) replacing Streamlit. The framework is undecided: the docs say Next.js, the UI prototype is Vite, and the leaning is a Vite static export; distinct from the public site (**Ponta Website**, [website.md](website.md)).
 - **Storage:** Postgres (Supabase) for tenancy, metadata and insight cards; **Parquet in object storage queried via DuckDB** for tracking and semantic data ([architecture.md](architecture.md#canonical-store-and-ai-layer)).
 - **AI:** structured, tool-calling LLM use grounded strictly in the semantic event store; pseudonymised prompts; mandatory citations ([ai-layer.md](ai-layer.md)).
 - **Repo strategy:** a new `ponta-platform` monorepo; `PONTA-PROTOTYPE` is retained, frozen, as the validation record. ([architecture.md](architecture.md#monorepo-and-repo-strategy)).

@@ -94,7 +94,7 @@ Execution spec: [platform-extraction-task.md](platform-extraction-task.md).
 
 **Runs:** after Phase 2's core exists; UI work can begin against stub data earlier.
 
-- Next.js app per [frontend.md](frontend.md): shell + auth + org switching, Match Library with tier/parity badges, Parity onboarding gate, Match AI Brief, Pitch Replay (spike Plotly vs Canvas here), Ask Ponta.
+- Web app (Next.js in the docs; Vite in the UI prototype, undecided) per [frontend.md](frontend.md): shell + auth + org switching, Match Library with tier/parity badges, Parity onboarding gate, Match AI Brief, Pitch Replay (spike Plotly vs Canvas here), Ask Ponta.
 - Deploy; Sentry; uptime monitoring; confirm backups restore.
 - 2–3 design partners onto the real product (Track V), including whichever supplies the first real SkillCorner export.
 - Lawyer-reviewed DPA, vendor ToS review, retention policy and purge job before the first paid contract.
