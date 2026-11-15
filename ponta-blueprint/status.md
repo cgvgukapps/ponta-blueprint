@@ -2,7 +2,7 @@
 
 **Last updated:** 15 November 2026. This is the living pick-up note: read it first when resuming. Update it at the end of each working session. For the plan itself see [roadmap.md](roadmap.md); for the build spec see [platform-extraction-task.md](platform-extraction-task.md).
 
-**One-line state:** Phase 1 is under way. The prototype is frozen and tagged, golden outputs are captured, and the engine code has been moved into `ponta-platform` (commit `8603dd7`), with lint clean and CI green (`36ef7d8`, 15 November 2026). 973 tests pass locally. The next action is the facades, the equivalence test, `parity.py` and `semantic_builder.py`.
+**One-line state:** Phase 1 engine work is done (15 November 2026): engines extracted, facades built, Plaiq-via-Matrix equivalence verified against the golden outputs, Parity Report and semantic builder written, demo runs. All in `ponta-platform` commit `e46c53e`, not yet pushed; see its `EXTRACTION_REPORT.md`. Three decisions are open (below). Next: the shareable match page from real output (brief v2, 5.3), then the rest of Phase 1 (Supabase, FastAPI, storage), gated by E1.
 
 ## Repositories
 
@@ -49,11 +49,11 @@
    - Git history for moved files: decided to skip (`git filter-repo` not installed; full history lives in the prototype at the tag). Revisit only if wanted.
 2. **Carry all tests over.** None deleted, skipped or weakened. Report counts before and after, by package. Tests find sample data relative to the repo root: add a resolver that reads `PONTA_SAMPLE_DATA`, defaulting to `../PONTA-PROTOTYPE/sample-data`. Do not copy the data into the repo (licence terms for Metrica and SkillCorner are unresolved, gate G3). The STATSports tests fetch a 51 MB unlicensed export to a pytest temp directory; that data must never enter the repo.
 3. ~~Decide how CI gets the sample data.~~ Done: skip in CI, full run is the local gate (see Progress above).
-4. **Add the facades:** `MatrixPipeline.run()` over the existing flow (`providers → sync → identity → sync(refine) → fusion → confidence → quality → export`), and `MatchAnalysis` over the roughly 30 functions `app.py` imports (inventory them first).
-5. **Plaiq-via-Matrix equivalence test** against the golden outputs. Set an explicit, justified tolerance; compare on natural keys, never row order; use `np.allclose` for surfaces and report the maximum difference. Characterise every difference beyond tolerance as an `engine_version` decision; do not edit formulas.
-6. **`parity.py`:** the Parity Report. Locate the SkillCorner "Analytics Parity" logic in `app.py`; the new code must reproduce its classification exactly (test it). Rules: GPS-only blocks opposition pressure and control; event-only degrades decision quality; low frame rate or high dropout degrades with the measured figure; no physiological source blocks load and fatigue metrics.
-7. **`semantic_builder.py`:** writes `semantic_events.parquet` and `trajectories.parquet`. Deterministic with explicit ordering; `physiological_context` is null unless present (never zero-filled); pseudonymous `player_ref`; no names and no raw coordinate arrays; goalkeepers and set pieces `not_scored`.
-8. **Demo script** (Metrica and SkillCorner end to end), then write `EXTRACTION_REPORT.md`.
+4. ~~Facades.~~ Done: `MatrixPipeline` (one source: Normalise only; several: unchanged reconcile) and `MatchAnalysis` over a Matrix `NormalisedMatch` (new `matrix_engine/match.py`, with an EPTS loader for Metrica Game 3).
+5. ~~Equivalence test.~~ Done, opt-in (`PONTA_EQUIVALENCE=1`, about 7 minutes). Inputs identical; outputs equal the golden files for both matches, except on Metrica two of 39,589 decision rows and 12 of 36,792 alternative rows (four carries), caused by a 2-micrometre float-storage difference tipping near-ties. No decision-quality band changes.
+6. ~~`parity.py`.~~ Done. Reproduces the prototype's SkillCorner panel for its stated premise. Finding: the SkillCorner open data does contain 23 shot events, so on the real match pass option value and event ΔV are Full where the panel said Degraded.
+7. ~~`semantic_builder.py`.~~ Done, with tests for determinism, no names or coordinates, not-scored goalkeepers and set pieces, and scores equal to the engine's. Deviations from `ai-layer.md` listed in the report.
+8. ~~Demo and report.~~ Done: `tools/demo.py`, `EXTRACTION_REPORT.md`. Tests: 1,015 (1,003 run in the full local suite, 12 opt-in equivalence).
 
 ### B. Rest of Phase 1
 
@@ -73,6 +73,10 @@ Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated 
 - **Website:** still open are licence checks for Metrica and SkillCorner (G3), lawyer review of the held items (G4), `/security`, `/privacy`, `/terms` pages, the G6 re-decision on fusion wording, and hero artwork that still shows two engines. Cloudflare deploy confirmed 15 November 2026: pontahq.com returns 200 with `noindex, nofollow`.
 
 ## Open decisions
+
+- **Extraction baseline:** accept the characterised Metrica differences (recommended) or treat the carry near-tie as an engine-validity item. See `ponta-platform/EXTRACTION_REPORT.md`.
+- **SkillCorner Data check:** Full (measured) or Degraded (the prototype's panel) for pass option value and event ΔV, given that the open data contains tracking-derived shots.
+- **Semantic schema:** update `ai-layer.md` for the builder's deviations (flat columns, no `best_option_dq_score`, pressure on the engine's 1 to 10 scale, categorical inference confidence).
 
 - **Provider list on the website:** the v2 page lists Second Spectrum as supported; the engine record has it fixture-tested only and the hard rule allows four providers. Change the page or revise the rule with a reason.
 - **Evidence-gate thresholds (E1 to E3)** in [roadmap.md](roadmap.md#evidence-gates-proposed-15-november-2026-founder-to-confirm-the-thresholds): confirm or change.
