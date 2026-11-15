@@ -2,7 +2,7 @@
 
 **Last updated:** 15 November 2026. This is the living pick-up note: read it first when resuming. Update it at the end of each working session. For the plan itself see [roadmap.md](roadmap.md); for the build spec see [platform-extraction-task.md](platform-extraction-task.md).
 
-**One-line state:** Phase 1 has started. The prototype is frozen and tagged, golden outputs are captured, the `ponta-platform` skeleton is pushed, and a clickable UI prototype exists in its own repo. **No engine code has been moved yet.** The next action is the module split and move.
+**One-line state:** Phase 1 has started. The prototype is frozen and tagged, golden outputs are captured, the `ponta-platform` skeleton is pushed, and a clickable UI prototype exists in its own repo. **Engine code has been moved (uncommitted in `ponta-platform`, 15 November 2026) and 973 tests pass.** The next action is to review and commit that move, then the facades, equivalence test, `parity.py` and `semantic_builder.py`.
 
 ## Repositories
 
@@ -38,6 +38,8 @@
 ## Next steps, in order
 
 ### A. Finish the extraction (`platform-extraction-task.md`, steps 2 to 7)
+
+**Progress, 15 November 2026 (working tree of `ponta-platform`, not yet committed):** items 1 and 2 below are done apart from the points listed here. Import-graph check passes. 973 tests pass (964 carried from the prototype plus the 9 skeleton tests), none deleted, skipped or weakened. By location: `matrix_engine` 245, `plaiq_engine` 673, repo-level 55 (46 cross-engine, 9 import-graph). Layout: `matrix_engine/ingestion/` and `matrix_engine/pitch_config.py`; `plaiq_engine/{analytics,statsbomb,roster,ingestion/statsbomb_io}`. Added `matrix_engine/sample_data.py` (resolver: `PONTA_SAMPLE_DATA`, default `../PONTA-PROTOTYPE/sample-data`) and a local CSV loader in `roster/build_roster.py` in place of `replay.load_game`. `test_skillcorner_io.py` and `test_ss_roster.py` sit in `tests/cross_engine/` because they import `roster`; shared fixture builders are in `tests/support/`. The three path checks in `test_statsports_provider.py` now use the real repo root, so the "nothing from this dataset in the repo" scans still cover the whole repo. **Still open:** `prev_event` in `resolve_identities` (not touched yet); about 243 ruff errors in the moved code (not fixed, to avoid editing engine files in the same change); no commit made.
 
 1. **Split and move the code** (imports rewritten only, no maths changes):
    - `matrix_engine`: `ingestion/{metrica_io, epts_io, metrica_velocities, skillcorner_io, second_spectrum_io, genius_events_io}`, the existing `matrix_engine/*` modules (`confidence`, `export`, `fusion`, `identity`, `quality`, `schema`, `sync`, `providers`, `testing`), and `pitch_config`.
