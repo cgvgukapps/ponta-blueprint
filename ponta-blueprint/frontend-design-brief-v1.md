@@ -1,5 +1,7 @@
 # Ponta Platform: Frontend Design Brief (v1)
 
+> **Superseded by [frontend-design-brief-v2.md](frontend-design-brief-v2.md) (15 November 2026).** Kept as the record of what the first prototype was asked to do. The open decisions below are now fixed in v2.
+
 **Version:** v1, for the first round of prototype experiments with an external agent. Expect to revise it after the first prototype is reviewed (see [Review checklist for v2](#review-checklist-for-v2-founder-use-not-part-of-the-prompt)).
 
 **How to use this file.** Everything from "Your task" down to "Report back" is the prompt for the external agent. The final section is for the founder only. Source-of-truth documents are listed at the end; where this brief and those documents disagree, this brief wins for the prototype, and the disagreement should be reported.

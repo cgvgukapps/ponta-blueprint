@@ -61,7 +61,7 @@ Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated 
 
 ### C. Frontend
 
-1. ~~Review the UI prototype against the v2 checklist.~~ Done 15 November 2026, and the changes are made in the UI repo (`a2d3e62`, see its `docs/design-notes.md` section 6): engine DQ bands and the 0 to 1.5 scale, citation chips that lead with the moment, "Data check" and source-based tier names, labelled parity counts, calmer replay overlays. Still to do: fold the decisions into a brief v2, and add the coverage figure to the data check once the engine produces it.
+1. ~~Review the UI prototype against the v2 checklist.~~ Done 15 November 2026, and the changes are made in the UI repo (`a2d3e62`, see its `docs/design-notes.md` section 6): engine DQ bands and the 0 to 1.5 scale, citation chips that lead with the moment, "Data check" and source-based tier names, labelled parity counts, calmer replay overlays. Brief v2 written: [frontend-design-brief-v2.md](frontend-design-brief-v2.md) (fixed decisions; next round: client-side names, coverage in the Data check, a shareable single-file match page, colour and print fixes, an API mapping). Not started.
 2. Import into `ponta-platform/apps/web`. The UI repo now has a baseline commit. Subtree if you keep committing there first, otherwise copy and record the source commit. Archive the old repo afterwards.
 3. After import: keep the `src/api` function signatures and add an HTTP client behind a mock switch; move the fake engine and mock packs to dev-only; generate TypeScript types from the OpenAPI schema; add CI path filters.
 4. The Parity gate is the first screen that can go real (needs only the Parity Report JSON). Library and Add data follow with the upload endpoint; Replay, Brief and Ask need Phase 2.
