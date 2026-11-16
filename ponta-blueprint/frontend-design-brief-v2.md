@@ -49,22 +49,27 @@ Take the reviewed prototype to the version that design partners can be shown. Ke
 
 These were open in v1 and are now decided, either by the first prototype or by the review. The values live in `src/styles/tokens.css`; change them there only.
 
+*(Revised 16 November 2026: visual redesign to the founder's references, a calm neutral tool UI and simple, high-impact components. Rows marked "revised" supersede the first values, which are in git history. Recorded in the UI repo's `docs/design-notes.md`, section 7.)*
+
 ### Palette and type
 
 | Decision | Value |
 |---|---|
-| Dark palette | Lightly cool near-black. Canvas `#0b0d12`; surfaces `#11141b`, `#171b24`, `#1e232e`; hairlines white 8% and 14% |
-| Text | `#ededed`, `#c3c3c3`, `#a7a7a7`, `#8a8a8a` (the floor; nothing dimmer) |
-| Brand accent | `#1e76fa` for focus, selection and graphics only. Blue text on dark is `#4a90fb` |
-| Primary button | **Filled**, `#1558c9`, white label (6.4:1) |
+| Dark palette (revised) | Neutral near-black. Canvas `#161616`; surfaces `#1c1c1c`, `#242424`, `#2a2a2a`. Panels are fills with no outline; hairlines (white 7%) only divide lists |
+| Text (revised) | `#f5f5f5`, `#cfcfcf`, `#a3a3a3`, `#979797` (the floor; nothing dimmer) |
+| Brand accent (revised) | `#1e76fa` for state only: focus, selection, toggles, progress. Never a button fill. Blue text on dark is `#5c9dfc` |
+| Primary button (revised) | **White fill** `#f5f5f5`, near-black label `#111111`. Secondary: soft fill, no outline |
 | Home team | Crimson `#d6293d`, circles and team dots only |
 | Away team | **Teal `#2bc7b9`**. Brand blue never appears on the pitch |
 | Event highlight | `#ffd700` |
 | Pitch | `#16231b`, lines white 26%, hex grid white 7% |
 | Heat | Lightness-monotonic purple to pink ramp, `--heat-0` to `--heat-8` |
-| Type | Geist and Geist Mono, self-hosted; tabular figures on every number |
-| Radii | 4, 6 and 8 px only |
+| Type (revised) | **Geist only**, self-hosted, body 14 px, page titles 26 px, key figures 36 to 40 px; tabular figures on every number. Geist Mono only for code. No uppercase labels: section labels are sentence case |
+| Radii (revised) | 6, 8, 12 and 18 px |
 | Pitch rendering | **HTML canvas**, not Plotly |
+| Icons (new) | Thin line icons, 1.5 px stroke |
+| Key figures (new) | One large figure with a small grey label beneath, in a soft tile (decision quality in the replay, Data check counts) |
+| The one flourish (new) | The Ask composer's gradient edge, blue `#1e76fa` to rose-red `#f0436b`. Used nowhere else; rose-red rather than red so it is never read as the home team or an error |
 
 ### The three channels and the colour collisions
 
