@@ -49,27 +49,30 @@ Take the reviewed prototype to the version that design partners can be shown. Ke
 
 These were open in v1 and are now decided, either by the first prototype or by the review. The values live in `src/styles/tokens.css`; change them there only.
 
-*(Revised 16 November 2026: visual redesign to the founder's references, a calm neutral tool UI and simple, high-impact components. Rows marked "revised" supersede the first values, which are in git history. Recorded in the UI repo's `docs/design-notes.md`, section 7.)*
+*(Revised again 16 November 2026: second redesign to the "Davis" reference, adopted in full except the brand colour, which stays Ponta blue. Rows marked "revised 2" supersede both earlier values. UI repo `docs/design-notes.md`, section 8.)*
+
+*(Earlier revision 16 November 2026: visual redesign to the founder's references, a calm neutral tool UI and simple, high-impact components. Rows marked "revised" supersede the first values, which are in git history. Recorded in the UI repo's `docs/design-notes.md`, section 7.)*
 
 ### Palette and type
 
 | Decision | Value |
 |---|---|
-| Dark palette (revised) | Neutral near-black. Canvas `#161616`; surfaces `#1c1c1c`, `#242424`, `#2a2a2a`. Panels are fills with no outline; hairlines (white 7%) only divide lists |
-| Text (revised) | `#f5f5f5`, `#cfcfcf`, `#a3a3a3`, `#979797` (the floor; nothing dimmer) |
-| Brand accent (revised) | `#1e76fa` for state only: focus, selection, toggles, progress. Never a button fill. Blue text on dark is `#5c9dfc` |
-| Primary button (revised) | **White fill** `#f5f5f5`, near-black label `#111111`. Secondary: soft fill, no outline |
+| Dark palette (revised 2) | Cool near-black. Background `#0e1116`; surfaces `#16191e`, `#1d2127`, popover `#24282e`; foreground `#fcfdff`. Cards are a lighter surface with a faint edge (white 6%) |
+| Text (revised 2) | `#fcfdff`, `#c9ced6`, `#9ca3ae`, `#8d94a0` (the floor; nothing dimmer) |
+| Brand accent (revised 2) | `#1e76fa` for focus, selection, toggles, progress and graphics; blue text on dark `#5c9dfc` |
+| Primary button (revised 2) | **Ponta blue fill** `#1a6ef0` (brand blue nudged for a 4.6:1 white label). Secondary: popover fill |
 | Home team | Crimson `#d6293d`, circles and team dots only |
 | Away team | **Teal `#2bc7b9`**. Brand blue never appears on the pitch |
 | Event highlight | `#ffd700` |
 | Pitch | `#16231b`, lines white 26%, hex grid white 7% |
 | Heat | Lightness-monotonic purple to pink ramp, `--heat-0` to `--heat-8` |
-| Type (revised) | **Geist only**, self-hosted, body 14 px, page titles 26 px, key figures 36 to 40 px; tabular figures on every number. Geist Mono only for code. No uppercase labels: section labels are sentence case |
+| Type (revised 2) | **Inter** for all text (body 14 px); **Source Serif 4** for page headings (30 to 44 px, regular weight); tabular figures on every number; mono only for code. No uppercase labels |
 | Radii (revised) | 6, 8, 12 and 18 px |
 | Pitch rendering | **HTML canvas**, not Plotly |
 | Icons (new) | Thin line icons, 1.5 px stroke |
 | Key figures (new) | One large figure with a small grey label beneath, in a soft tile (decision quality in the replay, Data check counts) |
-| The one flourish (new) | The Ask composer's gradient edge, blue `#1e76fa` to rose-red `#f0436b`. Used nowhere else; rose-red rather than red so it is never read as the home team or an error |
+| Ask composer (revised 2) | Thin blue-tinted edge (replaces the gradient), square blue send button, match picker in the toolbar, topic chips with icons, a soft blue horizon glow on the empty state; answers open with a collapsible step list |
+| Tables (new) | Filled, rounded header row; plain rows with a hover fill and no dividers |
 
 ### The three channels and the colour collisions
 
