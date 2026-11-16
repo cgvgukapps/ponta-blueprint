@@ -59,8 +59,8 @@ These were open in v1 and are now decided, either by the first prototype or by t
 |---|---|
 | Dark palette (revised 2) | Cool near-black. Background `#0e1116`; surfaces `#16191e`, `#1d2127`, popover `#24282e`; foreground `#fcfdff`. Cards are a lighter surface with a faint edge (white 6%) |
 | Text (revised 2) | `#fcfdff`, `#c9ced6`, `#9ca3ae`, `#8d94a0` (the floor; nothing dimmer) |
-| Brand accent (revised 2) | `#1e76fa` for focus, selection, toggles, progress and graphics; blue text on dark `#5c9dfc` |
-| Primary button (revised 2) | **Ponta blue fill** `#1a6ef0` (brand blue nudged for a 4.6:1 white label). Secondary: popover fill |
+| Brand accent (revised 2) | `#1e76fa` for focus, selection marks, toggles, progress and graphics (never a button fill); blue text on dark `#5c9dfc` |
+| Primary button (revised 3) | **Cool white fill** `#f4f6fa` with a near-black label `#0e1116` (16 November 2026; the blue fill of revised 2 is retired). On the light print theme it inverts to near-black with a white label. Secondary: popover fill |
 | Home team | Crimson `#d6293d`, circles and team dots only |
 | Away team | **Teal `#2bc7b9`**. Brand blue never appears on the pitch |
 | Event highlight | `#ffd700` |
@@ -71,7 +71,7 @@ These were open in v1 and are now decided, either by the first prototype or by t
 | Pitch rendering | **HTML canvas**, not Plotly |
 | Icons (new) | Thin line icons, 1.5 px stroke |
 | Key figures (new) | One large figure with a small grey label beneath, in a soft tile (decision quality in the replay, Data check counts) |
-| Ask composer (revised 2) | Thin blue-tinted edge (replaces the gradient), square blue send button, match picker in the toolbar, topic chips with icons, a soft blue horizon glow on the empty state; answers open with a collapsible step list |
+| Ask composer (revised 2) | Thin blue-tinted edge (replaces the gradient), square white send button, match picker in the toolbar, topic chips with icons, a soft blue horizon glow on the empty state; answers open with a collapsible step list |
 | Tables (new) | Filled, rounded header row; plain rows with a hover fill and no dividers |
 
 ### The three channels and the colour collisions
