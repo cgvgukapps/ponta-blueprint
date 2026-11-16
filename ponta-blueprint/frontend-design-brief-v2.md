@@ -147,6 +147,7 @@ The AI layer only ever sees pseudonyms (`home_5`); real names are added by the c
 - Check every screen with names on: tables, chips, the explain card, the player table, the pitch tooltip and the print view. Truncate with a full-name tooltip; never let a name break a numeric column.
 - Pitch markers keep shirt numbers, not names.
 - **Done when:** every screenshot can be captured in both modes with no overflow, and no pseudonym or name is hard-coded in brief or answer text.
+- **Status: done (16 November 2026),** UI repo `f9949c7`. `npm run shots` (names) and `npm run shots -- --codes` both pass with an overflow check. The shareable match page (5.3) still shows codes.
 
 ### 5.2 Coverage figure in the Data check
 
@@ -176,6 +177,8 @@ Ponta's first real deliveries will be founder-run: a prospect sends one export, 
 3. **Pitch accessibility.** Keep the canvas as one image for screen readers, but add a keyboard path: arrow keys step through events, and the explain card announces the selection. The player table remains the accessible view of player values.
 4. **Video slot.** Keep the disabled Video button next to "Play from 5 s before". Add a Settings placeholder, "Linked video source", marked *In development*. Do not design a video player.
 5. **Data check reasons.** Every Degraded or Blocked row must carry a measured figure or a named cause. List any that do not.
+
+**Status: done (16 November 2026),** UI repo `a88bbf4`, except that Safari print is unverified (Safari has no `@page` margin boxes, so no page numbers). The reasons audit is in the UI repo's `docs/design-notes.md` section 12.
 
 ### 5.5 A mapping for later
 

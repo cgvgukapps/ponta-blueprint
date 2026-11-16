@@ -2,7 +2,7 @@
 
 **Last updated:** 16 November 2026. This is the living pick-up note: read it first when resuming. Update it at the end of each working session. For the plan itself see [roadmap.md](roadmap.md); for the build spec see [platform-extraction-task.md](platform-extraction-task.md).
 
-**One-line state:** Phase 1 engine work is done and pushed (15 November 2026). The shareable match page (brief v2, 5.3) exists: a single-file, offline page of the data check, coverage and rule-selected moments, built from real engine output for SkillCorner 1886347 (generated outside the repos). Commits `ponta-platform` `930d652`, pushed. The UI prototype has had two visual redesigns (16 November 2026), the match page restyled to match, and coverage added to the Data check (brief v2, 5.2); see the Repositories table for its position. Next: the rest of Phase 1 (Supabase, FastAPI, storage), gated by evidence gate E1 (discovery calls); the page is ready for the concierge step.
+**One-line state:** Phase 1 engine work is done and pushed (15 November 2026). The shareable match page (brief v2, 5.3) exists: a single-file, offline page of the data check, coverage and rule-selected moments, built from real engine output for SkillCorner 1886347 (generated outside the repos). Commits `ponta-platform` `930d652`, pushed. The UI prototype has had two visual redesigns (16 November 2026), the match page restyled to match, and brief v2 items 5.1 (names), 5.2 (coverage) and 5.4 (review fixes) done; see the Repositories table for its position. Next: the rest of Phase 1 (Supabase, FastAPI, storage), gated by evidence gate E1 (discovery calls); the page is ready for the concierge step.
 
 ## Repositories
 
@@ -11,7 +11,7 @@
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`, tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final` |
 | Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `930d652` (Phase 1 engine work, match page payload tool), pushed |
-| UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `1b2dba1` (16 November 2026; last pushed `8bdb4c9`, the three commits after it are local); tag `prototype-v0.1` at `4bd8e52` |
+| UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `a88bbf4` (16 November 2026; last pushed `1b2dba1`, the two commits after it, 5.1 and 5.4, are local); tag `prototype-v0.1` at `4bd8e52` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main`, v2 live, still `noindex` |
 
 ## Done
@@ -67,7 +67,9 @@ Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated 
    - **Brief v2, 5.3 done (15 November 2026):** shareable match page in the UI repo (`match-page.html`, `docs/match-page-payload.md`), payload from `ponta-platform/tools/match_page_payload.py`. No generated prose; moments selected by stated rules; players as codes. Restyled to the new look on 16 November 2026 (light counterpart of the palette, logo inlined, figure tiles).
    - **Brief v2, 5.2 done (16 November 2026):** coverage tile and causes line in the Data check, the figure in the brief header and print view; mock figures per match, `m_0372` is the low-coverage example. Design notes section 9.
    - **Reference details done (16 November 2026):** tinted label pills, the selected-row treatment (accent tint plus blue underline), icon tiles on Add data, the reference chart style, Sign-in and Settings. Design notes section 10.
-   - Remaining v2 items: 5.1 names, 5.4 fixes (`--danger` and `--dq-poor` are still close in hue), 5.5 API mapping.
+   - **Brief v2, 5.1 done (16 November 2026):** names resolved in the client from fictional rosters (`{home_5}` tokens in brief text, Show names / Show codes in the account menu, code fallback), screenshots in both modes. Design notes section 11. The shareable match page still shows codes.
+   - **Brief v2, 5.4 done (16 November 2026):** status colours moved off the band ramp, print header and page numbers, pitch keyboard path, video placeholder, reasons audit. **Open:** Safari print not verified (no page numbers there, `<thead>` repetition unchecked). Design notes section 12.
+   - Remaining v2 item: 5.5 API mapping (`docs/api-mapping.md`).
 2. Import into `ponta-platform/apps/web`. The UI repo now has a baseline commit. Subtree if you keep committing there first, otherwise copy and record the source commit. Archive the old repo afterwards.
 3. After import: keep the `src/api` function signatures and add an HTTP client behind a mock switch; move the fake engine and mock packs to dev-only; generate TypeScript types from the OpenAPI schema; add CI path filters.
 4. The Parity gate is the first screen that can go real (needs only the Parity Report JSON). Library and Add data follow with the upload endpoint; Replay, Brief and Ask need Phase 2.
