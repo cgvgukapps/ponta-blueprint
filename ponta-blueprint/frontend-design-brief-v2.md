@@ -157,6 +157,7 @@ A metric can be Full while a share of events could not be scored (ball not detec
 - Show the coverage figure in the brief header too.
 - Give each mock match plausible mock figures. The real engine will measure them; the prototype only designs the slot.
 - **Done when:** the Data check, the brief and the print view all show coverage, and a match with low coverage reads as a stated limit, not an error.
+- **Status: done (16 November 2026),** UI repo `d7ef49b`. The pre-processing check in Add data leaves coverage out, because coverage is measured during analysis. Sources without tracking show "Not measured".
 
 ### 5.3 Shareable match page (single file)
 

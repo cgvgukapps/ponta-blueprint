@@ -1,8 +1,8 @@
 # Status and handoff
 
-**Last updated:** 15 November 2026. This is the living pick-up note: read it first when resuming. Update it at the end of each working session. For the plan itself see [roadmap.md](roadmap.md); for the build spec see [platform-extraction-task.md](platform-extraction-task.md).
+**Last updated:** 16 November 2026. This is the living pick-up note: read it first when resuming. Update it at the end of each working session. For the plan itself see [roadmap.md](roadmap.md); for the build spec see [platform-extraction-task.md](platform-extraction-task.md).
 
-**One-line state:** Phase 1 engine work is done and pushed (15 November 2026). The shareable match page (brief v2, 5.3) exists: a single-file, offline page of the data check, coverage and rule-selected moments, built from real engine output for SkillCorner 1886347 (generated outside the repos). Commits `ponta-platform` `930d652` and `ponta-platform-ui` `01cb9cc`, pushed. Next: the rest of Phase 1 (Supabase, FastAPI, storage), gated by evidence gate E1 (discovery calls); the page is ready for the concierge step.
+**One-line state:** Phase 1 engine work is done and pushed (15 November 2026). The shareable match page (brief v2, 5.3) exists: a single-file, offline page of the data check, coverage and rule-selected moments, built from real engine output for SkillCorner 1886347 (generated outside the repos). Commits `ponta-platform` `930d652`, pushed. The UI prototype has had two visual redesigns (16 November 2026), the match page restyled to match, and coverage added to the Data check (brief v2, 5.2); see the Repositories table for its position. Next: the rest of Phase 1 (Supabase, FastAPI, storage), gated by evidence gate E1 (discovery calls); the page is ready for the concierge step.
 
 ## Repositories
 
@@ -10,8 +10,8 @@
 |---|---|---|---|
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`, tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final` |
-| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `36ef7d8` (move `8603dd7`, then lint and CI-skip changes) |
-| UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `f8bd207` (visual redesign to the founder's references, 16 November 2026); tag `prototype-v0.1` at `4bd8e52` |
+| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `930d652` (Phase 1 engine work, match page payload tool), pushed |
+| UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `1b2dba1` (16 November 2026; last pushed `8bdb4c9`, the three commits after it are local); tag `prototype-v0.1` at `4bd8e52` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main`, v2 live, still `noindex` |
 
 ## Done
@@ -63,7 +63,11 @@ Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated 
 
 1. ~~Review the UI prototype against the v2 checklist.~~ Done 15 November 2026, and the changes are made in the UI repo (`a2d3e62`, see its `docs/design-notes.md` section 6): engine DQ bands and the 0 to 1.5 scale, citation chips that lead with the moment, "Data check" and source-based tier names, labelled parity counts, calmer replay overlays. Brief v2 written: [frontend-design-brief-v2.md](frontend-design-brief-v2.md) (fixed decisions; next round: client-side names, coverage in the Data check, a shareable single-file match page, colour and print fixes, an API mapping). Not started.
    - **Visual redesign done (16 November 2026):** neutral palette, white primary buttons, one typeface, fills instead of outlines, big-figure tiles, pill controls, the Ask composer's gradient edge; Data check and replay simplified. Decisions recorded in brief v2 section 3 and the UI repo's `docs/design-notes.md` section 7.
-   - **Brief v2, 5.3 done (15 November 2026):** shareable match page in the UI repo (`match-page.html`, `docs/match-page-payload.md`), payload from `ponta-platform/tools/match_page_payload.py`. No generated prose; moments selected by stated rules; players as codes. Remaining v2 items: 5.1 names, 5.2 coverage in the app's Data check, 5.4 fixes, 5.5 API mapping.
+   - **Second redesign done (16 November 2026), to the "Davis" reference:** cool dark palette with Ponta blue as the only brand colour, serif page headings, icon rail and search dialog, faint card edges. Recorded in brief v2 section 3 ("revised 2") and the UI repo's `docs/design-notes.md` section 8.
+   - **Brief v2, 5.3 done (15 November 2026):** shareable match page in the UI repo (`match-page.html`, `docs/match-page-payload.md`), payload from `ponta-platform/tools/match_page_payload.py`. No generated prose; moments selected by stated rules; players as codes. Restyled to the new look on 16 November 2026 (light counterpart of the palette, logo inlined, figure tiles).
+   - **Brief v2, 5.2 done (16 November 2026):** coverage tile and causes line in the Data check, the figure in the brief header and print view; mock figures per match, `m_0372` is the low-coverage example. Design notes section 9.
+   - **Reference details done (16 November 2026):** tinted label pills, the selected-row treatment (accent tint plus blue underline), icon tiles on Add data, the reference chart style, Sign-in and Settings. Design notes section 10.
+   - Remaining v2 items: 5.1 names, 5.4 fixes (`--danger` and `--dq-poor` are still close in hue), 5.5 API mapping.
 2. Import into `ponta-platform/apps/web`. The UI repo now has a baseline commit. Subtree if you keep committing there first, otherwise copy and record the source commit. Archive the old repo afterwards.
 3. After import: keep the `src/api` function signatures and add an HTTP client behind a mock switch; move the fake engine and mock packs to dev-only; generate TypeScript types from the OpenAPI schema; add CI path filters.
 4. The Parity gate is the first screen that can go real (needs only the Parity Report JSON). Library and Add data follow with the upload endpoint; Replay, Brief and Ask need Phase 2.
