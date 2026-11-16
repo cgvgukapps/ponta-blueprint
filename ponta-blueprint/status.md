@@ -11,7 +11,7 @@
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`, tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final` |
 | Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `930d652` (Phase 1 engine work, match page payload tool), pushed |
-| UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `a88bbf4` (16 November 2026), pushed; tag `prototype-v0.1` at `4bd8e52` |
+| UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `c10cb8b` (16 November 2026; last pushed `a88bbf4`, the Ask panel commit is local); tag `prototype-v0.1` at `4bd8e52` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main`, v2 live, still `noindex` |
 
 ## Done
@@ -69,6 +69,7 @@ Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated 
    - **Reference details done (16 November 2026):** tinted label pills, the selected-row treatment (accent tint plus blue underline), icon tiles on Add data, the reference chart style, Sign-in and Settings. Design notes section 10.
    - **Brief v2, 5.1 done (16 November 2026):** names resolved in the client from fictional rosters (`{home_5}` tokens in brief text, Show names / Show codes in the account menu, code fallback), screenshots in both modes. Design notes section 11. The shareable match page still shows codes.
    - **Brief v2, 5.4 done (16 November 2026):** status colours moved off the band ramp, print header and page numbers, pitch keyboard path, video placeholder, reasons audit. **Open:** Safari print not verified (no page numbers there, `<thead>` repetition unchecked). Design notes section 12.
+   - **Ask inside a match (16 November 2026):** Ask is now a side panel within a match (docked on Data check and Brief, a side tab on Replay), with context from a brief point or a selected moment; recorded in brief v2 section 3 and the UI repo's design notes section 13.
    - Remaining v2 item: 5.5 API mapping (`docs/api-mapping.md`).
 2. Import into `ponta-platform/apps/web`. The UI repo now has a baseline commit. Subtree if you keep committing there first, otherwise copy and record the source commit. Archive the old repo afterwards.
 3. After import: keep the `src/api` function signatures and add an HTTP client behind a mock switch; move the fake engine and mock packs to dev-only; generate TypeScript types from the OpenAPI schema; add CI path filters.

@@ -91,6 +91,15 @@ These were open in v1 and are now decided, either by the first prototype or by t
 - **Event-only** scores are a range with a dashed outline and ruled fill (`Estimate · Poor to Suboptimal`), never a point.
 - Goalkeepers and set pieces are shown as **Not scored**, with the reason.
 
+### Ask inside a match (new, 16 November 2026)
+
+- Inside an analysed match, **Ask is a panel, not a page**. The match tab bar ends with an **Ask** toggle; the panel stays open while the user moves between Data check, Brief and Replay, so an answer can be checked against the evidence without leaving it.
+- On **Data check and Brief** the panel docks on the right (420 px) and the page narrows to one column. On **Replay** it is the third side tab (Events, Players, Ask), and the explain card shrinks to its header and rating while it is open, so the pitch keeps its width.
+- **Context travels with the question.** "Ask about this point" on a brief point and "Ask about this moment" on the explain card prefill the composer and attach a removable context chip; the answer is grounded in exactly those cited moments. Medical and fatigue questions are still refused, whatever the context.
+- In the panel, cited moments are a **numbered list of citation chips**, not the thumbnail grid. Clicking one opens Replay at that moment with the conversation still open.
+- **One store, two views.** Panel conversations are the same threads the full **Ask Ponta** page lists; the page remains for history, questions across matches and long sessions, and the panel links to it.
+- Questions stay **pseudonymised**: names typed or prefilled are turned back into tokens (`{home_5}`) before a question is stored or sent.
+
 ### Citation chip anatomy
 
 `▶ 34:12 · Pass, Home 10 to Home 8 · ▬ 0.91`
