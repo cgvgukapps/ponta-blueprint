@@ -92,7 +92,7 @@ Execution spec: [platform-extraction-task.md](platform-extraction-task.md).
 
 **Progress (17 November 2026):** the engine extraction, the equivalence test, `parity.py` and `semantic_builder.py` are done (see the task's status banner). Supabase, the FastAPI skeleton, object storage, the cross-tenant access test and the basic ToS are not started.
 
-**Added 17 November 2026: context Stage A** ([context-packages.md](context-packages.md#p0-foundations-stage-a-committed)). P0 (package contract in code, context grid, package registry, Data check entries from packages, golden harness) and P1 (possession and game state, measured against event data on the Metrica matches: Gate 1). Engine work, not gated by E1. Exit adds: Gate 1 met, with the measured thresholds agreed.
+**Added 17 November 2026: context Stage A** ([context-packages.md](context-packages.md#p0-foundations-stage-a-committed)). P0 (package contract in code, context grid, package registry, Data check entries from packages, golden harness) and P1 (possession and game state, measured against event data on the Metrica matches: Gate 1). Engine work, not gated by E1; execution spec [context-foundations-task.md](context-foundations-task.md). Exit adds: Gate 1 met, with the measured thresholds agreed.
 
 **Exit criteria:** both engines run standalone from the monorepo with the prototype suite green; a sample match produces a Parity Report and a semantic-events Parquet file; a deployed (even empty) API + auth skeleton; cross-tenant isolation test passing.
 

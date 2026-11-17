@@ -103,6 +103,8 @@ Thresholds marked "agreed" are set in [Open decisions](#open-decisions). "Layer"
 
 **Done when:** an empty test package runs end to end on the regression set and writes a stamped frame file and a Data check entry.
 
+**Execution spec for P0 and P1:** [context-foundations-task.md](context-foundations-task.md) (ready, 17 November 2026).
+
 ### P1 Possession and game state (Stage A, committed; layer 1)
 
 **Depends on:** P0; event data where available.

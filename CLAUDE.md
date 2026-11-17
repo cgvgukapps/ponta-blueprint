@@ -5,7 +5,7 @@ This repo holds no code. It is the **planning and design blueprint** for Ponta, 
 ## Layout
 
 - Git root: `~/PontaPlan` (remote `cgvgukapps/ponta-blueprint`). All documents live in `ponta-blueprint/`.
-- `ponta-blueprint/*.md`: 28 flat Markdown documents that link to each other with relative links and `#anchor`s.
+- `ponta-blueprint/*.md`: 29 flat Markdown documents that link to each other with relative links and `#anchor`s.
 - `ponta-blueprint/assets/`: logos, icons, the PontaFlow diagram and a reference image. Binary; do not edit.
 - `.cursor/` is git-ignored and holds only an empty `mcp.json`. There are no Cursor rules to follow.
 
@@ -18,7 +18,7 @@ This repo holds no code. It is the **planning and design blueprint** for Ponta, 
 ## Document index (by role)
 
 - **Plan:** `roadmap.md` (phases with exit criteria, Track V validation, Track L legal), `data-tiers.md` (Tier 1/2/3, the Parity Report, context by data type), `ai-layer.md` (grounded AI design), `context-packages.md` (context packages P0 to P9; Stage A committed).
-- **Engines and execution tasks:** `Matrix.md`; `ai-workflows-task.md` (next, not startable until the API skeleton exists); `platform-extraction-task.md`, `matrix-prototype-task.md`, `matrix-statsports-adapter-task.md`, `prototype-cleanup-task.md` (complete).
+- **Engines and execution tasks:** `Matrix.md`; `context-foundations-task.md` (ready: context P0 and P1); `ai-workflows-task.md` (not startable until context Stage A and the API skeleton exist); `platform-extraction-task.md`, `matrix-prototype-task.md`, `matrix-statsports-adapter-task.md`, `prototype-cleanup-task.md` (complete).
 - **System design:** `architecture.md`, `engine-governance.md`, `operations.md`.
 - **Product and UX:** `features.md`, `frontend.md`, `frontend-design-brief-v2.md` (the fixed UI decisions live in its section 3; v1 superseded), `visual-design.md` (website-first), `website.md`, `website-v2-plan.md` (executed; launch gates open).
 - **Strategy and risk:** `risks.md`, `competitive-landscape.md`, `go-to-market.md`, `legal-compliance.md`, `roadmap_v2.md` (investor vision, not a commitment).

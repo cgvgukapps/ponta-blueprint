@@ -42,6 +42,7 @@
 ### Blueprint (this repo)
 
 - Reviewed and cleaned on 17 November 2026: status banners on every task spec and plan, stale facts corrected (pressure scale, pitch rendering, product colours, provider list, website state), the old company name "PLAIQ" replaced by Ponta where it meant the business, British spelling throughout, links checked.
+- **Context foundations spec written (17 November 2026):** [context-foundations-task.md](context-foundations-task.md). It uses a regression set of four local matches and treats SkillCorner's own possession, phase and game-state fields (found in its dynamic events) as comparison data only.
 - [platform-overview.md](platform-overview.md) is a dated snapshot for an independent reviewer; also published as a private page for the founder.
 - **Context packages adopted (17 November 2026):** [context-packages.md](context-packages.md) records the founder's work plan, adjusted after review, and four decisions: (1) repositioning agreed, the AI build waits for Stage A at the earliest, preferably Stage B; (2) Ponta computes its own context, provider metrics are stored for comparison only; (3) unvalidated fields may reach analysts labelled "estimated, not yet validated", never player-facing views; (4) only Stage A (P0, P1) is committed, Stages B to D planned, P9 in Phase 5. Data-tiers, AI layer, roadmap, risks (27 to 30), go-to-market, competitive landscape and engine governance updated to match.
 
@@ -58,7 +59,7 @@
 ## Next steps, in order
 
 1. **Track V (validation), now.** Discovery calls with the wedge, intercepted-pass and price questions (gate E1, at least 8 calls); check each prospect's vendor licence before taking a real export ([legal-compliance.md](legal-compliance.md#vendor-licence-check-before-the-first-real-export)).
-2. **Write `context-foundations-task.md`** (step 2 of the context plan): an execution spec for P0 and P1 in `ponta-platform`, measurement first. It builds the context grid, package registry, context frame file and Data check entries from packages, then possession from ball proximity compared with the existing event-based possession on the Metrica matches, and reports ball-undetected share, inferred-possession share and agreement with events so the P1 thresholds can be set from numbers (Gate 1).
+2. **Run [context-foundations-task.md](context-foundations-task.md)** (written 17 November 2026, ready): context P0 and P1 in `ponta-platform`, measurement first, with a coding agent. Then read `CONTEXT_FOUNDATIONS_REPORT.md` and agree the P1 thresholds and the Gate 1 bar from its numbers.
 3. **Concierge step** (roadmap Phase 2, step 0): run a prospect's real export locally through the engines and send back the Data check and the match page (gate E2). The page and payload tool exist.
 4. **Rest of Phase 1** (not gated by E1), alongside context Stage A: Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated cross-tenant access test for Parquet paths, basic ToS ([roadmap.md](roadmap.md#phase-1--platform-foundation-and-engine-extraction)).
 5. **Before the AI layer** ([ai-workflows-task.md](ai-workflows-task.md)): context Stage A done (Stage B preferred); decide the citation confidence for single-source matches and a named high-pressure threshold; choose the LLM provider and put sub-processor terms in place before any real customer data reaches a model.
