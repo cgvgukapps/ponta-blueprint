@@ -5,7 +5,7 @@ This repo holds no code. It is the **planning and design blueprint** for Ponta, 
 ## Layout
 
 - Git root: `~/PontaPlan` (remote `cgvgukapps/ponta-blueprint`). All documents live in `ponta-blueprint/`.
-- `ponta-blueprint/*.md`: 27 flat Markdown documents that link to each other with relative links and `#anchor`s.
+- `ponta-blueprint/*.md`: 28 flat Markdown documents that link to each other with relative links and `#anchor`s.
 - `ponta-blueprint/assets/`: logos, icons, the PontaFlow diagram and a reference image. Binary; do not edit.
 - `.cursor/` is git-ignored and holds only an empty `mcp.json`. There are no Cursor rules to follow.
 
@@ -17,7 +17,7 @@ This repo holds no code. It is the **planning and design blueprint** for Ponta, 
 
 ## Document index (by role)
 
-- **Plan:** `roadmap.md` (phases with exit criteria, Track V validation, Track L legal), `data-tiers.md` (Tier 1/2/3 and the Parity Report), `ai-layer.md` (grounded AI design).
+- **Plan:** `roadmap.md` (phases with exit criteria, Track V validation, Track L legal), `data-tiers.md` (Tier 1/2/3, the Parity Report, context by data type), `ai-layer.md` (grounded AI design), `context-packages.md` (context packages P0 to P9; Stage A committed).
 - **Engines and execution tasks:** `Matrix.md`; `ai-workflows-task.md` (next, not startable until the API skeleton exists); `platform-extraction-task.md`, `matrix-prototype-task.md`, `matrix-statsports-adapter-task.md`, `prototype-cleanup-task.md` (complete).
 - **System design:** `architecture.md`, `engine-governance.md`, `operations.md`.
 - **Product and UX:** `features.md`, `frontend.md`, `frontend-design-brief-v2.md` (the fixed UI decisions live in its section 3; v1 superseded), `visual-design.md` (website-first), `website.md`, `website-v2-plan.md` (executed; launch gates open).
@@ -26,7 +26,7 @@ This repo holds no code. It is the **planning and design blueprint** for Ponta, 
 
 ## The product in one paragraph
 
-Ponta is **one application**. **Matrix** is its data engine (Normalise → Reconcile → Fuse provider files into one quality-scored canonical dataset). **Plaiq's** deterministic spatial maths (pressure, control, pass option value, decision quality) runs once at ingestion and is compiled into **semantic football events**. Grounded AI agents read those events, cite every claim and read a per-match **Parity Report** (Full / Degraded / Blocked) first. Bring your own data, post-match batch only. Planned stack: Python engines in a `ponta-platform` monorepo, FastAPI, Supabase Postgres, Parquet in object storage via DuckDB, and a web app (Next.js in the docs, Vite in the UI prototype, undecided).
+Ponta is **one application**. **Matrix** is its data engine (Normalise → Reconcile → Fuse provider files into one quality-scored canonical dataset). **Plaiq's** deterministic spatial maths (pressure, control, pass option value, decision quality) runs once at ingestion and is compiled into **semantic football events**. **Context packages** (possession, game state, structure, phase, relationships, space, episodes) describe the whole match, so Ponta is a **match context model that the AI explains**. Grounded AI agents read those events and episodes, cite every claim and read a per-match **Parity Report** (Full / Degraded / Blocked) first. Bring your own data, post-match batch only. Planned stack: Python engines in a `ponta-platform` monorepo, FastAPI, Supabase Postgres, Parquet in object storage via DuckDB, and a web app (Next.js in the docs, Vite in the UI prototype, undecided).
 
 ## Related repos (outside this one; read-only unless the task says otherwise)
 
@@ -68,6 +68,7 @@ Ponta is **one application**. **Matrix** is its data engine (Normalise → Recon
 - Batch only. No real-time or live claims.
 - The only real providers are Metrica, SkillCorner, StatsBomb and STATSports. Others are "Coming soon".
 - Do not change engine maths during extraction. Report discrepancies; do not "fix" formulas.
+- Context packages: code computes, the model explains; every field defined, versioned, Data-checked and labelled observed or estimated; thresholds measured before they are agreed; unvalidated fields reach analysts only as "estimated, not yet validated", never a player-facing view.
 - Licensed or unlicensed sample data (Metrica, SkillCorner, STATSports) never gets copied into a repo.
 
 ## Git

@@ -50,12 +50,12 @@ The pitch and the product ship in a different order. The public call to action (
 
 | Wedge | Buyer | What they get first | Evidence status |
 |---|---|---|---|
-| **A. Single-export brief** | Small analyst team with one provider, priced out of incumbents (for example a SkillCorner or Metrica club) | Parity Report, cited brief, replay, explainable Decision Quality | Engine proven; value of the brief untested |
+| **A. Single-export brief** | Small analyst team with one provider, priced out of incumbents (for example a SkillCorner or Metrica club) | Parity Report, cited brief, replay, explainable Decision Quality; once context packages exist, "ask anything about your match, every answer cited to an episode" (revised 17 November 2026, [context-packages.md](context-packages.md)) | Engine proven; value of the brief and of the context untested |
 | **B. Fragmentation and provider transition** | Club with two systems or mid-switch, multi-team organisation, federation, consultancy | Reconcile, workload continuity | Synthetic only; needs an overlap window |
 
 **Do not choose by argument.** Ask both sets of questions in every discovery call and let the answers decide which to lead with. Until then wedge A is what the first product serves, and wedge B stays an early-access conversation. The website's pilot form already captures role, data stack and primary goal; use it as the structured intake for warm introductions (the site is `noindex`, so introductions are the only traffic).
 
-**Add to every discovery call:** the intercepted-pass question and a price anchor; whether the club's vendor licence allows sending exports to a third-party processor (see [legal-compliance.md](legal-compliance.md#vendor-licence-check-before-the-first-real-export)); and who owns any video the club would want linked to a brief.
+**Add to every discovery call:** the intercepted-pass question and a price anchor; *(added 17 November 2026)* which questions about a match the analyst cannot answer today with their current tools (possession, phase, shape, relationships), and whether they rebuild their provider's metrics themselves; whether they would label a few segments for a validation study; whether the club's vendor licence allows sending exports to a third-party processor (see [legal-compliance.md](legal-compliance.md#vendor-licence-check-before-the-first-real-export)); and who owns any video the club would want linked to a brief.
 
 ## The founder-led motion
 

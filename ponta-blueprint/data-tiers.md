@@ -82,6 +82,23 @@ Rules, which are also enforced in the AI layer ([ai-layer.md](ai-layer.md#parity
 - The report carries a **coverage figure** alongside each state: the share of events the engine could actually score for this match, with the cause of the gap (for example ball not detected in 26.4% of frames in the SkillCorner golden match and 32.2% in Metrica Game 3, goalkeeper and set-piece events not scored). A metric labelled Full on a match where a third of events are unscoreable would otherwise hide a large hole.
 - The Parity Report is also the **onboarding gate**: after upload, the app tells the club what it can and cannot do with this data, and what a second source would unlock. This is the commercial bridge from Tier 1 to Tiers 2 and 3.
 
+## Context packages by data type
+
+*(Added 17 November 2026.)* The context packages in [context-packages.md](context-packages.md) need both teams tracked for most of what they produce. Within Tier 1 the three kinds of single source support very different amounts of context, and the Data check must say so per package. Planned states, to be confirmed by each package's measurements:
+
+| Package | Optical, both teams (Metrica) | Broadcast optical (SkillCorner) | Event-only (StatsBomb) | GPS only (STATSports) |
+|---|---|---|---|---|
+| P1 Possession and game state | Full when the ball is detected; inferred share stated | Full or Degraded by ball-detected share | Possession and game state from events (observed); no frame-level possession | Blocked (no ball, one team); game state by upload |
+| P2 Team structure | Full | Degraded when players are off screen | Blocked (360 freeze-frames give partial snapshots only) | Own team's shape only; opposition Blocked |
+| P3 Relative zones | Full | Inherits P2 | Blocked | Blocked |
+| P4 Phase of play | Full | Degraded when possession was inferred | Partial, from event sequences | Blocked |
+| P5 Relationships | Full | Degraded off screen and when the ball is undetected | Blocked | Blocked |
+| P6 Movement types | Full | Degraded while the runner is off screen | Blocked | Own team only, without ball context |
+| P7 Space and value | Full | Degraded off screen | Base values as event-only estimates; adjusted Blocked | Blocked |
+| P8 Semantic states | Built from whatever above is Full or Degraded, with the states carried into each episode | Same | Episodes from event sequences only | Physical episodes only |
+
+Paired sources (Tier 3) could later fill gaps (for example GPS positions for players off screen in broadcast tracking), but only after fusion is validated on real paired data.
+
 ## How this changes the old product map
 
 | Old framing | New framing |

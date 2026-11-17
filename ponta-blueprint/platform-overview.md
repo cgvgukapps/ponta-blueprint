@@ -1,6 +1,6 @@
 # Ponta Platform Overview
 
-> **Snapshot, 17 November 2026.** A self-contained description of the platform for an independent reviewer (human or agent) with no other context. It summarises other documents and does not supersede them: for the current state see [status.md](status.md); for the plan see [roadmap.md](roadmap.md), [data-tiers.md](data-tiers.md) and [ai-layer.md](ai-layer.md). Update or retire it when those change materially.
+> **Snapshot, 17 November 2026.** A self-contained description of the platform for an independent reviewer (human or agent) with no other context. It summarises other documents and does not supersede them: for the current state see [status.md](status.md); for the plan see [roadmap.md](roadmap.md), [data-tiers.md](data-tiers.md) and [ai-layer.md](ai-layer.md). Update or retire it when those change materially. *(Revised later on 17 November 2026: context packages adopted and Ponta repositioned; see "Strategy update" below.)*
 
 Ponta is a planned multi-tenant B2B SaaS for football clubs. A club brings its own match data from any supported provider; Ponta cleans it into one quality-scored dataset, computes explainable spatial metrics, states plainly what the data can and cannot support, and lets grounded AI explain the match with every claim cited to a moment you can replay.
 
@@ -18,12 +18,24 @@ Prepared 17 November 2026 for an independent review. Internal and candid: eviden
 
 The single-source pipeline (Tier 1) rests on things proven on real data. The multi-source story the website leads with (reconciling two vendors, fusing GPS with optical tracking) is validated on **synthetic** data only. No real pair of sources for the same players or the same match exists in the project. The competitive teardown also found that SkillCorner already sells a very similar decision-quality concept at scale.
 
+## Strategy update (17 November 2026)
+
+The context the AI layer would read stops at single actions, which is not enough for a useful AI. Ponta is therefore repositioned from **an explainable decision-quality engine with a grounded AI brief** to **a match context model that the AI explains**. Deterministic **context packages** (P0 to P9) add possession and game state, team structure, relative zones, phase of play, relationships, movement types, space and value, and match episodes, each defined, versioned, covered by the Data check and labelled observed or estimated. Decision Quality becomes one field among many.
+
+- **Committed now:** Stage A only (P0 foundations, P1 possession and game state), as engine work measured against event data on the Metrica matches. Stages B to D are planned but not scheduled; embeddings (P9) are Phase 5.
+- **The AI build waits** for Stage A at the earliest, preferably Stage B, so it is not built around thin answers.
+- **Ponta computes its own context.** Provider-derived metrics a club already has are stored against Ponta's vocabulary for comparison only.
+- **Unvalidated context fields** may reach analysts labelled "estimated, not yet validated", never player-facing views. Gates 2 and 3 need one or two analysts, which Ponta does not yet have.
+- **Unchanged:** bring your own data, batch only, Tier 1 first, the Data check, gates E1 to E3 and the claim rules. Full plan: `context-packages.md`.
+
 ## Status at a glance
 
-      [Real data] validated on real provider data
-      [Synthetic only] validated on derived or synthetic data
-      [Prototype] built, mock data
-      [Designed] specified, not built
+Status key:
+
+- **[Real data]** validated on real provider data
+- **[Synthetic only]** validated on derived or synthetic data
+- **[Prototype]** built, mock data
+- **[Designed]** specified, not built
 
 | Capability | Status | Notes |
 |---|---|---|
@@ -46,33 +58,33 @@ The single-source pipeline (Tier 1) rests on things proven on real data. The mul
 
 Every uploaded file is compiled into one canonical, quality-scored store that both the replay and the AI read. The pipeline, in order:
 
-      - **Upload** provider files (optical tracking, event data or GPS).
+- **Upload** provider files (optical tracking, event data or GPS).
 
-      - **Provider adapter** reads the native format.
+- **Provider adapter** reads the native format.
 
-      - **Matrix** always normalises (schema, metres, units, playing direction, quality flags); it reconciles or fuses only when the data qualifies.
+- **Matrix** always normalises (schema, metres, units, playing direction, quality flags); it reconciles or fuses only when the data qualifies.
 
-      - **Data check** (`parity.py`) records, per metric, whether the data supports it and why.
+- **Data check** (`parity.py`) records, per metric, whether the data supports it and why.
 
-      - **Plaiq** computes pressure, control, option values and decision quality.
+- **Plaiq** computes pressure, control, option values and decision quality.
 
-      - **Semantic builder** writes one enriched row per pass, carry, off-ball run and defensive action.
+- **Semantic builder** writes one enriched row per pass, carry, off-ball run and defensive action.
 
-      - **Storage:** `trajectories.parquet` (for the replay only) and `semantic_events.parquet` (for the AI) in object storage, queried with DuckDB; match metadata, the Data check and generated insight cards in Postgres.
+- **Storage:** `trajectories.parquet` (for the replay only) and `semantic_events.parquet` (for the AI) in object storage, queried with DuckDB; match metadata, the Data check and generated insight cards in Postgres.
 
-      - **AI layer** writes a post-match brief and answers questions, reading only semantic events and the Data check.
+- **AI layer** writes a post-match brief and answers questions, reading only semantic events and the Data check.
 
 ```mermaid
 flowchart LR
-  raw["Provider filesoptical / event / GPS"] --> adapters["Adapters"]
-  adapters --> matrix["MatrixNormalise / Reconcile / Fuse"]
-  matrix --> parity["Data checkFull / Degraded / Blocked"]
-  matrix --> plaiq["Plaiqpressure, control, option value, decision quality"]
-  plaiq --> sem["Semantic events(Parquet)"]
-  matrix --> traj["Trajectories(Parquet)"]
-  parity --> pg["Postgresmatches, Data check, insights"]
-  sem --> ai["AI layerbrief, Ask, onboarding"]
-  traj --> replay["Pitch replay(web app)"]
+  raw["Provider files<br/>optical / event / GPS"] --> adapters["Adapters"]
+  adapters --> matrix["Matrix<br/>Normalise / Reconcile / Fuse"]
+  matrix --> parity["Data check<br/>Full / Degraded / Blocked"]
+  matrix --> plaiq["Plaiq<br/>pressure, control, option value, decision quality"]
+  plaiq --> sem["Semantic events<br/>(Parquet)"]
+  matrix --> traj["Trajectories<br/>(Parquet)"]
+  parity --> pg["Postgres<br/>matches, Data check, insights"]
+  sem --> ai["AI layer<br/>brief, Ask, onboarding"]
+  traj --> replay["Pitch replay<br/>(web app)"]
   ai --> pg
 ```
 
@@ -96,27 +108,27 @@ Tier 3 needs five things that do not exist yet: a real paired match, ingestion o
 
 ### Matrix (data engine)
 
-      - **Normalise:** one schema, coordinates in metres, consistent units and sample rates, playing-direction handling, quality flags, drift and dropout detection.
+- **Normalise:** one schema, coordinates in metres, consistent units and sample rates, playing-direction handling, quality flags, drift and dropout detection.
 
-      - **Reconcile:** cross-source identity matching, clock synchronisation, threshold harmonisation, calibration where an overlap exists.
+- **Reconcile:** cross-source identity matching, clock synchronisation, threshold harmonisation, calibration where an overlap exists.
 
-      - **Fuse:** weighted per-frame combination with confidence and source attribution. A state estimator is the documented next step if real data shows weighted averaging is not enough.
+- **Fuse:** weighted per-frame combination with confidence and source attribution. A state estimator is the documented next step if real data shows weighted averaging is not enough.
 
-      - **Providers:** Metrica (CSV and EPTS), SkillCorner, StatsBomb (events) and STATSports are the only providers treated as supported. Second Spectrum and Genius adapters exist but are fixture-tested only.
+- **Providers:** Metrica (CSV and EPTS), SkillCorner, StatsBomb (events) and STATSports are the only providers treated as supported. Second Spectrum and Genius adapters exist but are fixture-tested only.
 
 ### Plaiq (spatial engine)
 
-      - **Pressure:** 1v1 pressure on the player on a 1 to 10 scale. No named "high pressure" threshold is defined by the engine yet; the shareable match page uses 7 or more as a selection rule, and the UI prototype still shows an older 0 to 1 index that must be aligned.
+- **Pressure:** 1v1 pressure on the player on a 1 to 10 scale. No named "high pressure" threshold is defined by the engine yet; the shareable match page uses 7 or more as a selection rule, and the UI prototype still shows an older 0 to 1 index that must be aligned.
 
-      - **Control zones** (first-to-reach) and a **value surface** (threat by location).
+- **Control zones** (first-to-reach) and a **value surface** (threat by location).
 
-      - **Pass option value:** every option at release scored as value × chance of success (V × p).
+- **Pass option value:** every option at release scored as value × chance of success (V × p).
 
-      - **Decision quality:** value where the ball arrived divided by the best option available at release. Range 0 to 1.5, not 0 to 1; above 1.0 the receiver arrived somewhere better than any option at release. Bands: Poor below 0.55, Suboptimal 0.55 to 0.79, Good 0.80 to 0.94, Optimal 0.95 and above.
+- **Decision quality:** value where the ball arrived divided by the best option available at release. Range 0 to 1.5, not 0 to 1; above 1.0 the receiver arrived somewhere better than any option at release. Bands: Poor below 0.55, Suboptimal 0.55 to 0.79, Good 0.80 to 0.94, Optimal 0.95 and above.
 
-      - **Event value change** (ΔV), **off-ball movement value** and **failed-pass intent inference** (scoring the intended receiver of an intercepted pass, with a strong, medium or weak confidence category).
+- **Event value change** (ΔV), **off-ball movement value** and **failed-pass intent inference** (scoring the intended receiver of an intercepted pass, with a strong, medium or weak confidence category).
 
-      - Goalkeepers and passes from set pieces are **not scored**, with the reason stated.
+- Goalkeepers and passes from set pieces are **not scored**, with the reason stated.
 
 ## Data check and semantic events
 
@@ -124,17 +136,17 @@ Tier 3 needs five things that do not exist yet: a real paired match, ingestion o
 
 Generated deterministically at ingestion, stored on the match, read by the UI and by every AI workflow before anything is generated. Twelve metrics in six families, each with a state (Full, Degraded, Blocked), a reason, a measured figure where one exists, and what would change it.
 
-      - GPS-only blocks opposition pressure and control and keeps physical summaries.
+- GPS-only blocks opposition pressure and control and keeps physical summaries.
 
-      - Event-only degrades decision quality into a separate confidence class.
+- Event-only degrades decision quality into a separate confidence class.
 
-      - Optical below 10 Hz, or with more than 10% of player observations missing, is Degraded with the figure shown.
+- Optical below 10 Hz, or with more than 10% of player observations missing, is Degraded with the figure shown.
 
-      - No physiological source blocks load and fatigue in every mode.
+- No physiological source blocks load and fatigue in every mode.
 
-      - **Coverage** sits beside the states: the share of passes and carries actually scored, and why the rest were not (ball not detected, goalkeeper, set piece, outside tracked frames). A metric can be Full while a large share of events is unscoreable.
+- **Coverage** sits beside the states: the share of passes and carries actually scored, and why the rest were not (ball not detected, goalkeeper, set piece, outside tracked frames). A metric can be Full while a large share of events is unscoreable.
 
-      - It doubles as the onboarding gate: after upload the club sees what it can and cannot do, and what a second source would unlock.
+- It doubles as the onboarding gate: after upload the club sees what it can and cannot do, and what a second source would unlock.
 
 ### Semantic event (one row per action)
 
@@ -170,31 +182,31 @@ Ball undetected in 32.2% of Metrica Game 3 frames and 26.4% of SkillCorner 18863
 
 ## AI layer (designed, not built)
 
-**Principle:** deterministic engines compute facts; the language model only selects, summarises and explains semantic rows.
+**Principle:** deterministic engines compute facts; the language model only selects, summarises and explains semantic rows. Since 17 November 2026 the AI also reads **semantic states** (match episodes built by context package P8) and cites them as `[state_id, start_s, end_s]`; the AI build waits for context Stage A at the earliest.
 
 ### Hard rules
 
-      - No raw coordinates in any model context.
+- No raw coordinates in any model context.
 
-      - Every claim cites `[event_id, timestamp_s, confidence_score]` plus `match_id`; an uncited statement is not shown.
+- Every claim cites `[event_id, timestamp_s, confidence_score]` plus `match_id`; an uncited statement is not shown.
 
-      - Data check first: Degraded and Blocked metrics are disclosed, never silently substituted.
+- Data check first: Degraded and Blocked metrics are disclosed, never silently substituted.
 
-      - No free-form SQL: the model calls a small set of typed, validated tools.
+- No free-form SQL: the model calls a small set of typed, validated tools.
 
-      - Pseudonymised prompts: names are added back only in the client from the club's own roster.
+- Pseudonymised prompts: names are added back only in the client from the club's own roster.
 
-      - No medical, injury or causal fatigue claims; association only.
+- No medical, injury or causal fatigue claims; association only.
 
 ### Workflows
 
-      - **Post-match brief:** deterministic selection of notable moments (no model involved in choosing), then a structured one-page brief with a citation per bullet, stored as an auditable insight card.
+- **Post-match brief:** deterministic selection of notable moments (no model involved in choosing), then a structured one-page brief with a citation per bullet, stored as an auditable insight card.
 
-      - **Ask Ponta:** natural-language questions mapped to a typed query tool with a closed filter schema; answers are a short summary plus a playlist of cited moments; unanswerable or Blocked questions get a stated refusal with alternatives.
+- **Ask Ponta:** natural-language questions mapped to a typed query tool with a closed filter schema; answers are a short summary plus a playlist of cited moments; unanswerable or Blocked questions get a stated refusal with alternatives.
 
-      - **Onboarding assistant:** explains the Data check in plain language.
+- **Onboarding assistant:** explains the Data check in plain language.
 
-      - **Workload and transition monitor** (Tier 2, later): only after a real overlap window exists.
+- **Workload and transition monitor** (Tier 2, later): only after a real overlap window exists.
 
 ### Evaluation from the first commit
 
@@ -240,35 +252,35 @@ Also present: sign-in, settings (organisation, members and roles, data connectio
 
 ## Planned architecture (not built)
 
-      - **Monorepo** `ponta-platform`: two engine packages (built), plus API, worker and web apps (empty).
+- **Monorepo** `ponta-platform`: two engine packages (built), plus API, worker and web apps (empty).
 
-      - **API:** FastAPI modular monolith; the AI layer is a module inside it, with server-sent events for streaming.
+- **API:** FastAPI modular monolith; the AI layer is a module inside it, with server-sent events for streaming.
 
-      - **Worker:** queue-based ingestion (RQ unless a need for more appears).
+- **Worker:** queue-based ingestion (RQ unless a need for more appears).
 
-      - **Storage:** Supabase Postgres with row-level security for tenancy and metadata; Parquet in object storage (R2, S3 or Supabase Storage) read through DuckDB; Redis cache for on-demand pitch overlays.
+- **Storage:** Supabase Postgres with row-level security for tenancy and metadata; Parquet in object storage (R2, S3 or Supabase Storage) read through DuckDB; Redis cache for on-demand pitch overlays.
 
-      - **Tenant isolation for files:** row-level security does not cover object storage, so the API is the only reader, builds every path itself under the organisation's prefix, and an automated cross-tenant test must pass in CI.
+- **Tenant isolation for files:** row-level security does not cover object storage, so the API is the only reader, builds every path itself under the organisation's prefix, and an automated cross-tenant test must pass in CI.
 
-      - **Hosting:** undecided (managed containers in EU regions recommended; static frontend possible).
+- **Hosting:** undecided (managed containers in EU regions recommended; static frontend possible).
 
-      - **Frontend framework:** Vite (the prototype) versus Next.js (the older docs), undecided, leaning Vite.
+- **Frontend framework:** Vite (the prototype) versus Next.js (the older docs), undecided, leaning Vite.
 
 ## Product rules carried into every spec
 
-      - Never call engine output "ground truth"; never claim validation that has not been produced.
+- Never call engine output "ground truth"; never claim validation that has not been produced.
 
-      - No real-time or live claims.
+- No real-time or live claims.
 
-      - No medical, injury or causal fatigue claims; "coincided with", never "caused by".
+- No medical, injury or causal fatigue claims; "coincided with", never "caused by".
 
-      - No real player names in fixtures, mocks or generated artefacts.
+- No real player names in fixtures, mocks or generated artefacts.
 
-      - Only Metrica, SkillCorner, StatsBomb and STATSports are presented as supported; others are "coming soon".
+- Only Metrica, SkillCorner, StatsBomb and STATSports are presented as supported; others are "coming soon".
 
-      - Engine maths is not changed during extraction; discrepancies are reported, not fixed.
+- Engine maths is not changed during extraction; discrepancies are reported, not fixed.
 
-      - Licensed or unlicensed sample data is never copied into a repository.
+- Licensed or unlicensed sample data is never copied into a repository.
 
 ## Market and competition
 
@@ -283,15 +295,15 @@ The website's call to action and hero speak to wedge B and Tier 3, while Tier 1 
 
 ### Competitive findings
 
-      - **SkillCorner Game Intelligence:** severe overlap. It already sells off-ball movement value, passing options, pressure degree and execution under pressure to 250+ teams, on its own tracking. Whether it scores failed actions by intent is unverified.
+- **SkillCorner Game Intelligence:** severe overlap. It already sells off-ball movement value, passing options, pressure degree and execution under pressure to 250+ teams, on its own tracking. Whether it scores failed actions by intent is unverified.
 
-      - **StatsBomb IQ (Hudl):** overlaps at the recruitment workflow level; its value metrics are a different construct.
+- **StatsBomb IQ (Hudl):** overlaps at the recruitment workflow level; its value metrics are a different construct.
 
-      - **Impect (being acquired by Catapult):** Packing credits only successful actions, a citable difference. Catapult now owns both wearables and a tactical value metric, the two ingredients of Ponta's Tier 3 idea; the most time-sensitive signal found.
+- **Impect (being acquired by Catapult):** Packing credits only successful actions, a citable difference. Catapult now owns both wearables and a tactical value metric, the two ingredients of Ponta's Tier 3 idea; the most time-sensitive signal found.
 
-      - **Google DeepMind TacticAI:** research, not a product; confirms the top clubs are not a near-term market.
+- **Google DeepMind TacticAI:** research, not a product; confirms the top clubs are not a near-term market.
 
-**Current differentiation thesis** (to be tested, not assumed): grounded, cited, data-check-honest AI over vendor-agnostic data; explainable formulas shown with their working; credit for good decisions that did not complete (intercepted passes); and an affordable single-export entry point.
+**Current differentiation thesis** (to be tested, not assumed; revised 17 November 2026): a match context model (possession, phase, shape, relationships, space, episodes) computed the same way for every supported provider, explained by grounded, cited, data-check-honest AI; explainable formulas shown with their working; credit for good decisions that did not complete (intercepted passes); and an affordable single-export entry point. Providers already sell some context metrics (for example phases of play and run categories), so whether analysts lack this context is itself a discovery-call question.
 
 ## Roadmap and gates
 
@@ -323,40 +335,42 @@ The website's call to action and hero speak to wedge B and Tier 3, while Tier 1 
 
 ## Open decisions
 
-      - LLM provider and model (blocks Phase 2).
+- LLM provider and model (blocks Phase 2).
 
-      - Lead wedge, and the evidence-gate thresholds.
+- Lead wedge, and the evidence-gate thresholds.
 
-      - Whether event-only analysis ships in the first release.
+- Whether event-only analysis ships in the first release.
 
-      - Ask Ponta pricing: capped, metered or bundled.
+- Ask Ponta pricing: capped, metered or bundled.
 
-      - Hosting; Vite versus Next.js.
+- Hosting; Vite versus Next.js.
 
-      - Whether the website keeps listing Second Spectrum as supported.
+- Whether the website keeps listing Second Spectrum as supported.
 
-      - Public naming of Matrix and Plaiq inside one product; whether to publish the analytics specification or keep the formulas as trade secrets.
+- Public naming of Matrix and Plaiq inside one product; whether to publish the analytics specification or keep the formulas as trade secrets.
 
-      - A named, versioned "high pressure" threshold on the engine's 1 to 10 scale.
+- A named, versioned "high pressure" threshold on the engine's 1 to 10 scale.
 - What fills the confidence slot of a citation on a single-source match, which has no per-frame confidence (only ball detected and players observed).
+- Context package thresholds (grid rate, inferred-possession share, possession agreement bar, and later ones per package), each measured before it is agreed.
 
 ## Questions for the reviewer
 
-      - **Wedge and differentiation.** Given SkillCorner's overlap, is wedge A (a cited, honest single-export brief) distinctive enough to sell? What evidence would change your view fastest?
+- **Wedge and differentiation.** Given SkillCorner's overlap, is wedge A (a cited, honest single-export brief) distinctive enough to sell? What evidence would change your view fastest?
+- **Context model.** Is repositioning around a match context model the right answer to that overlap, given that providers sell some context metrics already? Is Stage A (possession and game state) the right first commitment, and is the validation plan (event data for Gate 1, analysts for Gates 2 and 3) realistic for a solo founder?
 
-      - **Sequencing.** Is the concierge step (founder-run page from a real export) the right first proof before building the platform? Are the gate thresholds sensible?
+- **Sequencing.** Is the concierge step (founder-run page from a real export) the right first proof before building the platform? Are the gate thresholds sensible?
 
-      - **AI grounding.** Are the hard rules and evaluation plan sufficient to keep a cited brief trustworthy for coaches? What is missing from the citation verifier or golden question set?
+- **AI grounding.** Are the hard rules and evaluation plan sufficient to keep a cited brief trustworthy for coaches? What is missing from the citation verifier or golden question set?
 
-      - **Metric validity.** How should decision quality be validated before it carries weight in a brief, and how should uncertainty be shown per player?
+- **Metric validity.** How should decision quality be validated before it carries weight in a brief, and how should uncertainty be shown per player?
 
-      - **Tier 2 and 3.** Is it realistic to obtain an overlap window and a paired match through design partners, and is the fused claim worth pursuing given Catapult and Impect?
+- **Tier 2 and 3.** Is it realistic to obtain an overlap window and a paired match through design partners, and is the fused claim worth pursuing given Catapult and Impect?
 
-      - **Architecture.** Any concerns with Parquet plus DuckDB plus Postgres for a solo operator, or with the file-level tenant isolation design?
+- **Architecture.** Any concerns with Parquet plus DuckDB plus Postgres for a solo operator, or with the file-level tenant isolation design?
 
-      - **Legal.** Which legal gate is most likely to block a first pilot (vendor licence terms, LLM sub-processing, player data rights)?
+- **Legal.** Which legal gate is most likely to block a first pilot (vendor licence terms, LLM sub-processing, player data rights)?
 
-      - **Product surface.** Does the prototype's experience (Data check first, cited moments, replay, Ask in the match) match what an analyst team would actually use weekly?
+- **Product surface.** Does the prototype's experience (Data check first, cited moments, replay, Ask in the match) match what an analyst team would actually use weekly?
 
 ## Where to look
 

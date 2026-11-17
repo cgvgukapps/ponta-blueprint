@@ -2,7 +2,7 @@
 
 **Last updated:** 17 November 2026. This is the living pick-up note: read it first when resuming, and update it at the end of any session that changes state. It describes the present; the history of how it got here is in git and in each repo's notes. For the plan see [roadmap.md](roadmap.md); for an outside reader's summary see [platform-overview.md](platform-overview.md).
 
-**One-line state:** pre-product, no customers. The engines, the Data check and the semantic builder are built and tested on real open data in `ponta-platform`; the AI layer, API, worker, storage and production web app are not built. A clickable UI prototype on mock data has been through two redesigns and brief v2 items 5.1 to 5.4. A single-file match page built from real engine output is ready for the founder-run concierge step. Next: discovery calls (gate E1) and the concierge step, alongside the rest of Phase 1.
+**One-line state:** pre-product, no customers. The engines, the Data check and the semantic builder are built and tested on real open data in `ponta-platform`; the AI layer, API, worker, storage and production web app are not built. A clickable UI prototype on mock data has been through two redesigns and brief v2 items 5.1 to 5.4. A single-file match page built from real engine output is ready for the founder-run concierge step. **Strategy, 17 November 2026:** Ponta is repositioned as a match context model that the AI explains; context packages (possession to episodes) come before the AI build, Stage A committed ([context-packages.md](context-packages.md)). Next: discovery calls (gate E1) and the concierge step, with context Stage A and the rest of Phase 1 alongside.
 
 ## Repositories
 
@@ -43,6 +43,7 @@
 
 - Reviewed and cleaned on 17 November 2026: status banners on every task spec and plan, stale facts corrected (pressure scale, pitch rendering, product colours, provider list, website state), the old company name "PLAIQ" replaced by Ponta where it meant the business, British spelling throughout, links checked.
 - [platform-overview.md](platform-overview.md) is a dated snapshot for an independent reviewer; also published as a private page for the founder.
+- **Context packages adopted (17 November 2026):** [context-packages.md](context-packages.md) records the founder's work plan, adjusted after review, and four decisions: (1) repositioning agreed, the AI build waits for Stage A at the earliest, preferably Stage B; (2) Ponta computes its own context, provider metrics are stored for comparison only; (3) unvalidated fields may reach analysts labelled "estimated, not yet validated", never player-facing views; (4) only Stage A (P0, P1) is committed, Stages B to D planned, P9 in Phase 5. Data-tiers, AI layer, roadmap, risks (27 to 30), go-to-market, competitive landscape and engine governance updated to match.
 
 ## Findings that change the plan
 
@@ -57,10 +58,11 @@
 ## Next steps, in order
 
 1. **Track V (validation), now.** Discovery calls with the wedge, intercepted-pass and price questions (gate E1, at least 8 calls); check each prospect's vendor licence before taking a real export ([legal-compliance.md](legal-compliance.md#vendor-licence-check-before-the-first-real-export)).
-2. **Concierge step** (roadmap Phase 2, step 0): run a prospect's real export locally through the engines and send back the Data check and the match page (gate E2). The page and payload tool exist.
-3. **Rest of Phase 1** (not gated by E1): Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated cross-tenant access test for Parquet paths, basic ToS ([roadmap.md](roadmap.md#phase-1--platform-foundation-and-engine-extraction)).
-4. **Before the AI layer** ([ai-workflows-task.md](ai-workflows-task.md)): decide the citation confidence for single-source matches and a named high-pressure threshold; choose the LLM provider and put sub-processor terms in place before any real customer data reaches a model.
-5. **Frontend, later:** import the UI into `ponta-platform/apps/web` (subtree, or copy and record the source commit); keep the `src/api` signatures and add an HTTP client behind a mock switch; generate types from the OpenAPI schema. The Data check is the first screen that can go real. The API mapping (brief v2, 5.5) waits until then.
+2. **Write `context-foundations-task.md`** (step 2 of the context plan): an execution spec for P0 and P1 in `ponta-platform`, measurement first. It builds the context grid, package registry, context frame file and Data check entries from packages, then possession from ball proximity compared with the existing event-based possession on the Metrica matches, and reports ball-undetected share, inferred-possession share and agreement with events so the P1 thresholds can be set from numbers (Gate 1).
+3. **Concierge step** (roadmap Phase 2, step 0): run a prospect's real export locally through the engines and send back the Data check and the match page (gate E2). The page and payload tool exist.
+4. **Rest of Phase 1** (not gated by E1), alongside context Stage A: Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated cross-tenant access test for Parquet paths, basic ToS ([roadmap.md](roadmap.md#phase-1--platform-foundation-and-engine-extraction)).
+5. **Before the AI layer** ([ai-workflows-task.md](ai-workflows-task.md)): context Stage A done (Stage B preferred); decide the citation confidence for single-source matches and a named high-pressure threshold; choose the LLM provider and put sub-processor terms in place before any real customer data reaches a model.
+6. **Frontend, later:** import the UI into `ponta-platform/apps/web` (subtree, or copy and record the source commit); keep the `src/api` signatures and add an HTTP client behind a mock switch; generate types from the OpenAPI schema. The Data check is the first screen that can go real. The API mapping (brief v2, 5.5) waits until then.
 
 **Running in parallel:** the legal gates in [roadmap.md](roadmap.md#track-l--legal-and-compliance-runs-alongside-each-item-gated-to-a-trigger) (basic ToS before the first pilot; LLM sub-processor terms before real customer data reaches a model); the website launch gates above; optionally a `soccertrack-validation-task.md` and the Tier 3 gate status in [data-tiers.md](data-tiers.md) (offered, not requested).
 
@@ -68,6 +70,8 @@
 
 - **Citation confidence for single-source matches:** what fills the confidence slot (a documented derivation from `ball_detected` and `players_observed`, or an explicit null with the reason). Blocks the AI layer.
 - **A named high-pressure threshold** on the engine's 1 to 10 scale, documented and versioned; the UI glossary then follows.
+- **Context package thresholds:** grid rate, inferred-possession share, possession agreement bar (Gate 1), and the later ones per package; listed in [context-packages.md](context-packages.md#open-decisions), each decided before its package starts, from measurements where possible.
+- **Recruit one or two analysts** through discovery calls for context Gates 2 and 3 (formation, phase, movement labels).
 - **Evidence-gate thresholds (E1 to E3)** in [roadmap.md](roadmap.md#evidence-gates-proposed-15-november-2026-founder-to-confirm-the-thresholds): confirm or change.
 - **Lead wedge** (single-export brief, or fragmentation and provider transition): decided by discovery calls ([go-to-market.md](go-to-market.md#two-wedges-one-to-lead-with-added-15-november-2026)).
 - **Provider list on the website:** the page lists Second Spectrum as supported; the engine has it fixture-tested only and the hard rule allows four providers. Change the page or revise the rule with a reason.
@@ -79,7 +83,7 @@
 - **Facade decisions** (`MatchAnalysis` input form, rendering helpers, private-name wrappers): parked; recommendations in `ponta-platform/docs/MATCH_ANALYSIS_INVENTORY.md`.
 - **Public naming** of Matrix and Plaiq; the IP-protection call on publishing `ANALYTICS_SPECIFICATION.md`.
 
-*Decided and no longer open:* the extraction baseline and the SkillCorner Data check (15 November 2026); the UI palette, away colour, heat gradient, primary button style and canvas pitch rendering (fixed in [frontend-design-brief-v2.md](frontend-design-brief-v2.md#3-fixed-decisions-do-not-reopen-without-reporting-why) section 3).
+*Decided and no longer open:* the context-packages repositioning and its four decisions (17 November 2026); the extraction baseline and the SkillCorner Data check (15 November 2026); the UI palette, away colour, heat gradient, primary button style and canvas pitch rendering (fixed in [frontend-design-brief-v2.md](frontend-design-brief-v2.md#3-fixed-decisions-do-not-reopen-without-reporting-why) section 3).
 
 ## Docs that now disagree with the evidence
 

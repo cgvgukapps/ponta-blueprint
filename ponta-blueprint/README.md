@@ -8,6 +8,7 @@ A design/laydown exercise for taking the validated **PONTA-PROTOTYPE** (Matrix a
 
 - **Matrix is the built-in data engine** inside the app: Normalise → Reconcile → Fuse, turning every club's provider files into one quality-scored, canonical dataset.
 - **Plaiq's deterministic math is the spatial engine**: pressure, control zones, pass option value, decision quality, failed-pass inference — computed once at ingestion and compiled into **semantic football events**.
+- **Context packages describe the whole match** *(added 17 November 2026)*: possession, game state, team structure, phase of play, relationships, space and match episodes, computed deterministically at ingestion, so the AI is not limited to single actions. Ponta is positioned as a **match context model that the AI explains**; Decision Quality is one field among many. See [context-packages.md](context-packages.md).
 - **Grounded AI agents read those events.** They never see raw coordinates, they cite every claim, and they read a per-match **Parity Report** (Full / Degraded / Blocked per metric) before saying anything. See [ai-layer.md](ai-layer.md).
 - **Intelligence is progressive, set by the data the club brings** ([data-tiers.md](data-tiers.md)): Tier 1 single source (ships first), Tier 2 two unpaired sources, Tier 3 paired match sources (the flagship differentiation bet — gated on real paired data). The app never blocks on the hardest, still-unvalidated piece (real multi-vendor fusion) in order to deliver on the proven one.
 
@@ -40,6 +41,7 @@ A design/laydown exercise for taking the validated **PONTA-PROTOTYPE** (Matrix a
 - [roadmap.md](roadmap.md) — the revised, phased plan (extraction → AI workflows → web app, with validation and legal running in parallel, not last).
 - [data-tiers.md](data-tiers.md) — Tier 1/2/3, the Parity Report, and exactly what must be true before each tier's headline claim is honest.
 - [ai-layer.md](ai-layer.md) — the AI-native design: semantic events, the workflows, grounding rules, pseudonymisation, evaluation.
+- [context-packages.md](context-packages.md) — the context packages P0 to P9 (possession to episodes), the package contract, build stages and gates, and the 17 November 2026 repositioning. Stage A committed; the rest planned.
 - [platform-overview.md](platform-overview.md) — a dated, self-contained snapshot of the whole platform and the evidence status of each part, written for an independent reviewer. Summarises the documents below; does not supersede them.
 
 **Engines and execution tasks:**

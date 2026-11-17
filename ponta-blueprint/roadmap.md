@@ -1,5 +1,7 @@
 # Ponta Build Roadmap
 
+> **Revised 17 November 2026: context packages.** The AI layer needs more context than single actions, so Ponta is repositioned as a match context model that the AI explains ([context-packages.md](context-packages.md)). Context **Stage A** (P0 foundations, P1 possession and game state) is engine work added to Phase 1 and can start now. Stages B and C sit inside Phase 2, **before** the AI workflows; P8 (episodes) completes Phase 2's AI work; P9 is Phase 5. The concierge step and the evidence gates are unchanged and still come first.
+
 See [README.md](README.md) for the document index and baseline assumptions. This roadmap was **rewritten for the one-product, AI-native strategy**. It does not invent new decisions about the architecture; it sequences the work defined in [architecture.md](architecture.md), [data-tiers.md](data-tiers.md), [ai-layer.md](ai-layer.md), [features.md](features.md), [frontend.md](frontend.md), [legal-compliance.md](legal-compliance.md) and [go-to-market.md](go-to-market.md).
 
 The earlier version of this roadmap was Plaiq-first and then Matrix-and-Plaiq-first, with a validation phase that gated the rest. Its structure is replaced; its content is carried forward where still true.
@@ -90,6 +92,8 @@ Execution spec: [platform-extraction-task.md](platform-extraction-task.md).
 
 **Progress (17 November 2026):** the engine extraction, the equivalence test, `parity.py` and `semantic_builder.py` are done (see the task's status banner). Supabase, the FastAPI skeleton, object storage, the cross-tenant access test and the basic ToS are not started.
 
+**Added 17 November 2026: context Stage A** ([context-packages.md](context-packages.md#p0-foundations-stage-a-committed)). P0 (package contract in code, context grid, package registry, Data check entries from packages, golden harness) and P1 (possession and game state, measured against event data on the Metrica matches: Gate 1). Engine work, not gated by E1. Exit adds: Gate 1 met, with the measured thresholds agreed.
+
 **Exit criteria:** both engines run standalone from the monorepo with the prototype suite green; a sample match produces a Parity Report and a semantic-events Parquet file; a deployed (even empty) API + auth skeleton; cross-tenant isolation test passing.
 
 ## Phase 2 — Tier 1 pipeline and AI workflows
@@ -98,14 +102,14 @@ Execution spec: [platform-extraction-task.md](platform-extraction-task.md).
 
 0. **Concierge step (before the platform):** run a real prospect's export locally through the engines and send back the Parity Report and a cited brief as a static page, founder-run, as Matrix Normalise already is. It exercises the real-vendor schema assumption, tests whether the brief is useful, and meets gate E2 before auth, RLS and the worker exist.
 1. Universal file-upload connector → worker → both Parquet artifacts → slim Postgres row and Parity Report. Tier 1 for optical (SkillCorner, Metrica), event-only (StatsBomb) and GPS-physical-only (STATSports).
-2. **AI workflows over the semantic store** ([ai-workflows-task.md](ai-workflows-task.md)): post-match brief, typed-tool natural-language explorer, parity gate assistant — **with the citation verifier, golden question set and adversarial tests from the first commit**, not added later.
+2. **Context Stages B and C, then the AI workflows** *(order revised 17 November 2026)*: structure, relative zones and phase of play (Stage B, Gate 2), then relationships, movement types and space (Stage C, Gate 3), each only when its gate is met ([context-packages.md](context-packages.md#build-order-and-gates)). The AI build starts after Stage A at the earliest, preferably after Stage B. Then **AI workflows over the semantic store** ([ai-workflows-task.md](ai-workflows-task.md)): post-match brief, typed-tool natural-language explorer, parity gate assistant — **with the citation verifier, golden question set and adversarial tests from the first commit**, not added later.
 3. LLM provider adapter, audit logging, rate/spend limits ([operations.md](operations.md#llm-costs-and-ai-operations)).
 4. API governance basics (`/v1`, per-org keys, rate limiting).
 5. Resolve explicitly (don't let it default): which provider/model; whether event-only analysis ships in the first release; whether Ask Ponta is capped, metered or bundled.
 
 **Progress (17 November 2026):** for step 0, the single-file match page and its payload tool exist and have been run on real open data (SkillCorner 1886347); no prospect export has been received yet. Steps 1 to 5 are not started.
 
-**Exit criteria:** an uploaded Tier 1 match yields a cited brief and a working explorer; all AI guardrail tests pass; Blocked/Degraded metrics are disclosed rather than answered; LLM sub-processor terms in place before any real customer data is used.
+**Exit criteria:** an uploaded Tier 1 match yields a cited brief and a working explorer, which answers questions about passages of play with cited episodes once P8 exists; all AI guardrail tests pass; Blocked/Degraded metrics are disclosed rather than answered; LLM sub-processor terms in place before any real customer data is used.
 
 ## Phase 3 — Web app and first users
 
@@ -137,6 +141,7 @@ Execution spec: [platform-extraction-task.md](platform-extraction-task.md).
 **Runs:** after Phases 3–4 prove willingness to pay and real-data results.
 
 - Cross-match player identity (unlocks trends and baselines), player comparison, shortlists and team dashboards.
+- Context package P9 (embeddings: "find moments like this") and player-facing pattern cards, once enough matches and the Gate 2 and 3 validation results exist ([context-packages.md](context-packages.md#p9-embeddings-phase-5-layer-9)).
 - Report/PDF export; StatsBomb pull connector with Vault credentials; SkillCorner live pull.
 - Opposition analysis; media moment export (needs video/export capability that doesn't exist).
 - Additional adapters (Catapult, Second Spectrum, TRACAB, Opta, Wyscout), each gated on real access.

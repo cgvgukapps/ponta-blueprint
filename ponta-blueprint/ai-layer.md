@@ -1,5 +1,7 @@
 # Ponta AI Layer
 
+> **Revised 17 November 2026: context before the AI build.** Single actions are not enough context for a useful AI layer. Ponta is repositioned as a **match context model that the AI explains** ([context-packages.md](context-packages.md#strategy-change-decided-17-november-2026)): deterministic context packages add possession, game state, structure, phase, relationships, space and match episodes, and the AI reads those as well as single events. The AI build starts after context Stage A at the earliest, preferably Stage B. Everything below still holds; the additions are marked.
+
 See [README.md](README.md) for the document index, [data-tiers.md](data-tiers.md) for the Tier 1/2/3 model and the Parity Report this layer depends on, and [architecture.md](architecture.md#canonical-store-and-ai-layer) for where it sits in the system. This document specifies the AI-native part of Ponta: what the AI does, what it is forbidden to do, and how every claim it makes is grounded and checkable.
 
 ## The principle: deterministic math, grounded language
@@ -14,8 +16,8 @@ The product's trust position follows from this: *show your work, no black box* (
 
 ## Hard rules (non-negotiable)
 
-1. **No raw coordinates in any LLM context.** Trajectory arrays never enter a prompt. All spatial math runs in `plaiq_engine`; the AI sees only semantic events and aggregates derived from them.
-2. **Every claim cites.** Every factual statement in an AI output carries a citation array of `[event_id, timestamp_s, confidence_score]` (plus `match_id`). A statement without a resolvable citation is not rendered; the generator is re-run or the claim dropped. *(Open, 17 November 2026: single-source matches have no per-frame confidence, only `ball_detected` and `players_observed`, so what fills the confidence slot for Tier 1 must be decided before the AI layer is built. See [status.md](status.md#open-decisions).)*
+1. **No raw coordinates in any LLM context.** Trajectory arrays never enter a prompt. All spatial math runs in the engines and context packages; the AI sees only semantic events, semantic states (episodes) and aggregates derived from them, as labelled fields.
+2. **Every claim cites.** Every factual statement in an AI output carries a citation array of `[event_id, timestamp_s, confidence_score]` (plus `match_id`). A statement without a resolvable citation is not rendered; the generator is re-run or the claim dropped. *(Added 17 November 2026: a claim about a passage of play cites an episode instead, `[state_id, start_s, end_s]` plus `match_id`; the verifier checks it the same way.)* *(Open, 17 November 2026: single-source matches have no per-frame confidence, only `ball_detected` and `players_observed`, so what fills the confidence slot for Tier 1 must be decided before the AI layer is built. See [status.md](status.md#open-decisions).)*
 3. **Parity first.** Every AI call begins by reading the match's Parity Report and the relevant per-frame confidence. Degraded or Blocked metrics are disclosed in the output, never silently substituted or implied ([below](#parity-and-confidence-honesty)).
 4. **No arbitrary SQL.** The model calls a small set of typed, sandboxed tools; it cannot write free-form queries against the store.
 5. **Pseudonymised prompts.** Names and other direct identifiers never leave Ponta's infrastructure inside a prompt ([below](#pseudonymisation-and-llm-providers)).
@@ -86,7 +88,8 @@ Notes that differ from a naïve reading of this schema:
 
 Two stores, deliberately separate (detail in [architecture.md](architecture.md#canonical-store-and-ai-layer)):
 
-- **`semantic_events.parquet`** (object storage, queried via DuckDB) — the *only* thing the AI layer reads for evidence. Precomputed at ingestion so no geometry runs at query time.
+- **`semantic_events.parquet`** (object storage, queried via DuckDB) — the AI layer's evidence for single actions. Precomputed at ingestion so no geometry runs at query time. *(Revised 17 November 2026: once context package P1 exists, each row also carries its possession chain, phase and game state.)*
+- **`semantic_states.parquet`** *(added 17 November 2026; built in context package P8)* — one row per match episode (a passage of play with one phase and shape): `state_id`, `start_s`, `end_s`, phase, possession, shapes, line metrics, relationships, space summary, Data check states and package versions, plus a templated summary written by code. The AI's evidence for anything longer than one action. Frame-level context (`context_frames.parquet`) is **not** read by the AI; it feeds the states and the replay.
 - **Postgres** — tenancy, match metadata (including `fusion_tier` and the `parity_report`), roster, and generated insight cards.
 
 `trajectories.parquet` (full 10/25 Hz data) is read **only by the frontend pitch-replay path** through the API, never by the AI layer.
