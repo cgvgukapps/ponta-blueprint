@@ -10,7 +10,7 @@
 |---|---|---|---|
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`; tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final`. Never modify. |
-| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `c58c4aa` (context Stage A, 17 November 2026; last pushed `930d652`) |
+| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `a4f3f19` (context Stage A, Gate 1 passed, 17 November 2026), pushed |
 | UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `26b7c1d`, pushed; tag `prototype-v0.1` at `4bd8e52` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main` at `82a3429`; v2 deployed with `noindex, nofollow` |
 
@@ -60,7 +60,7 @@
 ## Next steps, in order
 
 1. **Track V (validation), now.** Discovery calls with the wedge, intercepted-pass and price questions (gate E1, at least 8 calls); check each prospect's vendor licence before taking a real export ([legal-compliance.md](legal-compliance.md#vendor-licence-check-before-the-first-real-export)).
-2. **Decide on context Stage A's results** (`ponta-platform/CONTEXT_FOUNDATIONS_REPORT.md`, built 17 November 2026): the Gate 1 bar (proposed: at least 93% agreement with event-based possession on each Metrica match, possession changes within 15%), agreeing the measured thresholds, and one control radius or one per provider. Then decide whether to start Stage B (structure, zones, phase), which needs analysts for Gate 2.
+2. **Context Stage B is planned, not scheduled** (decision 4). Stage A is done and Gate 1 passed (17 November 2026). Before Stage B: recruit one or two analysts through discovery calls (Gate 2), and fold a hand-labelled possession sample into their first session.
 3. **Concierge step** (roadmap Phase 2, step 0): run a prospect's real export locally through the engines and send back the Data check and the match page (gate E2). The page and payload tool exist.
 4. **Rest of Phase 1** (not gated by E1), alongside context Stage A: Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated cross-tenant access test for Parquet paths, basic ToS ([roadmap.md](roadmap.md#phase-1--platform-foundation-and-engine-extraction)).
 5. **Before the AI layer** ([ai-workflows-task.md](ai-workflows-task.md)): context Stage A done (Stage B preferred); decide the citation confidence for single-source matches and a named high-pressure threshold; choose the LLM provider and put sub-processor terms in place before any real customer data reaches a model.
@@ -72,7 +72,7 @@
 
 - **Citation confidence for single-source matches:** what fills the confidence slot (a documented derivation from `ball_detected` and `players_observed`, or an explicit null with the reason). Blocks the AI layer.
 - **A named high-pressure threshold** on the engine's 1 to 10 scale, documented and versioned; the UI glossary then follows.
-- **Context Stage A decisions:** the Gate 1 bar, agreeing P1's measured thresholds, and one control radius or one per provider (broadcast tracking agrees better at 2.0 to 2.5 m); see `ponta-platform/CONTEXT_FOUNDATIONS_REPORT.md`.
+- **Context P1 refinements (open, with recommendations):** a control radius per provider (once a second broadcast match confirms SkillCorner's fit at 2.0 to 2.5 m), a hand-labelled possession sample before Stage B, and movement-based gap inference when a feed needs it ([context-packages.md](context-packages.md#open-decisions)).
 - **Context package thresholds:** grid rate, inferred-possession share, possession agreement bar (Gate 1), and the later ones per package; listed in [context-packages.md](context-packages.md#open-decisions), each decided before its package starts, from measurements where possible.
 - **Recruit one or two analysts** through discovery calls for context Gates 2 and 3 (formation, phase, movement labels).
 - **Evidence-gate thresholds (E1 to E3)** in [roadmap.md](roadmap.md#evidence-gates-proposed-15-november-2026-founder-to-confirm-the-thresholds): confirm or change.
@@ -86,7 +86,7 @@
 - **Facade decisions** (`MatchAnalysis` input form, rendering helpers, private-name wrappers): parked; recommendations in `ponta-platform/docs/MATCH_ANALYSIS_INVENTORY.md`.
 - **Public naming** of Matrix and Plaiq; the IP-protection call on publishing `ANALYTICS_SPECIFICATION.md`.
 
-*Decided and no longer open:* the context-packages repositioning and its four decisions (17 November 2026); the extraction baseline and the SkillCorner Data check (15 November 2026); the UI palette, away colour, heat gradient, primary button style and canvas pitch rendering (fixed in [frontend-design-brief-v2.md](frontend-design-brief-v2.md#3-fixed-decisions-do-not-reopen-without-reporting-why) section 3).
+*Decided and no longer open:* the context-packages repositioning and its four decisions, the Gate 1 bar (met) and all P1 thresholds (17 November 2026); the extraction baseline and the SkillCorner Data check (15 November 2026); the UI palette, away colour, heat gradient, primary button style and canvas pitch rendering (fixed in [frontend-design-brief-v2.md](frontend-design-brief-v2.md#3-fixed-decisions-do-not-reopen-without-reporting-why) section 3).
 
 ## Docs that now disagree with the evidence
 

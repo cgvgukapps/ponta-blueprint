@@ -1,6 +1,6 @@
 # Ponta Context Packages
 
-> **Status: adopted 17 November 2026.** Stage A (P0, P1) is committed. Stages B to D (P2 to P8) are planned but not scheduled; P9 belongs to Phase 5. Source: the founder's work plan "Ponta Context Packages: Work Plan" (17 November 2026), adjusted after review. The four founder decisions are recorded below.
+> **Status: adopted 17 November 2026; Stage A built and Gate 1 passed the same day.** Stage A (P0, P1) is done. Stages B to D (P2 to P8) are planned but not scheduled; P9 belongs to Phase 5. Source: the founder's work plan "Ponta Context Packages: Work Plan" (17 November 2026), adjusted after review. The four founder decisions are recorded below.
 
 See [README.md](README.md) for the document index, [ai-layer.md](ai-layer.md) for how the AI reads what these packages produce, [data-tiers.md](data-tiers.md#context-packages-by-data-type) for what each kind of data can support, and [roadmap.md](roadmap.md) for where the work sits.
 
@@ -103,7 +103,7 @@ Thresholds marked "agreed" are set in [Open decisions](#open-decisions). "Layer"
 
 **Done when:** an empty test package runs end to end on the regression set and writes a stamped frame file and a Data check entry.
 
-**Execution spec for P0 and P1:** [context-foundations-task.md](context-foundations-task.md). **Built on 17 November 2026** in `ponta-platform` (`plaiq_engine/context/`); measurements and proposed thresholds in its `CONTEXT_FOUNDATIONS_REPORT.md`. Gate 1 and the threshold decisions are pending.
+**Execution spec for P0 and P1:** [context-foundations-task.md](context-foundations-task.md). **Built on 17 November 2026** in `ponta-platform` (`plaiq_engine/context/`); measurements in its `CONTEXT_FOUNDATIONS_REPORT.md`. **Gate 1 passed** against the agreed bar (at least 93% agreement with event-based possession on each Metrica match, possession changes within 15%): 93.7%, 95.7% and 93.6%. All P1 thresholds agreed by the founder on 17 November 2026.
 
 ### P1 Possession and game state (Stage A, committed; layer 1)
 
@@ -235,9 +235,12 @@ Each is decided before its package starts, from measurements where the table say
 
 | Decision | Needed before | Notes |
 |---|---|---|
-| Context grid rate (5 Hz proposed) | P0 | Lower is cheaper; refinement uses the source rate |
-| Inferred-possession share that makes possession Degraded | P1 | Measured on the regression set first |
-| Possession agreement bar with event data | Gate 1 | Metrica Games 1 to 3 have event data to compare against |
+| Context grid rate | P0 | **Agreed 17 November 2026: 5 Hz** |
+| Inferred-possession share that makes possession Degraded | P1 | **Agreed 17 November 2026: 25% of in-play time** (measured: Metrica 11 to 18%, SkillCorner 26%) |
+| Possession agreement bar with event data | Gate 1 | **Agreed 17 November 2026:** at least 93% on each Metrica match, possession changes within 15%; met |
+| Control radius per provider | P1 refinement | Open; recommended once a second broadcast match confirms SkillCorner's better fit at 2.0 to 2.5 m |
+| Hand-labelled possession sample (accuracy, not agreement) | Before Stage B | Open; recommended, folded into the first analyst session |
+| Movement-based inference for detection gaps | When needed | Open; recommended when a feed with frequent in-play gaps appears |
 | Minimum players observed for structure to be Full | P2 | The existing optical rule is 10% of player observations missing |
 | Phase taxonomy: final list and minimum phase duration | P4 | Agree with one or two analysts before coding |
 | Agreement bar for analyst studies | Gate 2 | Same method as the decision-quality study |

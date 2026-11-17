@@ -18,7 +18,7 @@ This repo holds no code. It is the **planning and design blueprint** for Ponta, 
 ## Document index (by role)
 
 - **Plan:** `roadmap.md` (phases with exit criteria, Track V validation, Track L legal), `data-tiers.md` (Tier 1/2/3, the Parity Report, context by data type), `ai-layer.md` (grounded AI design), `context-packages.md` (context packages P0 to P9; Stage A committed).
-- **Engines and execution tasks:** `Matrix.md`; `context-foundations-task.md` (built 17 November 2026; founder decisions pending); `ai-workflows-task.md` (not startable until context Stage A and the API skeleton exist); `platform-extraction-task.md`, `matrix-prototype-task.md`, `matrix-statsports-adapter-task.md`, `prototype-cleanup-task.md` (complete).
+- **Engines and execution tasks:** `Matrix.md`; `context-foundations-task.md` (complete: Stage A built, Gate 1 passed); `ai-workflows-task.md` (not startable until context Stage A and the API skeleton exist); `platform-extraction-task.md`, `matrix-prototype-task.md`, `matrix-statsports-adapter-task.md`, `prototype-cleanup-task.md` (complete).
 - **System design:** `architecture.md`, `engine-governance.md`, `operations.md`.
 - **Product and UX:** `features.md`, `frontend.md`, `frontend-design-brief-v2.md` (the fixed UI decisions live in its section 3; v1 superseded), `visual-design.md` (website-first), `website.md`, `website-v2-plan.md` (executed; launch gates open).
 - **Strategy and risk:** `risks.md`, `competitive-landscape.md`, `go-to-market.md`, `legal-compliance.md`, `roadmap_v2.md` (investor vision, not a commitment).
