@@ -60,7 +60,7 @@
 ## Next steps, in order
 
 1. **Track V (validation), now.** Discovery calls with the wedge, intercepted-pass and price questions (gate E1, at least 8 calls); check each prospect's vendor licence before taking a real export ([legal-compliance.md](legal-compliance.md#vendor-licence-check-before-the-first-real-export)).
-2. **Context Stage B is planned, not scheduled** (decision 4). Stage A is done and Gate 1 passed (17 November 2026). Before Stage B: recruit one or two analysts through discovery calls (Gate 2), and fold a hand-labelled possession sample into their first session.
+2. **Context Stage B next** (decision 4a, 17 November 2026: proceed without waiting for analysts). Research brief on published definitions, then `context-structure-task.md` (P2 structure, P3 relative zones, P4 phase of play), validated against SkillCorner's player roles and phases of play and Metrica's set pieces (Gate 2a). Analyst agreement (Gate 2b) still before anything is player-facing.
 3. **Concierge step** (roadmap Phase 2, step 0): run a prospect's real export locally through the engines and send back the Data check and the match page (gate E2). The page and payload tool exist.
 4. **Rest of Phase 1** (not gated by E1), alongside context Stage A: Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated cross-tenant access test for Parquet paths, basic ToS ([roadmap.md](roadmap.md#phase-1--platform-foundation-and-engine-extraction)).
 5. **Before the AI layer** ([ai-workflows-task.md](ai-workflows-task.md)): context Stage A done (Stage B preferred); decide the citation confidence for single-source matches and a named high-pressure threshold; choose the LLM provider and put sub-processor terms in place before any real customer data reaches a model.
@@ -86,7 +86,7 @@
 - **Facade decisions** (`MatchAnalysis` input form, rendering helpers, private-name wrappers): parked; recommendations in `ponta-platform/docs/MATCH_ANALYSIS_INVENTORY.md`.
 - **Public naming** of Matrix and Plaiq; the IP-protection call on publishing `ANALYTICS_SPECIFICATION.md`.
 
-*Decided and no longer open:* the context-packages repositioning and its four decisions, the Gate 1 bar (met) and all P1 thresholds (17 November 2026); the extraction baseline and the SkillCorner Data check (15 November 2026); the UI palette, away colour, heat gradient, primary button style and canvas pitch rendering (fixed in [frontend-design-brief-v2.md](frontend-design-brief-v2.md#3-fixed-decisions-do-not-reopen-without-reporting-why) section 3).
+*Decided and no longer open:* proceeding through the context stages against reference labels, with analyst gates kept for player-facing use (decision 4a, 17 November 2026); the context-packages repositioning and its four decisions, the Gate 1 bar (met) and all P1 thresholds (17 November 2026); the extraction baseline and the SkillCorner Data check (15 November 2026); the UI palette, away colour, heat gradient, primary button style and canvas pitch rendering (fixed in [frontend-design-brief-v2.md](frontend-design-brief-v2.md#3-fixed-decisions-do-not-reopen-without-reporting-why) section 3).
 
 ## Docs that now disagree with the evidence
 

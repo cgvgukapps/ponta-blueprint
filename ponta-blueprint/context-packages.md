@@ -1,6 +1,6 @@
 # Ponta Context Packages
 
-> **Status: adopted 17 November 2026; Stage A built and Gate 1 passed the same day.** Stage A (P0, P1) is done. Stages B to D (P2 to P8) are planned but not scheduled; P9 belongs to Phase 5. Source: the founder's work plan "Ponta Context Packages: Work Plan" (17 November 2026), adjusted after review. The four founder decisions are recorded below.
+> **Status: adopted 17 November 2026; Stage A built and Gate 1 passed the same day.** Stage A (P0, P1) is done. **Revised 17 November 2026 (decision 4a): Stages B to D proceed now** without waiting for analysts, validated against references (Gate 2a, Gate 3a); analyst agreement (Gate 2b, Gate 3b) is still required before anything is player-facing or called validated. P9 belongs to Phase 5. Source: the founder's work plan "Ponta Context Packages: Work Plan" (17 November 2026), adjusted after review. The four founder decisions are recorded below.
 
 See [README.md](README.md) for the document index, [ai-layer.md](ai-layer.md) for how the AI reads what these packages produce, [data-tiers.md](data-tiers.md#context-packages-by-data-type) for what each kind of data can support, and [roadmap.md](roadmap.md) for where the work sits.
 
@@ -30,7 +30,8 @@ What does not change: bring your own data, post-match batch only, Tier 1 first, 
 1. **Repositioning agreed.** The AI build waits for Stage A at the earliest, preferably Stage B.
 2. **Ponta computes its own context.** Where a club already has provider-derived metrics (for example a provider's phases of play or run categories), they are stored against Ponta's vocabulary with their source, for comparison and validation, never as Ponta's source.
 3. **Unvalidated fields may reach analysts**, labelled "estimated, not yet validated". They never reach a player-facing view until their validation step has passed.
-4. **Commit to Stage A only.** Stages B to D are planned and unscheduled; P9 is Phase 5.
+4. **Commit to Stage A only.** Stages B to D are planned and unscheduled; P9 is Phase 5. *(Superseded by 4a the same day.)*
+4a. **Proceed through Stages B to D without waiting for analysts** (founder, 17 November 2026). Published research supplies the definitions, taxonomies and starting thresholds; the data already holds reference labels to measure against (SkillCorner's player roles, phases of play and game state; Metrica's logged events); the founder spot-checks on the replay. Gates 2 and 3 are split: the **reference** half (2a, 3a) unlocks the next stage; the **analyst** half (2b, 3b) is required before any context label is player-facing, called validated, or (for adjusted decision quality) made the default. Until then labels reach analysts as "estimated, checked against references, not yet validated by analysts".
 
 ## Principles
 
@@ -74,17 +75,26 @@ A context package is one self-contained module that turns canonical tracking int
 
 ```mermaid
 flowchart TB
-  A["Stage A: P0 Foundations, P1 Possession and game state<br/>(committed)"]
+  A["Stage A: P0 Foundations, P1 Possession and game state<br/>(done; Gate 1 passed)"]
   G1{"Gate 1: possession agrees with event data<br/>above the agreed bar"}
-  B["Stage B: P2 Structure, P3 Relative zones, P4 Phase of play<br/>(planned)"]
-  G2{"Gate 2: analysts agree with phase and formation labels"}
+  B["Stage B: P2 Structure, P3 Relative zones, P4 Phase of play<br/>(next)"]
+  G2{"Gate 2a: roles and phases agree with reference labels;<br/>zones pass the founder's spot check"}
   C["Stage C: P5 Relationships, P6 Movement types, P7 Space and value<br/>(planned)"]
-  G3{"Gate 3: runtime budget met; adjusted decision quality tested"}
+  G3{"Gate 3a: runtime budget met; adjusted decision quality<br/>computed side by side with base"}
   D["Stage D: P8 Semantic states (P9 Embeddings in Phase 5)"]
   A --> G1 --> B --> G2 --> C --> G3 --> D
+  B -.-> G2b{"Gate 2b: analysts agree<br/>(before player-facing use)"}
+  C -.-> G3b{"Gate 3b: expert study on adjusted DQ<br/>(before it is player-facing or default)"}
 ```
 
-Packages within a stage can run in parallel. **Gate 1 can be met alone**, because the Metrica matches include event data. **Gates 2 and 3 need one or two analysts**, so they depend on discovery calls producing a design partner (Track V in [roadmap.md](roadmap.md)); recruiting them is part of this plan, not a side task.
+Packages within a stage can run in parallel. **Gate 1 can be met alone**, because the Metrica matches include event data. *(Revised 17 November 2026.)* **Gates 2a and 3a can also be met alone**, measured like Gate 1:
+
+- **P2 roles and shape** against SkillCorner's player roles (every player carries one, for example LCB, DM, CF) and the starting line-up.
+- **P4 phases** against SkillCorner's phases of play on every event (in possession: build_up, create, finish, direct, quick_break, transition, set_play, chaotic, disruption; out of possession: high, medium and low block and their defending variants), and against Metrica's logged set pieces. Provider labels are comparison only (decision 2): they measure agreement, they never become Ponta's output.
+- **Definitions and thresholds** from published research, cited in the package spec.
+- **P3 zones** by the founder's spot check on the replay (50 sampled frames).
+
+**Gates 2b and 3b still need one or two analysts** (Track V in [roadmap.md](roadmap.md)); they gate player-facing use and any claim that a label is validated, not the next stage.
 
 ## Packages
 
@@ -131,7 +141,7 @@ Thresholds marked "agreed" are set in [Open decisions](#open-decisions). "Layer"
 - Shape changes against the previous window.
 - Data check: Degraded when players observed fall below the agreed threshold.
 
-**Done when:** formation labels match analyst labels on sampled segments from the regression set (Gate 2).
+**Done when:** role and shape labels agree with SkillCorner's player roles above the agreed bar, and formation labels are stable and plausible on the founder's spot check (Gate 2a). Analyst agreement on sampled segments (Gate 2b) before player-facing use.
 
 ### P3 Relative zones (Stage B, planned; layer 2)
 
@@ -152,7 +162,7 @@ Thresholds marked "agreed" are set in [Open decisions](#open-decisions). "Layer"
 - Segmentation into phases with a minimum duration and smoothing.
 - Data check: coverage as share of match time labelled; Degraded when possession was inferred.
 
-**Done when:** phase labels agree with two analysts on sampled segments above the agreed bar (Gate 2).
+**Done when:** phase labels agree with SkillCorner's phases of play and with Metrica's logged set pieces above the agreed bar (Gate 2a). Agreement with two analysts on sampled segments (Gate 2b) before player-facing use.
 
 ### P5 Continuous relationships (Stage C, planned; layer 4)
 
@@ -187,7 +197,7 @@ Thresholds marked "agreed" are set in [Open decisions](#open-decisions). "Layer"
 - Base and adjusted values stored side by side; the working names the weight and why. **Base stays the default**; the adjusted score is labelled an estimate until the expert study measures it, because the weights are a judgement, not a measurement. Adding the adjusted score is a new metric with its own version, not a change to the existing formula.
 - Data check: adjusted values Degraded or Blocked when game state is unknown.
 
-**Done when:** the expert study measures analyst agreement with adjusted decision quality against base decision quality (Gate 3).
+**Done when:** adjusted decision quality is computed beside base on the regression set, with its weights in the working (Gate 3a). The expert study measuring analyst agreement with adjusted against base decision quality (Gate 3b) comes before the adjusted score is player-facing or the default.
 
 ### P8 Semantic states and episodes (Stage D, planned; layer 8)
 
@@ -243,7 +253,8 @@ Each is decided before its package starts, from measurements where the table say
 | Movement-based inference for detection gaps | When needed | Open; recommended when a feed with frequent in-play gaps appears |
 | Minimum players observed for structure to be Full | P2 | The existing optical rule is 10% of player observations missing |
 | Phase taxonomy: final list and minimum phase duration | P4 | Agree with one or two analysts before coding |
-| Agreement bar for analyst studies | Gate 2 | Same method as the decision-quality study |
+| Agreement bar with reference labels (roles, phases) | Gate 2a | Measured first, as for Gate 1 |
+| Agreement bar for analyst studies | Gate 2b | Same method as the decision-quality study |
 | Free-player distance and overload rules | P5 | Named and versioned like the high-pressure threshold |
 | Runtime and storage budget per match | Gate 3 | Sets how much of P5 runs on the full grid |
 | Game-state risk weights by goal difference and time band | P7 | A simple lookup first, shown in the working |
