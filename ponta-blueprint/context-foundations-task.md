@@ -1,6 +1,6 @@
 # Context Foundations (P0 and P1) — Execution Task
 
-> **Status: ready (17 November 2026).** Preconditions met. This is Stage A of [context-packages.md](context-packages.md): P0 foundations and P1 possession and game state. It is engine work in `ponta-platform`, not gated by evidence gate E1.
+> **Status: built (17 November 2026); founder decisions pending.** Executed in `ponta-platform`; results in its `CONTEXT_FOUNDATIONS_REPORT.md`. P0 and P1 run on all four regression matches (about 2.5 s and 0.8 MB each). Proximity possession agrees with event-based possession on 93.6% to 95.7% of compared time on the Metrica matches. Waiting on the founder: the Gate 1 bar, agreeing the measured thresholds, and one control radius or one per provider. Kept as the record of what was asked.
 
 Self-contained task for a coding agent working in the `ponta-platform` monorepo (`/Users/cicerovieira/Ponta-Platform`). Read [context-packages.md](context-packages.md) first: it is the specification (principles, package contract, storage convention); this document is the work breakdown. Also relevant: [ai-layer.md](ai-layer.md#the-semantic-football-event) (the semantic event schema), [data-tiers.md](data-tiers.md#context-packages-by-data-type) (what each kind of data supports), and `EXTRACTION_REPORT.md` and `docs/ARCHITECTURE.md` in the monorepo.
 

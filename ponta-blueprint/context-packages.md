@@ -103,7 +103,7 @@ Thresholds marked "agreed" are set in [Open decisions](#open-decisions). "Layer"
 
 **Done when:** an empty test package runs end to end on the regression set and writes a stamped frame file and a Data check entry.
 
-**Execution spec for P0 and P1:** [context-foundations-task.md](context-foundations-task.md) (ready, 17 November 2026).
+**Execution spec for P0 and P1:** [context-foundations-task.md](context-foundations-task.md). **Built on 17 November 2026** in `ponta-platform` (`plaiq_engine/context/`); measurements and proposed thresholds in its `CONTEXT_FOUNDATIONS_REPORT.md`. Gate 1 and the threshold decisions are pending.
 
 ### P1 Possession and game state (Stage A, committed; layer 1)
 
