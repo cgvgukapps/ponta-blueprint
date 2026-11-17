@@ -1,6 +1,6 @@
 # Status and handoff
 
-**Last updated:** 16 November 2026. This is the living pick-up note: read it first when resuming. Update it at the end of each working session. For the plan itself see [roadmap.md](roadmap.md); for the build spec see [platform-extraction-task.md](platform-extraction-task.md).
+**Last updated:** 17 November 2026. This is the living pick-up note: read it first when resuming. Update it at the end of each working session. For the plan itself see [roadmap.md](roadmap.md); for the build spec see [platform-extraction-task.md](platform-extraction-task.md).
 
 **One-line state:** Phase 1 engine work is done and pushed (15 November 2026). The shareable match page (brief v2, 5.3) exists: a single-file, offline page of the data check, coverage and rule-selected moments, built from real engine output for SkillCorner 1886347 (generated outside the repos). Commits `ponta-platform` `930d652`, pushed. The UI prototype has had two visual redesigns (16 November 2026), the match page restyled to match, and brief v2 items 5.1 (names), 5.2 (coverage) and 5.4 (review fixes) done; see the Repositories table for its position. Next: the rest of Phase 1 (Supabase, FastAPI, storage), gated by evidence gate E1 (discovery calls); the page is ready for the concierge step.
 
@@ -23,6 +23,7 @@
 - **Golden outputs captured** for Metrica Sample Game 3 and SkillCorner match 1886347. See `ponta-platform/tools/golden/README.md`. Data is git-ignored and regenerable (about 10 minutes).
 - **`ponta-platform` skeleton:** two installable packages (empty), pinned requirements, import-graph checker with tests, GitHub Actions CI, README, `docs/ARCHITECTURE.md`. Ruff and 9 tests pass locally.
 - **Version control:** all repos above are under git with remotes. The blueprint had none before.
+- **Platform overview for review (17 November 2026):** [platform-overview.md](platform-overview.md), a self-contained snapshot of the platform and the evidence status of each part, written to hand to an independent reviewer. Also published as a private page for the founder. Refresh it if the state changes before the review.
 - **Analyses delivered, no files changed:** SoccerTrack dataset (useful for positional fusion validation only: no physiological channels, unclear licence, small); multi-provider wearable integration (see "Strategy gaps" below); hosting options.
 
 ## Findings that change the plan

@@ -5,7 +5,7 @@ This repo holds no code. It is the **planning and design blueprint** for Ponta, 
 ## Layout
 
 - Git root: `~/PontaPlan` (remote `cgvgukapps/ponta-blueprint`). All documents live in `ponta-blueprint/`.
-- `ponta-blueprint/*.md`: 26 flat Markdown documents that link to each other with relative links and `#anchor`s.
+- `ponta-blueprint/*.md`: 27 flat Markdown documents that link to each other with relative links and `#anchor`s.
 - `ponta-blueprint/assets/`: logos, icons, the PontaFlow diagram and a reference image. Binary; do not edit.
 - `.cursor/` is git-ignored and holds only an empty `mcp.json`. There are no Cursor rules to follow.
 
@@ -22,6 +22,7 @@ This repo holds no code. It is the **planning and design blueprint** for Ponta, 
 - **System design:** `architecture.md`, `engine-governance.md`, `operations.md`.
 - **Product and UX:** `features.md`, `frontend.md`, `frontend-design-brief-v2.md` (v1 superseded), `visual-design.md`, `website.md`, `website-v2-plan.md`.
 - **Strategy and risk:** `risks.md`, `competitive-landscape.md`, `go-to-market.md`, `legal-compliance.md`, `roadmap_v2.md` (investor vision, not a commitment).
+- **For outside review:** `platform-overview.md` (a dated, self-contained snapshot of the platform and its evidence status; summarises, does not supersede).
 
 ## The product in one paragraph
 

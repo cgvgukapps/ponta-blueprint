@@ -39,6 +39,7 @@ A design/laydown exercise for taking the validated **PONTA-PROTOTYPE** (Matrix a
 - [roadmap.md](roadmap.md) — the revised, phased plan (extraction → AI workflows → web app, with validation and legal running in parallel, not last).
 - [data-tiers.md](data-tiers.md) — Tier 1/2/3, the Parity Report, and exactly what must be true before each tier's headline claim is honest.
 - [ai-layer.md](ai-layer.md) — the AI-native design: semantic events, the workflows, grounding rules, pseudonymisation, evaluation.
+- [platform-overview.md](platform-overview.md) — a dated, self-contained snapshot of the whole platform and the evidence status of each part, written for an independent reviewer. Summarises the documents below; does not supersede them.
 
 **Engines and execution tasks:**
 
