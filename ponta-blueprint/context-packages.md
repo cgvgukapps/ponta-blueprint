@@ -1,6 +1,6 @@
 # Ponta Context Packages
 
-> **Status: adopted 17 November 2026; Stage A built and Gate 1 passed the same day; Stage B built the same day, Gate 2a measured and awaiting the founder's bars and spot check.** Stage A (P0, P1) is done; Stage B (P2, P3, P4) is built ([context-structure-task.md](context-structure-task.md)). **Revised 17 November 2026 (decision 4a): Stages B to D proceed now** without waiting for analysts, validated against references (Gate 2a, Gate 3a); analyst agreement (Gate 2b, Gate 3b) is still required before anything is player-facing or called validated. P9 belongs to Phase 5. Source: the founder's work plan "Ponta Context Packages: Work Plan" (17 November 2026), adjusted after review. The four founder decisions are recorded below.
+> **Status: adopted 17 November 2026; Stage A built and Gate 1 passed the same day; Stage B built the same day; its Gate 2a bars and thresholds agreed by the founder; met on the reference match except zones (spot check pending); roles need a revision to hold across SkillCorner's 20 open-data matches.** Stage A (P0, P1) is done; Stage B (P2, P3, P4) is built ([context-structure-task.md](context-structure-task.md)). **Revised 17 November 2026 (decision 4a): Stages B to D proceed now** without waiting for analysts, validated against references (Gate 2a, Gate 3a); analyst agreement (Gate 2b, Gate 3b) is still required before anything is player-facing or called validated. P9 belongs to Phase 5. Source: the founder's work plan "Ponta Context Packages: Work Plan" (17 November 2026), adjusted after review. The four founder decisions are recorded below.
 
 See [README.md](README.md) for the document index, [ai-layer.md](ai-layer.md) for how the AI reads what these packages produce, [data-tiers.md](data-tiers.md#context-packages-by-data-type) for what each kind of data can support, and [roadmap.md](roadmap.md) for where the work sits.
 
@@ -77,7 +77,7 @@ A context package is one self-contained module that turns canonical tracking int
 flowchart TB
   A["Stage A: P0 Foundations, P1 Possession and game state<br/>(done; Gate 1 passed)"]
   G1{"Gate 1: possession agrees with event data<br/>above the agreed bar"}
-  B["Stage B: P2 Structure, P3 Relative zones, P4 Phase of play<br/>(built; Gate 2a bars with the founder)"]
+  B["Stage B: P2 Structure, P3 Relative zones, P4 Phase of play<br/>(built; bars agreed; spot check and role revision pending)"]
   G2{"Gate 2a: roles and phases agree with reference labels;<br/>zones pass the founder's spot check"}
   C["Stage C: P5 Relationships, P6 Movement types, P7 Space and value<br/>(planned)"]
   G3{"Gate 3a: runtime budget met; adjusted decision quality<br/>computed side by side with base"}
@@ -145,10 +145,10 @@ Thresholds marked "agreed" are set in [Open decisions](#open-decisions). "Layer"
 
 **Built on 17 November 2026** (`plaiq_engine/context/structure.py`; spec [context-structure-task.md](context-structure-task.md); measurements in `CONTEXT_STRUCTURE_REPORT.md`).
 - **Shape:** medians fall inside published ranges on all four matches.
-- **Roles:** agree with SkillCorner's by position group for 79% of playing time (91% with central midfield merged).
+- **Roles:** agree with SkillCorner's by position group for 79% of playing time (91% with central midfield merged) on the reference match. *(Revised 17 November 2026.)* Across SkillCorner's 20 open-data matches the median is 75.4% (60% to 99%), and 12 of 20 matches clear the 75% bar. Most misses are wide midfielders given central slots, or a centre forward given an attacking-midfield slot. A role-fit revision is recommended before later packages use roles.
 - **Formations:** change at most once per team per half.
 - **Not built:** role variants (inverted full-back) are not detected; roles are template slots.
-- **Direction of play:** each team's direction is read from the data, because Metrica Sample Game 2 is normalised with the home team attacking −x.
+- **Direction of play:** each team's direction is read from the data rather than the provider convention. This caught Metrica Sample Game 2 normalised with the home team attacking −x; the loader was fixed on 17 November 2026.
 
 ### P3 Relative zones (Stage B, built; layer 2)
 
@@ -178,7 +178,7 @@ Thresholds marked "agreed" are set in [Open decisions](#open-decisions). "Layer"
 **Done when:** phase labels agree with SkillCorner's phases of play and with Metrica's logged set pieces above the agreed bar (Gate 2a). Agreement with two analysts on sampled segments (Gate 2b) before player-facing use.
 
 **Built on 17 November 2026** (`plaiq_engine/context/phase.py`).
-- **Agreement:** with SkillCorner's in-possession phases, 73.1%, Cohen's κ 0.60 (0.58 and 0.61 by half; published analyst agreement is about κ 0.7).
+- **Agreement:** with SkillCorner's in-possession phases, 73.1%, Cohen's κ 0.60 (0.58 and 0.61 by half; published analyst agreement is about κ 0.7). *(Revised 17 November 2026.)* Pooled over SkillCorner's 20 open-data matches: κ 0.61 (0.62 and 0.59 by half), so the rules and block boundaries carry over. Per match, 11 of 20 clear κ 0.55 on both halves; none falls below 0.50.
 - **Vocabulary** *(revised: replaces the taxonomy above)*: SkillCorner's published phases (build_up, create, finish, direct, quick_break, transition, set_play, chaotic, with the paired blocks), so the labels can be measured against a reference.
 - **Established play:** follows the defending block from the three deepest defenders. The measured boundaries (26 m and 47 m from goal) replaced equal pitch thirds, which gave κ 0.20.
 - **Not used or not built:** Plaiq pressure is not an input and counter-press is not labelled.
@@ -271,10 +271,10 @@ Each is decided before its package starts, from measurements where the table say
 | Control radius per provider | P1 refinement | Open; recommended once a second broadcast match confirms SkillCorner's better fit at 2.0 to 2.5 m |
 | Hand-labelled possession sample (accuracy, not agreement) | Before Stage B | Open; recommended, folded into the first analyst session |
 | Movement-based inference for detection gaps | When needed | Open; recommended when a feed with frequent in-play gaps appears |
-| Minimum players observed for structure to be Full | P2 | *(Superseded.)* Built as 8 outfield players per team at a grid point and 90% of in-play time with a shape (proposed, `CONTEXT_STRUCTURE_REPORT.md`); founder to agree |
+| Minimum players observed for structure to be Full | P2 | *(Superseded.)* Built as 8 outfield players per team at a grid point and 90% of in-play time with a shape. **Agreed 17 November 2026** |
 | Phase taxonomy: final list and minimum phase duration | P4 | *(Superseded by decision 4a.)* SkillCorner's published vocabulary adopted so it can be measured; minimum phase 1 s (no measurable effect). Analysts review it at Gate 2b |
-| Agreement bar with reference labels (roles, phases, zones) | Gate 2a | **Measured 17 November 2026; proposed:** roles at least 75% by position group, weighted by playing time (measured 79%), and at least 85% with central midfield merged (91%); formations at most 2 changes per team, state and half (measured at most 1); phases Cohen's κ at least 0.55 on each half (0.58 and 0.61); zones at least 45 of 50 on the founder's spot check (not yet done). Founder to agree |
-| Stage B thresholds (P2 to P4) | Gate 2a | Three measured (low block 26 m, high block 47 m, break gain 15 m), the rest proposed with sources; listed in `CONTEXT_STRUCTURE_REPORT.md`. Founder to agree |
+| Agreement bar with reference labels (roles, phases, zones) | Gate 2a | **Measured 17 November 2026; proposed:** roles at least 75% by position group, weighted by playing time (measured 79%), and at least 85% with central midfield merged (91%); formations at most 2 changes per team, state and half (measured at most 1); phases Cohen's κ at least 0.55 on each half (0.58 and 0.61); zones at least 45 of 50 on the founder's spot check (not yet done). **Agreed 17 November 2026.** Met on the reference match except zones. Across SkillCorner's 20 open-data matches: formations 20 of 20; phases 11 of 20 per match (pooled κ 0.61); roles 12 of 20. Open: whether to restate the phase bar for a set of matches (for example pooled, with a per-match floor of 0.50) |
+| Stage B thresholds (P2 to P4) | Gate 2a | **Agreed 17 November 2026** (thresholds 0.4.0): three measured (low block 26 m, high block 47 m, break gain 15 m), the rest from published sources or engineering choices; listed in `CONTEXT_STRUCTURE_REPORT.md` |
 | Agreement bar for analyst studies | Gate 2b | Same method as the decision-quality study |
 | Free-player distance and overload rules | P5 | Named and versioned like the high-pressure threshold |
 | Runtime and storage budget per match | Gate 3 | Sets how much of P5 runs on the full grid |

@@ -49,7 +49,7 @@ A design/laydown exercise for taking the validated **PONTA-PROTOTYPE** (Matrix a
 - [Matrix.md](Matrix.md) — Matrix as Ponta's built-in engine: vision, layers, evidence, limits, validation protocol.
 - [platform-extraction-task.md](platform-extraction-task.md) — execution spec: stand up `ponta-platform`, extract the engines, add the semantic builder and parity report. **Complete** (see `EXTRACTION_REPORT.md` in `ponta-platform`).
 - [context-foundations-task.md](context-foundations-task.md) — execution spec: context packages P0 (foundations) and P1 (possession and game state), measurement first. **Complete** (17 November 2026; Gate 1 passed).
-- [context-structure-task.md](context-structure-task.md) — execution spec: context packages P2 (team structure), P3 (relative zones) and P4 (phase of play), validated against reference labels. **Built** (17 November 2026; Gate 2a bars with the founder).
+- [context-structure-task.md](context-structure-task.md) — execution spec: context packages P2 (team structure), P3 (relative zones) and P4 (phase of play), validated against reference labels. **Built** (17 November 2026; bars and thresholds agreed; zone spot check pending; roles need a revision to hold across SkillCorner's 20 open-data matches).
 - [ai-workflows-task.md](ai-workflows-task.md) — execution spec: the grounded AI workflows over the semantic store. **Next**, blocked on the API skeleton and on open schema decisions listed in it.
 - [matrix-prototype-task.md](matrix-prototype-task.md) — Matrix prototype build spec. **Complete.**
 - [matrix-statsports-adapter-task.md](matrix-statsports-adapter-task.md) — real STATSports ingest. **Complete.**
