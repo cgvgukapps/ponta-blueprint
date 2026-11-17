@@ -2,7 +2,7 @@
 
 **Last updated:** 17 November 2026. This is the living pick-up note: read it first when resuming, and update it at the end of any session that changes state. It describes the present; the history of how it got here is in git and in each repo's notes. For the plan see [roadmap.md](roadmap.md); for an outside reader's summary see [platform-overview.md](platform-overview.md).
 
-**One-line state:** pre-product, no customers. The engines, the Data check and the semantic builder are built and tested on real open data in `ponta-platform`; the AI layer, API, worker, storage and production web app are not built. A clickable UI prototype on mock data has been through two redesigns and brief v2 items 5.1 to 5.4. A single-file match page built from real engine output is ready for the founder-run concierge step. **Strategy, 17 November 2026:** Ponta is repositioned as a match context model that the AI explains; context packages (possession to episodes) come before the AI build ([context-packages.md](context-packages.md)). Context Stages A and B are built (Gate 1 passed; Gate 2a bars and thresholds agreed, met on the reference match except zones; roles do not yet hold across SkillCorner's 20 open-data matches). Next: the founder's zone spot check, a short P2 role-fit revision, discovery calls (gate E1) and the concierge step, with the rest of Phase 1 alongside.
+**One-line state:** pre-product, no customers. The engines, the Data check and the semantic builder are built and tested on real open data in `ponta-platform`; the AI layer, API, worker, storage and production web app are not built. A clickable UI prototype on mock data has been through two redesigns and brief v2 items 5.1 to 5.4. A single-file match page built from real engine output is ready for the founder-run concierge step. **Strategy, 17 November 2026:** Ponta is repositioned as a match context model that the AI explains; context packages (possession to episodes) come before the AI build ([context-packages.md](context-packages.md)). Context Stages A and B are built (Gate 1 passed; Gate 2a bars and thresholds agreed and met on the reference match, zones 47 of 50 on the founder's spot check; roles do not yet hold across SkillCorner's 20 open-data matches). Next: the founder's phase replay check, a short P2 role-fit revision, discovery calls (gate E1) and the concierge step, with the rest of Phase 1 alongside.
 
 ## Repositories
 
@@ -10,7 +10,7 @@
 |---|---|---|---|
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`; tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final`. Never modify. |
-| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `0263e9f` (Stage B thresholds agreed and measured on 20 open-data matches; Metrica Game 2 direction fixed at `f284563`), pushed 17 November 2026 |
+| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `ebcd668` (zone spot check recorded, phase replay mode), **not pushed**; `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) is the last pushed commit |
 | UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `26b7c1d`, pushed; tag `prototype-v0.1` at `4bd8e52` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main` at `82a3429`; v2 deployed with `noindex, nofollow` |
 
@@ -47,7 +47,8 @@
   - **Formations:** meet the bar on all 20 matches.
   - **Phases:** pooled κ 0.61 (0.62 and 0.59 by half), but only 11 of 20 matches clear κ 0.55 on both halves; none falls below 0.50.
   - **Roles:** median 75.4% by playing time; only 12 of 20 matches clear 75%. Most misses are wide midfielders given central slots (44%) or centre forwards given an attacking-midfield slot (15%).
-  - **Summary:** Gate 2a is met on the reference match except zones (spot check pending), and not across the set for roles.
+  - **Summary:** Gate 2a is met on the reference match, and not across the set for roles.
+- **Zone spot check (17 November 2026):** the founder judged 47 of 50 zone cards right (bar 45), so zones meet Gate 2a. Phases on the same still cards scored 34 of 50, with finish weakest at 9 of 17. A still frame rarely shows a phase, so the phase check is being redone as 7-second replays (`tools/context_spotcheck.py --replay`).
 - **Context Stage A built (17 November 2026)** in `ponta-platform` (`plaiq_engine/context/`): the context grid, package registry, Data check entries from packages, golden harness, and P1 possession and game state on all four regression matches; semantic events schema 1.1 adds possession chain, source, score and red-card difference. Report: `CONTEXT_FOUNDATIONS_REPORT.md`.
 - **Context foundations spec written (17 November 2026):** [context-foundations-task.md](context-foundations-task.md). It uses a regression set of four local matches and treats SkillCorner's own possession, phase and game-state fields (found in its dynamic events) as comparison data only.
 - [platform-overview.md](platform-overview.md) is a dated snapshot for an independent reviewer; also published as a private page for the founder.
@@ -68,7 +69,7 @@
 
 1. **Track V (validation), now.** Discovery calls with the wedge, intercepted-pass and price questions (gate E1, at least 8 calls); check each prospect's vendor licence before taking a real export ([legal-compliance.md](legal-compliance.md#vendor-licence-check-before-the-first-real-export)).
 2. **Finish Gate 2a, then Stage C.**
-   - **Zone spot check (founder):** `python tools/context_spotcheck.py --cache <cache> --out <file outside the repo>` writes 50 cards with tick boxes; paste the copied results back. The bar is 45 of 50.
+   - **Phase replay check (founder):** `python tools/context_spotcheck.py --replay --cache <cache> --out <file outside the repo>` writes the 50 moments as replays; paste the copied results back. Zones already passed (47 of 50).
    - **P2 role-fit revision:** fix wide midfielders read as central and forwards read as attacking midfielders, re-measured on the 20 open-data matches with `tools/context_reference_set.py`. Until then, roles stay out of later packages.
    - **Then:** a Stage C spec (P5 relationships, P6 movement types, P7 space and value).
    - Analyst agreement (Gate 2b) is still needed before anything is player-facing.
@@ -85,7 +86,7 @@
 - **A named high-pressure threshold** on the engine's 1 to 10 scale, documented and versioned; the UI glossary then follows.
 - **Context P1 refinements (open, with recommendations):** a control radius per provider (once a second broadcast match confirms SkillCorner's fit at 2.0 to 2.5 m), a hand-labelled possession sample before Stage B, and movement-based gap inference when a feed needs it ([context-packages.md](context-packages.md#open-decisions)).
 - **Context Gate 2a (with the founder):**
-  - the zone spot check;
+  - the phase replay check;
   - approving the P2 role-fit revision;
   - whether the phase bar, set for one match, should be restated for a set of matches (recommended: pooled κ at least 0.55 on each half, no match below 0.50).
 

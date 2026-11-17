@@ -1,6 +1,6 @@
 # Context Structure (P2, P3, P4) — Execution Task
 
-> **Status: built (17 November 2026); Gate 2a bars and thresholds agreed by the founder the same day; zone spot check pending; a P2 role-fit revision recommended.** Stage B of [context-packages.md](context-packages.md), started under decision 4a (proceed without waiting for analysts). Built in `ponta-platform` (`plaiq_engine/context/structure.py`, `zones.py`, `phase.py`); results in `CONTEXT_STRUCTURE_REPORT.md` there.
+> **Status: built (17 November 2026); Gate 2a bars and thresholds agreed by the founder the same day; zones passed the spot check (47 of 50); phase replay check pending; a P2 role-fit revision recommended.** Stage B of [context-packages.md](context-packages.md), started under decision 4a (proceed without waiting for analysts). Built in `ponta-platform` (`plaiq_engine/context/structure.py`, `zones.py`, `phase.py`); results in `CONTEXT_STRUCTURE_REPORT.md` there.
 >
 > - **Reference match (1886347):** roles agree with SkillCorner's by position group for 79% of playing time; phases at Cohen's κ 0.60.
 > - **All 20 SkillCorner open-data matches** (measured afterwards, nothing tuned):
@@ -8,7 +8,7 @@
 >   - phases hold pooled (κ 0.61) but clear the per-half bar on only 11 matches;
 >   - roles reach a median 75.4% and clear the bar on 12 matches, so they do not generalise.
 >
-> Gate 2a is met on the reference match except zones, not across the set for roles.
+> Gate 2a is met on the reference match, zones included; it is not met across the set for roles.
 
 Self-contained task for a coding agent working in the `ponta-platform` monorepo. It builds context packages P2 (team structure), P3 (relative zones) and P4 (phase of play) on the framework from [context-foundations-task.md](context-foundations-task.md) (complete: context grid, registry, Data check entries, P1 possession and game state). Read [context-packages.md](context-packages.md) first.
 

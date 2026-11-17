@@ -1,6 +1,6 @@
 # Ponta Context Packages
 
-> **Status: adopted 17 November 2026; Stage A built and Gate 1 passed the same day; Stage B built the same day; its Gate 2a bars and thresholds agreed by the founder; met on the reference match except zones (spot check pending); roles need a revision to hold across SkillCorner's 20 open-data matches.** Stage A (P0, P1) is done; Stage B (P2, P3, P4) is built ([context-structure-task.md](context-structure-task.md)). **Revised 17 November 2026 (decision 4a): Stages B to D proceed now** without waiting for analysts, validated against references (Gate 2a, Gate 3a); analyst agreement (Gate 2b, Gate 3b) is still required before anything is player-facing or called validated. P9 belongs to Phase 5. Source: the founder's work plan "Ponta Context Packages: Work Plan" (17 November 2026), adjusted after review. The four founder decisions are recorded below.
+> **Status: adopted 17 November 2026; Stage A built and Gate 1 passed the same day; Stage B built the same day; its Gate 2a bars and thresholds agreed by the founder; met on the reference match (zones 47 of 50 on the founder's spot check); roles need a revision to hold across SkillCorner's 20 open-data matches.** Stage A (P0, P1) is done; Stage B (P2, P3, P4) is built ([context-structure-task.md](context-structure-task.md)). **Revised 17 November 2026 (decision 4a): Stages B to D proceed now** without waiting for analysts, validated against references (Gate 2a, Gate 3a); analyst agreement (Gate 2b, Gate 3b) is still required before anything is player-facing or called validated. P9 belongs to Phase 5. Source: the founder's work plan "Ponta Context Packages: Work Plan" (17 November 2026), adjusted after review. The four founder decisions are recorded below.
 
 See [README.md](README.md) for the document index, [ai-layer.md](ai-layer.md) for how the AI reads what these packages produce, [data-tiers.md](data-tiers.md#context-packages-by-data-type) for what each kind of data can support, and [roadmap.md](roadmap.md) for where the work sits.
 
@@ -77,7 +77,7 @@ A context package is one self-contained module that turns canonical tracking int
 flowchart TB
   A["Stage A: P0 Foundations, P1 Possession and game state<br/>(done; Gate 1 passed)"]
   G1{"Gate 1: possession agrees with event data<br/>above the agreed bar"}
-  B["Stage B: P2 Structure, P3 Relative zones, P4 Phase of play<br/>(built; bars agreed; spot check and role revision pending)"]
+  B["Stage B: P2 Structure, P3 Relative zones, P4 Phase of play<br/>(built; bars agreed and met on the reference match; role revision pending)"]
   G2{"Gate 2a: roles and phases agree with reference labels;<br/>zones pass the founder's spot check"}
   C["Stage C: P5 Relationships, P6 Movement types, P7 Space and value<br/>(planned)"]
   G3{"Gate 3a: runtime budget met; adjusted decision quality<br/>computed side by side with base"}
@@ -164,7 +164,7 @@ Thresholds marked "agreed" are set in [Open decisions](#open-decisions). "Layer"
 - **Not as above:** *(revised)* zones are labelled for the ball with per-zone player counts, not per player.
 - **The pocket:** defined as between the lines, in a half-space and inside the hull (no published definition exists).
 - **Not built:** "wide of the full-back".
-- **Spot check:** the 50-card page (`tools/context_spotcheck.py`) is ready for the founder.
+- **Spot check:** *(revised 17 November 2026)* the founder judged 47 of 50 zone cards right (bar 45), so Gate 2a for zones is met. Phases are being rechecked as replays, since a still frame rarely shows one.
 
 ### P4 Phase of play (Stage B, built; layer 7)
 
@@ -273,7 +273,7 @@ Each is decided before its package starts, from measurements where the table say
 | Movement-based inference for detection gaps | When needed | Open; recommended when a feed with frequent in-play gaps appears |
 | Minimum players observed for structure to be Full | P2 | *(Superseded.)* Built as 8 outfield players per team at a grid point and 90% of in-play time with a shape. **Agreed 17 November 2026** |
 | Phase taxonomy: final list and minimum phase duration | P4 | *(Superseded by decision 4a.)* SkillCorner's published vocabulary adopted so it can be measured; minimum phase 1 s (no measurable effect). Analysts review it at Gate 2b |
-| Agreement bar with reference labels (roles, phases, zones) | Gate 2a | **Measured 17 November 2026; proposed:** roles at least 75% by position group, weighted by playing time (measured 79%), and at least 85% with central midfield merged (91%); formations at most 2 changes per team, state and half (measured at most 1); phases Cohen's κ at least 0.55 on each half (0.58 and 0.61); zones at least 45 of 50 on the founder's spot check (not yet done). **Agreed 17 November 2026.** Met on the reference match except zones. Across SkillCorner's 20 open-data matches: formations 20 of 20; phases 11 of 20 per match (pooled κ 0.61); roles 12 of 20. Open: whether to restate the phase bar for a set of matches (for example pooled, with a per-match floor of 0.50) |
+| Agreement bar with reference labels (roles, phases, zones) | Gate 2a | **Measured 17 November 2026; proposed:** roles at least 75% by position group, weighted by playing time (measured 79%), and at least 85% with central midfield merged (91%); formations at most 2 changes per team, state and half (measured at most 1); phases Cohen's κ at least 0.55 on each half (0.58 and 0.61); zones at least 45 of 50 on the founder's spot check. **Agreed 17 November 2026.** Met on the reference match (zones 47 of 50). Across SkillCorner's 20 open-data matches: formations 20 of 20; phases 11 of 20 per match (pooled κ 0.61); roles 12 of 20. Open: whether to restate the phase bar for a set of matches (for example pooled, with a per-match floor of 0.50) |
 | Stage B thresholds (P2 to P4) | Gate 2a | **Agreed 17 November 2026** (thresholds 0.4.0): three measured (low block 26 m, high block 47 m, break gain 15 m), the rest from published sources or engineering choices; listed in `CONTEXT_STRUCTURE_REPORT.md` |
 | Agreement bar for analyst studies | Gate 2b | Same method as the decision-quality study |
 | Free-player distance and overload rules | P5 | Named and versioned like the high-pressure threshold |
