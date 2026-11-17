@@ -11,7 +11,7 @@ See [README.md](README.md) for baseline assumptions and document index. This doc
 - **Matrix** — the independent layer between a club's tracking providers and their analysis. The main offering, and the strategic priority. Public headline: *"One dataset from every tracking provider."* Public tagline: *"The operating system for football tracking data."*
 - **Plaiq** — the IQ analytics engine (off-ball decision quality, pressure, pass option value — everything specified in `ANALYTICS_SPECIFICATION.md` and covered elsewhere in this blueprint). Public line: *"scores the decision, not just the outcome."* Spell out "pass option value" in any public copy; do not use the initials "POV" on pontahq.com. Plaiq ingests **either** Matrix's unified, multi-source-reconciled tracking output **or** a single vendor's raw tracking/event data directly — Matrix is an upstream enrichment layer, not a hard dependency of Plaiq. Public shorthand: *"Plaiq runs on Matrix's output, or on its own."*
 
-This is a deliberate reprioritization from the rest of the blueprint, which was written analytics-first. `competitive-landscape.md` found that Plaiq's core metric overlaps severely with SkillCorner's Game Intelligence product at commercial scale. Matrix is a different bet: instead of competing with tracking/GPS vendors on analytics built from their data, it becomes the vendor-neutral layer that reconciles their data together — a bet that a club's real, unsolved pain (multiple vendors, no common ground truth, manual reconciliation) is more defensible than a second entrant into an already-productized analytics category.
+This is a deliberate reprioritisation from the rest of the blueprint, which was written analytics-first. `competitive-landscape.md` found that Plaiq's core metric overlaps severely with SkillCorner's Game Intelligence product at commercial scale. Matrix is a different bet: instead of competing with tracking/GPS vendors on analytics built from their data, it becomes the vendor-neutral layer that reconciles their data together — a bet that a club's real, unsolved pain (multiple vendors, no common ground truth, manual reconciliation) is more defensible than a second entrant into an already-productised analytics category.
 
 ## Vision
 
@@ -96,7 +96,7 @@ Public availability labels (founder wording, in the built, not-yet-public site c
 
 1. **Matrix Normalise — Available now.** Customer gives one provider's export; Matrix returns a standardised schema, cleaned tracking data, quality scoring, and consistent thresholds. No second data source required, no reconciliation claim being made. Delivery today is founder-run (send an export, we send it back), not a self-serve API. Proven by Track A, and the Track A proof is now a public section on pontahq.com.
 2. **Matrix Reconcile — Early access** (FAQ: opening to design partners). Customer has two providers (e.g. surviving a vendor switch, or running GPS alongside optical). Unlocks cross-provider comparison, calibration, and historical continuity across a provider transition. No signed design partner yet.
-3. **Matrix Fuse — In development.** Customer has GPS + optical + event data together. Unlocks a combined player representation and richer workload modeling — the hardest, least-proven tier (Track B below), and the one still blocked on a real design partner.
+3. **Matrix Fuse — In development.** Customer has GPS + optical + event data together. Unlocks a combined player representation and richer workload modelling — the hardest, least-proven tier (Track B below), and the one still blocked on a real design partner.
 
 **A concrete use case for tier 2 — "Provider Transition."** A club switching tracking/GPS vendors (a real, recurring event — budget cycles, contract renewals, hardware failures) otherwise gets a hard discontinuity in its historical player-workload data: the old provider's numbers and the new provider's numbers aren't directly comparable. Matrix's pitch here is concrete and easy to understand without any technical background: *"your multi-year player workload history remains analytically continuous through the switch."* This is also a natural moment when a club already has budget and motivation to buy — the switch itself is the trigger, not something Matrix has to create.
 
@@ -131,14 +131,14 @@ Tactical Analysis · Physical Performance · Recruitment · AI Models · Coach D
 
 **Long-term vision:** evolve Matrix from a data integration feature into the industry's canonical football data infrastructure — potentially licensed to other analytics vendors, not just consumed internally by Plaiq.
 
-## Why Matrix is prioritized over Plaiq
+## Why Matrix is prioritised over Plaiq
 
 *(Revised: the question is now moot as a product choice — both engines ship inside one app — but the reasoning still explains why the data engine is the foundation and why Plaiq alone was a weak standalone bet.)*
 
-- **Sidesteps the confirmed competitive overlap.** `competitive-landscape.md`'s single most consequential finding was that Plaiq's core metric is already productized by SkillCorner Game Intelligence at 250+ clients. Matrix is not an analytics competitor to SkillCorner/Catapult/etc. — it's infrastructure that makes their own products more useful together, which is structurally not something any single vertically-integrated vendor is incentivized to build for its competitors' data.
+- **Sidesteps the confirmed competitive overlap.** `competitive-landscape.md`'s single most consequential finding was that Plaiq's core metric is already productised by SkillCorner Game Intelligence at 250+ clients. Matrix is not an analytics competitor to SkillCorner/Catapult/etc. — it's infrastructure that makes their own products more useful together, which is structurally not something any single vertically-integrated vendor is incentivised to build for its competitors' data.
 - **Real, validated pain, not a hypothesis.** The manual reconciliation problem (different clocks, coordinate systems, IDs, sample rates across vendors) is an operational cost every multi-vendor club already pays, independent of whether any given analytics metric is differentiated.
 
-This reprioritization introduces new risks that don't exist in the same form for Plaiq alone, and aren't yet resolved anywhere in this blueprint:
+This reprioritisation introduces new risks that don't exist in the same form for Plaiq alone, and aren't yet resolved anywhere in this blueprint:
 
 - **Legal/ToS exposure is larger, not smaller.** `architecture.md` and `legal-compliance.md` were written around Plaiq being "an enhancement layer on data the customer already licensed, never redistributing across tenants." Matrix's core act — *fusing* multiple vendors' proprietary data into one derived, harmonised dataset — is a materially bigger claim, and no vendor's ToS has been checked for whether this kind of derivative combination is permitted, even for internal use by the licensing customer.
 - **Wearable/GPS data is more sensitive than tactical tracking data.** Physical/biometric performance data is more likely to fall under stricter data-protection categories (e.g. GDPR special-category health-adjacent data) than positional tracking alone — a legal review gap, not yet covered by `legal-compliance.md`.
@@ -168,7 +168,7 @@ PONTA-PROTOTYPE/
   ingestion/                  # existing per-provider parsers — matrix_engine/providers/ calls into these, doesn't replace them
 ```
 
-Rationale (full trade-off analysis already done in this chat's prior turn, summarized here):
+Rationale (full trade-off analysis already done in this chat's prior turn, summarised here):
 
 - Reuses ~4,700 lines of already-tested ingestion/roster/identity code (`ingestion/*_io.py`, `roster/build_roster.py`, `statsbomb/identity.py`, `pitch_config.py`) rather than duplicating it in a fresh repo.
 - Mirrors the extraction pattern `architecture.md` already planned for `plaiq_engine` — a UI-agnostic package with a clean façade, extracted from the same source tree.

@@ -178,6 +178,7 @@ Ponta's first real deliveries will be founder-run: a prospect sends one export, 
 - Citation chips on this page cannot open a live replay. Each chip opens a static moment thumbnail with the explain card instead.
 - It works when opened from disk or a static host, with no sign-in.
 - **Done when:** `npm run build` also writes one such page for `m_0412` that opens offline, and the payload document exists.
+- **Status: done (15 November 2026; restyled 16 November 2026).** One deviation, deliberate: with no AI layer yet, the page shows the Data check, coverage and moments chosen by stated rules, not a generated brief. The payload comes from `ponta-platform/tools/match_page_payload.py`, and a page built from real engine output (SkillCorner 1886347) exists outside the repos.
 
 ### 5.4 Fixes carried from the review
 
@@ -190,6 +191,8 @@ Ponta's first real deliveries will be founder-run: a prospect sends one export, 
 **Status: done (16 November 2026),** UI repo `a88bbf4`, except that Safari print is unverified (Safari has no `@page` margin boxes, so no page numbers). The reasons audit is in the UI repo's `docs/design-notes.md` section 12.
 
 ### 5.5 A mapping for later
+
+**Status: on hold (16 November 2026, founder decision).** Not started; revisit when the frontend moves into `ponta-platform/apps/web`.
 
 The backend is not being connected now, but the mock shapes should not drift further from the planned API. Write `docs/api-mapping.md`: for each `src/api` function, the planned endpoint and the fields it will return, mapped to the semantic event schema and the Parity Report. Where the mock uses different names, record the difference; do not refactor yet.
 

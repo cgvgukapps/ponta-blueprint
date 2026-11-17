@@ -1,5 +1,7 @@
 # Matrix Prototype — Execution Task
 
+> **Status: complete.** Executed in `PONTA-PROTOTYPE`: real cross-provider normalisation (Track A) and synthetic dual-source fusion (Track B, a 24.5% RMSE improvement over the better single input, on synthetic data only). Results are in that repo's `matrix_engine/README.md`; the code now lives in `ponta-platform` ([platform-extraction-task.md](platform-extraction-task.md)). Kept as the record of what was asked; the prototype repo still links to this file, so do not rename it.
+
 This is a self-contained task description for a coding agent building inside `/Users/cicerovieira/PONTA-PROTOTYPE`. It doesn't assume the agent has any other context — everything needed is below or in the files referenced.
 
 ## Context
@@ -47,7 +49,7 @@ matrix_engine/
 
 No Streamlit imports anywhere in `matrix_engine/` — it must be usable from a plain Python script or pytest, same constraint as the existing engine code.
 
-### 2. Common normalized schema (`schema.py`)
+### 2. Common normalised schema (`schema.py`)
 
 Define one pandas `DataFrame` schema every provider adapter must output, at minimum:
 
@@ -55,7 +57,7 @@ Define one pandas `DataFrame` schema every provider adapter must output, at mini
 |---|---|---|
 | `timestamp` | float (seconds, match-relative) | zeroed at kickoff or first frame, per source |
 | `frame` | int | source-native frame index, kept for traceability |
-| `player_id` | str | normalized player identifier (use existing roster/identity resolution where applicable) |
+| `player_id` | str | normalised player identifier (use existing roster/identity resolution where applicable) |
 | `team` | str | `home` / `away` |
 | `x`, `y` | float | metres, using the pitch convention already established in `pitch_config.py` |
 | `source` | str | e.g. `metrica`, `skillcorner`, `synthetic_gps` |
@@ -73,7 +75,7 @@ This track does **not** attempt fusion — Metrica's Sample_Game and the SkillCo
 
 ### 4. Track B — synthetic dual-source fusion (one real match, one synthetic degraded copy)
 
-**`testing/synthetic_source.py`** — given a ground-truth normalized DataFrame (from `providers/metrica.py` on one Sample_Game), produce a degraded copy simulating an independent second source, with independently configurable:
+**`testing/synthetic_source.py`** — given a ground-truth normalised DataFrame (from `providers/metrica.py` on one Sample_Game), produce a degraded copy simulating an independent second source, with independently configurable:
 
 - **Downsampling** — e.g. resample from 25 Hz to 10 Hz.
 - **Position noise** — additive Gaussian noise on `x`/`y` (configurable std dev, e.g. 0.3–1.0 m to emulate GPS-grade rather than optical-grade accuracy).

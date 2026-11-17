@@ -106,7 +106,7 @@ Tier 3 needs five things that do not exist yet: a real paired match, ingestion o
 
 ### Plaiq (spatial engine)
 
-      - **Pressure:** 1v1 pressure on the player on a 1 to 10 scale. No named "high pressure" threshold is defined by the engine yet; the prototype uses 7 as a selection rule.
+      - **Pressure:** 1v1 pressure on the player on a 1 to 10 scale. No named "high pressure" threshold is defined by the engine yet; the shareable match page uses 7 or more as a selection rule, and the UI prototype still shows an older 0 to 1 index that must be aligned.
 
       - **Control zones** (first-to-reach) and a **value surface** (threat by location).
 
@@ -338,6 +338,7 @@ The website's call to action and hero speak to wedge B and Tier 3, while Tier 1 
       - Public naming of Matrix and Plaiq inside one product; whether to publish the analytics specification or keep the formulas as trade secrets.
 
       - A named, versioned "high pressure" threshold on the engine's 1 to 10 scale.
+- What fills the confidence slot of a citation on a single-source match, which has no per-frame confidence (only ball detected and players observed).
 
 ## Questions for the reviewer
 

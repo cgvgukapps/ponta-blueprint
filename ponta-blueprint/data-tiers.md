@@ -22,7 +22,7 @@ Three tiers, each unlocking the next. The tier of a match is stored on the match
 
 **Inputs.** One provider's export for a match or session. Three sub-cases behave differently, and the product must say which one it is looking at:
 
-- **Optical tracking, both teams** (SkillCorner, Metrica, Second Spectrum): the full Plaiq engine runs — pressure, personal control zones, pass option value, decision quality, off-ball movement value, failed-pass intent inference. This is the strongest Tier 1 experience.
+- **Optical tracking, both teams** (SkillCorner and Metrica; a Second Spectrum adapter exists but is fixture-tested only, so it is not presented as supported): the full Plaiq engine runs — pressure, personal control zones, pass option value, decision quality, off-ball movement value, failed-pass intent inference. This is the strongest Tier 1 experience.
 - **Event data only** (StatsBomb): the degraded, event-only Plaiq mode runs on reconstructed pseudo-continuity (see `features.md` Part 2). Scores are lower-confidence and must be visually distinguished, not shown on the same band as full-tracking scores.
 - **GPS only** (STATSports, later Catapult etc.): positions cover **one team only**, so opposition pressure and control zones are **not computable**. This is a physical-load tier, not a tactical one. Tactical AI briefs are Blocked; physical summaries are available. Do not let the product imply otherwise.
 

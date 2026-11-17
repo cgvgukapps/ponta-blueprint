@@ -1,5 +1,7 @@
 # Platform Extraction — Execution Task
 
+> **Status: complete for its scope (15 November 2026).** Both engines run from `ponta-platform` with all prototype tests; the Plaiq-via-Matrix equivalence test, `parity.py`, `semantic_builder.py`, the demo and `EXTRACTION_REPORT.md` are done, and the decisions it raised are recorded in [status.md](status.md#open-decisions). One small item is open: the unused `prev_event` parameter of `resolve_identities`. The rest of Phase 1 (Supabase, FastAPI, storage, the cross-tenant test) was never in this task's scope; see [roadmap.md](roadmap.md#phase-1--platform-foundation-and-engine-extraction).
+
 Self-contained task for a coding agent. It starts from the cleaned `PONTA-PROTOTYPE` (see [prototype-cleanup-task.md](prototype-cleanup-task.md), complete) and creates the production monorepo's engine layer. It does **not** build the API, database, frontend or any LLM feature. Read, in this order, if anything below is ambiguous: [architecture.md](architecture.md) ("Canonical store and AI layer", "Monorepo and repo strategy"), [data-tiers.md](data-tiers.md), [ai-layer.md](ai-layer.md) ("The semantic football event"), and `Matrix.md`.
 
 ## Context

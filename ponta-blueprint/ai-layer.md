@@ -15,7 +15,7 @@ The product's trust position follows from this: *show your work, no black box* (
 ## Hard rules (non-negotiable)
 
 1. **No raw coordinates in any LLM context.** Trajectory arrays never enter a prompt. All spatial math runs in `plaiq_engine`; the AI sees only semantic events and aggregates derived from them.
-2. **Every claim cites.** Every factual statement in an AI output carries a citation array of `[event_id, timestamp_s, confidence_score]` (plus `match_id`). A statement without a resolvable citation is not rendered; the generator is re-run or the claim dropped.
+2. **Every claim cites.** Every factual statement in an AI output carries a citation array of `[event_id, timestamp_s, confidence_score]` (plus `match_id`). A statement without a resolvable citation is not rendered; the generator is re-run or the claim dropped. *(Open, 17 November 2026: single-source matches have no per-frame confidence, only `ball_detected` and `players_observed`, so what fills the confidence slot for Tier 1 must be decided before the AI layer is built. See [status.md](status.md#open-decisions).)*
 3. **Parity first.** Every AI call begins by reading the match's Parity Report and the relevant per-frame confidence. Degraded or Blocked metrics are disclosed in the output, never silently substituted or implied ([below](#parity-and-confidence-honesty)).
 4. **No arbitrary SQL.** The model calls a small set of typed, sandboxed tools; it cannot write free-form queries against the store.
 5. **Pseudonymised prompts.** Names and other direct identifiers never leave Ponta's infrastructure inside a prompt ([below](#pseudonymisation-and-llm-providers)).

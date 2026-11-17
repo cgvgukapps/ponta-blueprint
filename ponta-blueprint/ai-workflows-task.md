@@ -1,11 +1,24 @@
 # AI Workflows — Execution Task
 
+> **Status: next, not startable yet (17 November 2026).** Precondition 1 is met (the engines, `parity.py` and `semantic_builder.py` exist in `ponta-platform`). Precondition 2 is not: there is no FastAPI skeleton, authorised-path reader or cross-tenant test yet (`apps/api` is empty). The roadmap also puts a founder-run concierge step and evidence gate E1 before the platform build ([roadmap.md](roadmap.md#evidence-gates-proposed-15-november-2026-founder-to-confirm-the-thresholds)). Read "What the built schema means for this task" below before starting.
+
 Self-contained task for a coding agent working in the `ponta-platform` monorepo. It builds the grounded AI layer specified in [ai-layer.md](ai-layer.md) over the semantic store produced by [platform-extraction-task.md](platform-extraction-task.md). Read `ai-layer.md` first — it is the specification; this document is the work breakdown. Also relevant: [data-tiers.md](data-tiers.md), [engine-governance.md](engine-governance.md#ai-governance), [legal-compliance.md](legal-compliance.md#ai-and-health-adjacent-data), [operations.md](operations.md#llm-costs-and-ai-operations).
 
 ## Preconditions (do not start until true; if not, stop and report)
 
 - `ponta-platform` exists with `matrix_engine`, `plaiq_engine`, `parity.py` and `semantic_builder.py` working, and the extraction acceptance criteria met.
 - A FastAPI skeleton and a way to read a match's `semantic_events.parquet`, `trajectories.parquet` and Parity Report by `match_id` **through the API's authorised-path mechanism** (the API builds object paths itself under the caller's org prefix; the AI layer never accepts a path or URI from a client or from the model). If this does not yet exist, building it with its cross-tenant isolation test is a prerequisite, not part of this task.
+
+## What the built schema means for this task (added 17 November 2026)
+
+The semantic builder now exists, and a few of its fields differ from what this task first assumed. Details are in `ponta-platform/EXTRACTION_REPORT.md` and [ai-layer.md](ai-layer.md#the-semantic-football-event). Do not change the schema to fit this task; where a decision is open, stop and ask.
+
+- **Citation confidence is undefined for a single source.** The citation rule asks for `confidence_score`, but a per-frame confidence exists only when Matrix reconciles two or more sources. Single-source rows carry `ball_detected` and `players_observed` instead. *Open decision:* what goes in the confidence slot of a Tier 1 citation (for example a documented derivation from those two fields, or an explicit null with the reason). The "minimum confidence" filter below depends on the same decision.
+- **Pressure is on the engine's 1 to 10 scale** (`opposition_pressure`), not a 0 to 1 index. No named "high pressure" threshold exists yet; one must be chosen, documented and versioned in the thresholds config before the pressure-band filter is used.
+- **`dq_score` runs from 0 to 1.5.** Filter and describe through `dq_band` (Poor below 0.55, Suboptimal 0.55 to 0.79, Good 0.80 to 0.94, Optimal 0.95 and above); never clip or normalise to 0 to 1.
+- **`inference_confidence` is a category** (`strong`, `medium`, `weak`), not a number.
+- **Rows are flat columns** (`actor_player_ref`, `dq_score` …), which suits the typed query tool; `nested_record` gives the nested view.
+- **Coverage belongs in every answer's limits:** the share of passes and carries scored and the causes of the rest (goalkeeper, set piece, no score from the engine), as the Data check and the shareable match page already show.
 
 ## Objective
 

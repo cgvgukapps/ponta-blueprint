@@ -11,9 +11,9 @@ See [README.md](README.md) for the document index and [roadmap.md](roadmap.md) f
 ## How to use this document in a pitch
 
 - Frame everything here as **"what becomes possible once we've proven the wedge and have capital/data to invest further"** — not as committed near-term deliverables. Presenting these as Phase 2/3 work (per `roadmap.md`) would be dishonest and would look worse under diligence than a smaller, credible near-term plan.
-- Features 1-3 below double as a direct, prepared answer to the hardest question this blueprint has already surfaced against itself: **"SkillCorner already does something very similar — why will you win?"** (`competitive-landscape.md`). The honest near-term answer is the wedges in that document (data-source agnosticism, intent-based scoring, explainability); the honest *long-term* answer is that Plaiq becomes a personalization and simulation platform layered on top of those wedges, which is a materially harder thing for an incumbent to replicate than a single metric. **Feature 4 is a different, Matrix-specific bet** — it answers "why can't a tracking vendor just build this reconciliation layer themselves once they see you've proven it," not the Plaiq/SkillCorner question.
+- Features 1-3 below double as a direct, prepared answer to the hardest question this blueprint has already surfaced against itself: **"SkillCorner already does something very similar — why will you win?"** (`competitive-landscape.md`). The honest near-term answer is the wedges in that document (data-source agnosticism, intent-based scoring, explainability); the honest *long-term* answer is that Plaiq becomes a personalisation and simulation platform layered on top of those wedges, which is a materially harder thing for an incumbent to replicate than a single metric. **Feature 4 is a different, Matrix-specific bet** — it answers "why can't a tracking vendor just build this reconciliation layer themselves once they see you've proven it," not the Plaiq/SkillCorner question.
 - Each feature below states its **prerequisite gate** from `roadmap.md` — don't skip that in a pitch. Investors evaluating a technical product will probe exactly this ("what needs to be true before you can start this"), and having the answer ready is a credibility signal, not a weakness to hide.
-- Not all four carry the same competitive urgency, and the pitch should be honest about that difference: Team Context ML and the Calibration Graph are both genuine, durable moats (a competitor can't copy their way to another club's labeling history, or to accumulated validated cross-vendor calibration relationships); Predictive Team Shape and Fitness-Reconciled Decision Quality are both races against better-resourced players (DeepMind/TacticAI and Catapult/Impect respectively) who could plausibly ship something similar first. Conflating "moat" and "race" in a pitch is the kind of imprecision a sharp investor will catch.
+- Not all four carry the same competitive urgency, and the pitch should be honest about that difference: Team Context ML and the Calibration Graph are both genuine, durable moats (a competitor can't copy their way to another club's labelling history, or to accumulated validated cross-vendor calibration relationships); Predictive Team Shape and Fitness-Reconciled Decision Quality are both races against better-resourced players (DeepMind/TacticAI and Catapult/Impect respectively) who could plausibly ship something similar first. Conflating "moat" and "race" in a pitch is the kind of imprecision a sharp investor will catch.
 
 ## Feature 1: Team Context ML (club-tuned decision-preference model)
 
@@ -23,7 +23,7 @@ Every competing product (StatsBomb IQ, SkillCorner Game Intelligence, Impect) sc
 
 ### Why this is a genuine moat, not just a feature
 
-Every wedge in `competitive-landscape.md` is a *product* difference a competitor could plausibly copy if they chose to invest in it. A club-tuned preference model is an **account-level data moat**: its value compounds with tenure at a specific customer, and a competitor can't copy their way to it — they'd need that specific club's months of accumulated labeling history too. This is the strongest switching-cost argument available in this business, and it's the one most worth leading with when an investor asks about defensibility against incumbents with more data/brand/distribution.
+Every wedge in `competitive-landscape.md` is a *product* difference a competitor could plausibly copy if they chose to invest in it. A club-tuned preference model is an **account-level data moat**: its value compounds with tenure at a specific customer, and a competitor can't copy their way to it — they'd need that specific club's months of accumulated labelling history too. This is the strongest switching-cost argument available in this business, and it's the one most worth leading with when an investor asks about defensibility against incumbents with more data/brand/distribution.
 
 ### Why it's technically credible, not just aspirational
 
@@ -36,7 +36,7 @@ Not buildable meaningfully before **Phase 3/4** — it requires real paying cust
 ### Risks to state honestly, even in a pitch
 
 - **Cold start**: needs a defined threshold before a club-tuned score is shown at all, with the universal score as the default below it.
-- **Outcome bias**: coaches labeling after seeing the outcome would quietly reintroduce the "reward what worked" bias that PLAIQ's failed-pass intent-scoring was specifically built to avoid (see `competitive-landscape.md`'s intent-vs-outcome wedge) — the labeling UI must freeze the decision-time frame and hide the outcome.
+- **Outcome bias**: coaches labelling after seeing the outcome would quietly reintroduce the "reward what worked" bias that PLAIQ's failed-pass intent-scoring was specifically built to avoid (see `competitive-landscape.md`'s intent-vs-outcome wedge) — the labelling UI must freeze the decision-time frame and hide the outcome.
 - **Must not dilute the explainability positioning**: ship as a clearly separate "Style Fit Score" alongside the objective, universal DQ Rating — never conflate the two, or two clubs seeing different numbers for the same event with no visible reason undermines the "no black box" trust argument that the whole product is built on.
 
 ### Where it plugs into the existing product
@@ -66,7 +66,7 @@ Presenting this as one giant leap is both less credible and less fundable than a
 
 1. **v0 — case-based retrieval (buildable pre-funding, no ML research required).** Given a hypothetical repositioning, retrieve real historical frames from already-ingested matches with similar spatial configurations and show what actually happened next. This is a nearest-neighbor lookup over data already collected through normal product usage, not a trained model — a credible, shippable proof of concept that the "what-if" interaction is valuable before committing to the harder version.
 2. **v1 — constrained predictive model on a narrow phase of play** (e.g., set-pieces/corners specifically, mirroring TacticAI's own narrower scope rather than attempting full open-play prediction) — the first real learned model, scoped small enough to validate against held-out historical data (does the prediction match what a real defense actually did?) before trusting it in front of a customer.
-3. **v2 — full interactive open-play shape simulation** — the complete vision, realistically a multi-year, well-capitalized effort requiring the data partnership and research hire above.
+3. **v2 — full interactive open-play shape simulation** — the complete vision, realistically a multi-year, well-capitalised effort requiring the data partnership and research hire above.
 
 v0 is honestly closeable inside `roadmap.md`'s existing Phase 4/5 without new fundraising; v1 and v2 are the actual "use of funds" story for a raise.
 
@@ -87,7 +87,7 @@ Unlike Team Context ML, this is not a category where PLAIQ has a structural head
 ### Honest prerequisites
 
 - **A new connector category and a new buyer.** Wearable/GPS data (Catapult, STATSports, Polar) is a separate vendor relationship from tracking/event data, and it's typically purchased and owned by a club's sports-science/medical department — not the recruitment/analytics buyer this whole blueprint has targeted so far. This is a second internal champion to win over, not just a new API integration.
-- **Careful statistical design to avoid overclaiming causation.** Given the weak, largely between-player nature of the underlying research signal, the visualization needs honest uncertainty framing (confidence bands, not a bold "fatigue caused this bad decision" narrative) — consistent with the confidence-badge pattern PLAIQ already uses elsewhere, not a new design language.
+- **Careful statistical design to avoid overclaiming causation.** Given the weak, largely between-player nature of the underlying research signal, the visualisation needs honest uncertainty framing (confidence bands, not a bold "fatigue caused this bad decision" narrative) — consistent with the confidence-badge pattern PLAIQ already uses elsewhere, not a new design language.
 - **A distinct, heightened legal review.** Physiological signals (heart rate especially) sit closer to GDPR's "special category" health data than positional tracking coordinates do — `legal-compliance.md`'s existing framework was written around tracking/event data and would need a specific extension before this ships, not an assumed extension.
 - **Honest scoping of "body state."** Most in-match wearable data is *external* load (GPS-derived distance, sprints, accelerations/decelerations, proprietary load indices) — heart rate is inconsistently captured in-play, and true physiological/cognitive markers are almost always pre/post-match tests, not continuous streams. The buildable v1 is "Decision Quality vs. physical exertion," not the fuller "body state" framing.
 
@@ -95,11 +95,11 @@ Unlike Team Context ML, this is not a category where PLAIQ has a structural head
 
 1. **v0 — retrospective correlation report.** A per-player, post-match report correlating existing DQ events against a club's own exported load data (even just a CSV upload, matching the file-upload-first philosophy already established for tracking data in `architecture.md`), presented with explicit correlation-not-causation framing and confidence bands. No new real-time infrastructure required.
 2. **v1 — live synced timeline in Player Performance mode.** The actual vision: the existing DQ timeline chart with a load/exertion overlay sharing the same time axis. Needs a real wearable-data connector and the sports-science buyer relationship, not just a report generator.
-3. **v2 — a genuine early-warning tool** ("this player's decisions historically decline once cumulative load crosses X — consider substituting"). Requires enough individualized historical data per player to make a *personal*, not population-level, claim — and should only be pursued once v0/v1 show the correlation is real and useful for specific customers, not assumed upfront given the research caveat above.
+3. **v2 — a genuine early-warning tool** ("this player's decisions historically decline once cumulative load crosses X — consider substituting"). Requires enough individualised historical data per player to make a *personal*, not population-level, claim — and should only be pursued once v0/v1 show the correlation is real and useful for specific customers, not assumed upfront given the research caveat above.
 
 ### A note on synergy with Feature 1
 
-Worth flagging, not overstating: if a club is already reviewing decisions for the Team Context ML labeling workflow, that same review moment is a natural place to also surface load-state context — "was this decision made under unusually high accumulated load" — helping a coach judge whether a given decision is a true preference signal or an outlier the model shouldn't learn from. A plausible future integration point, not a dependency either feature needs to wait on.
+Worth flagging, not overstating: if a club is already reviewing decisions for the Team Context ML labelling workflow, that same review moment is a natural place to also surface load-state context — "was this decision made under unusually high accumulated load" — helping a coach judge whether a given decision is a true preference signal or an outlier the model shouldn't learn from. A plausible future integration point, not a dependency either feature needs to wait on.
 
 ## Feature 4: The Calibration Graph (a network-effect moat for Matrix)
 
@@ -122,20 +122,20 @@ Not a v1 idea in any form — this requires several real, validated design-partn
 ### Risks to state honestly, even in a pitch
 
 - **Cold start is worse than Feature 1's.** A calibration graph with one or two edges isn't yet a graph — it's just the pairwise validation work `Matrix.md` already scopes as the current blocker. The moat only exists once there's enough real coverage to make network inference plausible, which could take years of design-partner accumulation.
-- **Each edge has its own validity conditions.** A relationship validated at one venue, sampling rate, and player population doesn't automatically generalize — the edge metadata (population, venue, sampling rate) exists precisely because a calibration relationship measured under one set of conditions may not transfer to another.
+- **Each edge has its own validity conditions.** A relationship validated at one venue, sampling rate, and player population doesn't automatically generalise — the edge metadata (population, venue, sampling rate) exists precisely because a calibration relationship measured under one set of conditions may not transfer to another.
 - **Depends on Matrix succeeding at the pairwise stage first.** This is explicitly a "what becomes possible after the wedge is proven" idea, not a parallel bet — there is nothing to build here until `Matrix.md`'s own next-steps blocker (a real design partner) is cleared at least once.
 
 ## Sequencing relative to `roadmap.md`
 
 | Feature | Earliest credible start | What has to be true first |
 |---|---|---|
-| Team Context ML | `roadmap.md` Phase 4 | Real paying customers, months of usage history, a designed bias-resistant labeling UX |
+| Team Context ML | `roadmap.md` Phase 4 | Real paying customers, months of usage history, a designed bias-resistant labelling UX |
 | Predictive Team Shape v0 (case-based) | `roadmap.md` Phase 4/5 | A meaningful library of ingested matches across customers to retrieve from |
 | Predictive Team Shape v1 (constrained predictive model) | Post-raise, informed by this document | An ML hire, a defined tracking-data acquisition plan, held-out validation methodology |
-| Predictive Team Shape v2 (full simulation) | Multi-year, well-capitalized | A platform-licensed data deal at meaningful scale (`architecture.md`'s Future Evolution), real-time serving infrastructure |
+| Predictive Team Shape v2 (full simulation) | Multi-year, well-capitalised | A platform-licensed data deal at meaningful scale (`architecture.md`'s Future Evolution), real-time serving infrastructure |
 | Fitness-Reconciled DQ v0 (retrospective report) | `roadmap.md` Phase 4, opportunistically earlier if a design partner offers wearable exports | A single wearable-data connector (even CSV-based), confidence-banded reporting design |
 | Fitness-Reconciled DQ v1 (live synced timeline) | Post-Phase 4 | A real wearable-vendor connector, a sports-science department relationship at a customer |
-| Fitness-Reconciled DQ v2 (early-warning tool) | Post-raise, data-dependent | Enough individualized historical load/DQ data per player to support personal (not population-level) claims |
+| Fitness-Reconciled DQ v2 (early-warning tool) | Post-raise, data-dependent | Enough individualised historical load/DQ data per player to support personal (not population-level) claims |
 | Calibration Graph (Matrix) | Post-raise, well after `roadmap.md`'s Matrix design-partner blocker clears at least once | Several real, validated pairwise calibration relationships across different vendor pairs — explicitly not v1, and further out than any Plaiq feature above |
 
 ## What not to do with this document in a pitch

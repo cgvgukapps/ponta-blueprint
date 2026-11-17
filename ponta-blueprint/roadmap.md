@@ -88,6 +88,8 @@ Triggers from [legal-compliance.md](legal-compliance.md), restated as gates on t
 
 Execution spec: [platform-extraction-task.md](platform-extraction-task.md).
 
+**Progress (17 November 2026):** the engine extraction, the equivalence test, `parity.py` and `semantic_builder.py` are done (see the task's status banner). Supabase, the FastAPI skeleton, object storage, the cross-tenant access test and the basic ToS are not started.
+
 **Exit criteria:** both engines run standalone from the monorepo with the prototype suite green; a sample match produces a Parity Report and a semantic-events Parquet file; a deployed (even empty) API + auth skeleton; cross-tenant isolation test passing.
 
 ## Phase 2 — Tier 1 pipeline and AI workflows
@@ -101,17 +103,21 @@ Execution spec: [platform-extraction-task.md](platform-extraction-task.md).
 4. API governance basics (`/v1`, per-org keys, rate limiting).
 5. Resolve explicitly (don't let it default): which provider/model; whether event-only analysis ships in the first release; whether Ask Ponta is capped, metered or bundled.
 
+**Progress (17 November 2026):** for step 0, the single-file match page and its payload tool exist and have been run on real open data (SkillCorner 1886347); no prospect export has been received yet. Steps 1 to 5 are not started.
+
 **Exit criteria:** an uploaded Tier 1 match yields a cited brief and a working explorer; all AI guardrail tests pass; Blocked/Degraded metrics are disclosed rather than answered; LLM sub-processor terms in place before any real customer data is used.
 
 ## Phase 3 — Web app and first users
 
 **Runs:** after Phase 2's core exists; UI work can begin against stub data earlier.
 
-- Web app (Next.js in the docs; Vite in the UI prototype, undecided) per [frontend.md](frontend.md): shell + auth + org switching, Match Library with tier/parity badges, Parity onboarding gate, Match AI Brief, Pitch Replay (spike Plotly vs Canvas here), Ask Ponta.
+- Web app (Next.js in the docs; Vite in the UI prototype, undecided) per [frontend.md](frontend.md): shell + auth + org switching, Match Library with tier/parity badges, Parity onboarding gate, Match AI Brief, Pitch Replay (HTML canvas, decided in [frontend-design-brief-v2.md](frontend-design-brief-v2.md#palette-and-type)), Ask Ponta (a full page plus a panel inside each match). The UI prototype in `ponta-platform-ui` is the starting point; its fake engine and mock data stay out of the production build.
 - Deploy; Sentry; uptime monitoring; confirm backups restore.
 - 2–3 design partners onto the real product (Track V), including whichever supplies the first real SkillCorner export.
 - Lawyer-reviewed DPA, vendor ToS review, retention policy and purge job before the first paid contract.
 - Decide website launch timing against the product and legal gates.
+
+**Progress (17 November 2026):** a clickable UI prototype on mock data (`ponta-platform-ui`) covers the library, Add data, Data check, brief and print view, replay, Ask (page and in-match panel), names and settings; its design decisions are fixed in [frontend-design-brief-v2.md](frontend-design-brief-v2.md). Nothing is connected to a backend.
 
 **Exit criteria:** at least one design partner or paid customer using Tier 1 end-to-end with their own data and the legal basics actually in place, not just drafted.
 

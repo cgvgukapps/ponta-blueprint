@@ -14,7 +14,7 @@ See [README.md](README.md) for baseline assumptions and [architecture.md](archit
 - Adopt a two-tier change policy:
   - **Patch-level fix** (a bug, not a methodology change) — recompute silently for affected matches via the existing `process_match` worker job, no version-visible change to the customer.
   - **Material recalibration** (a threshold change, a new component in a formula — the kind of change the spec's own changelog documents) — bump a minor/major version, and treat historical backfill as a deliberate, visible operation: a background job that reprocesses existing matches under the new engine version, tracked to completion, so cross-match comparisons and trend lines (`features.md`'s comparison/trend features) never silently mix two incompatible scoring eras.
-- Keep the model changelog discipline `ANALYTICS_SPECIFICATION.md` already has (documenting *why* a formula changed, including rejected alternatives) — just formalize it with version tags so a specific analytics row's provenance is traceable back to a specific documented decision.
+- Keep the model changelog discipline `ANALYTICS_SPECIFICATION.md` already has (documenting *why* a formula changed, including rejected alternatives) — just formalise it with version tags so a specific analytics row's provenance is traceable back to a specific documented decision.
 
 This is intentionally lightweight: no separate model-registry service, no A/B testing infrastructure — a version column and a backfill runbook are proportionate to a solo-operator, small-scale product.
 
@@ -49,7 +49,7 @@ The unifying principle: an explicit "not scored, here's why" is always better th
 
 ## Cross-provider player identity: an explicit non-goal for v1
 
-`features.md`'s cross-match identity gap is scoped to reconciling the same player *within one provider's data* across multiple matches (StatsBomb's stable IDs make this tractable; tracking-only providers need name-based reconciliation). A harder, separate problem — reconciling the same human if a customer connects **two different providers** for overlapping matches (e.g., StatsBomb events and a Second Spectrum upload for the same fixture) — is out of scope for v1. State this plainly as a known limitation rather than attempting a fragile heuristic solution prematurely; it's a rare case for most customers, who realistically standardize on one primary data vendor.
+`features.md`'s cross-match identity gap is scoped to reconciling the same player *within one provider's data* across multiple matches (StatsBomb's stable IDs make this tractable; tracking-only providers need name-based reconciliation). A harder, separate problem — reconciling the same human if a customer connects **two different providers** for overlapping matches (e.g., StatsBomb events and a Second Spectrum upload for the same fixture) — is out of scope for v1. State this plainly as a known limitation rather than attempting a fragile heuristic solution prematurely; it's a rare case for most customers, who realistically standardise on one primary data vendor.
 
 ## Construct validity and reliability of Decision Quality (added 15 November 2026)
 

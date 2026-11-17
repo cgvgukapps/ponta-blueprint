@@ -63,7 +63,7 @@ This is what pontahq.com actually is. Full copy and section order live in [websi
 | Inline links (white page) | `#1558C9` | AA on the card tint |
 | Inline links (dark) | `#4A90FB` | AA on `#0A0A0A` |
 
-The product's colour semantics still hold for Ponta Frontend (`#E63946` home, `#1D8CF8` away, `#FFD700` event, pitch green, heat gradients). *(Superseded in part: the UI prototype `prototype-v0.1` changed these. Home is `#d6293d` and away is teal, resolving the away-blue versus brand-blue collision, and its status colours also differ. The final values are an open decision; see [status.md](status.md#open-decisions).)* They stay out of website chrome except the Plaiq rating-band colours above.
+The product's colour semantics still hold for Ponta Frontend (`#E63946` home, `#1D8CF8` away, `#FFD700` event, pitch green, heat gradients). *(Superseded for the product, 17 November 2026: the values are now fixed in [frontend-design-brief-v2.md](frontend-design-brief-v2.md#palette-and-type). Home is crimson `#d6293d`, away is teal `#2bc7b9` (resolving the away-blue versus brand-blue collision), the event highlight stays `#ffd700`, and the pitch is `#16231b`. Error and warning colours were moved off the decision-quality band hues. The meanings, and the rule below, are unchanged.)* They stay out of website chrome except the Plaiq rating-band colours above.
 
 ## The structure transfers too, relabelled
 
@@ -77,9 +77,9 @@ The original two-divider, four-item nav is **not** what shipped — see **Shippe
 
 **Hexagons.** See **Shipped visual language** above for the three places they now appear. Still no hex-shaped buttons or hex-framed avatars.
 
-**The palette** is documented in **Shipped visual language**. The original all-dark `#1A1A1A` page is **not** what shipped. Accent remains the logo blue `#1E76FA`. Continuity with Ponta Frontend (when it exists) is the shared accent and the Ponta mark, not a matched page background — the marketing site is now dark-hero / white-body, and the prototype product is still `#1a1a2e`.
+**The palette** is documented in **Shipped visual language**. The original all-dark `#1A1A1A` page is **not** what shipped. Accent remains the logo blue `#1E76FA`. Continuity with Ponta Frontend (when it exists) is the shared accent and the Ponta mark, not a matched page background — the marketing site is now dark-hero / white-body, and the product UI is a cool near-black (`#0e1116`, see [frontend-design-brief-v2.md](frontend-design-brief-v2.md#palette-and-type); the old Streamlit prototype used `#1a1a2e`).
 
-**The product's colour semantics still hold, and still constrain the site.** `app.py` assigns meaning: `#E63946` = home team, `#1D8CF8` = away team, `#FFD700` = event, `#2d6a2d` = pitch, plus heat gradients for value and pressure. `frontend.md` requires those meanings stay consistent everywhere. So the rule survives the palette change unaltered — **reserve, don't spend:** `#E63946` (reads as both "home team" and, conventionally, "error"), the heat gradients, and pitch green stay out of site chrome. Keeping them out is what lets them keep meaning inside the product.
+**The product's colour semantics still hold, and still constrain the site.** `app.py` assigns meaning: `#E63946` = home team, `#1D8CF8` = away team, `#FFD700` = event, `#2d6a2d` = pitch, plus heat gradients for value and pressure. *(Those are the Streamlit prototype's values; the product's current ones are listed above. Reserve the current home crimson and team teal in the same way.)* `frontend.md` requires those meanings stay consistent everywhere. So the rule survives the palette change unaltered — **reserve, don't spend:** `#E63946` (reads as both "home team" and, conventionally, "error"), the heat gradients, and pitch green stay out of site chrome. Keeping them out is what lets them keep meaning inside the product.
 
 ## The Ponta hero illustration
 

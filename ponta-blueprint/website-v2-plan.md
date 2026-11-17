@@ -1,5 +1,7 @@
 # Ponta Website v2 — Refactor Plan
 
+> **Status: executed (15 November 2026).** The v2 page described here is built and deployed with `noindex` (`Ponta-Website` `main`). What remains open is the launch gates G1 to G6 below, of which G3 (open-data licences), G4 (legal pages and sub-processor terms) and G6 (the hero's fusion wording) are the substantive ones. "Current state" below describes the site before v2 and is kept as history. The website repo links to this file, so do not rename it.
+
 See [website.md](website.md) for the standing rules and launch positioning, [ai-layer.md](ai-layer.md) and [data-tiers.md](data-tiers.md) for what the product can actually claim, and the `Ponta-Website` repo (`index.html`, `content/draft.md`, `AGENTS.md`) for the current build. This document turns the strategy-review feedback for the website into an executable plan. **Planning only — nothing in the website repo has been changed.**
 
 ## Current state (verified, not assumed)

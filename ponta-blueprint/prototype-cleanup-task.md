@@ -8,7 +8,7 @@ This is a self-contained task description for a coding agent working inside `/Us
 
 `PONTA-PROTOTYPE` is a well-tested analytics/ingestion codebase (382 passing tests as of this writing — confirm with `pytest -q` before starting) that's about to enter `roadmap.md`'s Phase 1 ("Foundation"): extracting `analytics/`, `ingestion/`, `roster/`, `statsbomb/`, and `pitch_config.py` into an installable `plaiq_engine` package with a clean `MatchAnalysis` façade (`architecture.md` build order, step 1). **This task is explicitly not that extraction** — it's the tidying pass that should happen first, so the extraction starts from a clean, consistent, version-controlled codebase instead of inheriting clutter, known bugs, and inconsistent conventions into the new package structure.
 
-This task also isn't a rewrite or a redesign — every change should be small, reviewable, and behavior-preserving unless a specific item below says otherwise (and where it does, the reasoning must be documented, since a behavior change to the engine matters for `engine-governance.md`'s upcoming `engine_version` numbering).
+This task also isn't a rewrite or a redesign — every change should be small, reviewable, and behaviour-preserving unless a specific item below says otherwise (and where it does, the reasoning must be documented, since a behaviour change to the engine matters for `engine-governance.md`'s upcoming `engine_version` numbering).
 
 ## Objective
 
@@ -39,7 +39,7 @@ These four were flagged by name in `features.md` but not yet fixed — each need
 - **Kinematic default inconsistency.** `analytics/pass_option_value.py` defaults to `v_max=8.0, reaction_time=0.2` in a couple of places (around lines 206-208 and 320-322), while the canonical defaults used everywhere else in the same file (around lines 1080-1089, 1342, 1369) and in `analytics/pitch_control.py`'s `DEFAULT_V_MAX`/`DEFAULT_REACTION` (lines ~45/47) are `9.0`/`0.7`. Determine which is actually intended (9.0/0.7 matches `ANALYTICS_SPECIFICATION.md`'s documented appendix values, so it's the likely canonical one, but verify — don't just assume), fix the outlier(s), and add/extend a test that would catch this kind of drift in the future.
 - **Ring-distance formula.** `ANALYTICS_SPECIFICATION.md` (line ~84) writes hex ring distance as `max(|Δq|, |Δr|, |Δq+Δr|) / 2`; the actual code (`statsbomb/sb_dq.py` line ~235, `analytics/pass_option_value.py` line ~390) computes `(|Δq| + |Δr| + |Δq+Δr|) // 2`. These two forms are the standard axial/cube hex-distance identity and *may* be exactly equivalent — verify this rigorously with a property-based or exhaustive small-range test (don't assume either way), and then either (a) if truly equivalent, update the spec prose to state the form actually implemented so a future reader isn't misled into thinking there's a bug, or (b) if you find a real edge case where they diverge, fix the code and document why. Either outcome must be written up explicitly in your final report — "investigated and confirmed equivalent" is a valid, useful outcome, not a non-answer.
 - **Dead/unused constants.** Run a static-analysis pass (e.g. `ruff check` or `pyflakes`, installing as a dev dependency if not already present) across `analytics/`, `ingestion/`, `roster/`, `statsbomb/`, `pitch_config.py` and remove genuinely unused constants/imports/functions it finds — not just the ones anyone happened to notice by eye. List what was removed in the final report.
-- **Outdated trend-line prose.** `ANALYTICS_SPECIFICATION.md` §5.1 (~line 366) and §7.4 (~line 840) describe the off-ball/DQ trend-line design ("mean + EWMA + per-half + max spline"). Compare this prose line-by-line against the actual implementation in `app.py` (roughly lines 4014-4432, which includes inline comments describing the current design) and correct any parameter or behavior the prose still describes from an earlier version.
+- **Outdated trend-line prose.** `ANALYTICS_SPECIFICATION.md` §5.1 (~line 366) and §7.4 (~line 840) describe the off-ball/DQ trend-line design ("mean + EWMA + per-half + max spline"). Compare this prose line-by-line against the actual implementation in `app.py` (roughly lines 4014-4432, which includes inline comments describing the current design) and correct any parameter or behaviour the prose still describes from an earlier version.
 
 ## 3. Remove orphaned artifacts
 
@@ -56,13 +56,13 @@ These four were flagged by name in `features.md` but not yet fixed — each need
 ## Constraints
 
 - Do not perform the `plaiq_engine` package extraction itself, do not touch `matrix_engine/`'s internals beyond the shim-import fix in step 1, and do not start any Supabase/FastAPI/frontend work — all explicitly out of scope, covered by separate tasks.
-- Every change must keep `pytest` fully green (382 passed, 0 failed as of this writing — confirm the exact current count yourself before starting, since it may have changed). If a mismatch fix in §2 changes a formula's actual output, that's a real behavior change — call it out explicitly and loudly in the final report; do not fix it silently.
+- Every change must keep `pytest` fully green (382 passed, 0 failed as of this writing — confirm the exact current count yourself before starting, since it may have changed). If a mismatch fix in §2 changes a formula's actual output, that's a real behaviour change — call it out explicitly and loudly in the final report; do not fix it silently.
 - Small, reviewable commits per concern (see §0), not one large diff.
 - Match existing code style/conventions already established in `ingestion/*_io.py` and `analytics/*.py` (docstring style, module layout) rather than introducing a new convention.
 
 ## Acceptance criteria
 
-- Git repository initialized, sensible `.gitignore` in place, working tree clean, cleanup changes split into logically-grouped commits.
+- Git repository initialised, sensible `.gitignore` in place, working tree clean, cleanup changes split into logically-grouped commits.
 - All 11 root-level shim files removed; the 6 identified function-local call sites migrated to qualified imports; a repo-wide check confirms nothing else references the old flat module names.
 - Kinematic defaults consistent across `analytics/pass_option_value.py` and `analytics/pitch_control.py`, with the choice documented.
 - Ring-distance formula/spec discrepancy explicitly investigated and resolved (code fixed, or spec prose corrected to match reality) — not left as an open question.
@@ -83,5 +83,5 @@ Short and honest, matching this blueprint's existing tone (see `risks.md` for th
 - What was removed/fixed, with before/after specifics for each item in §1-4 (not just "done").
 - The actual resolution of the ring-distance investigation and the kinematic-default decision, including reasoning.
 - What the dead-code pass found and removed (or a note if it found nothing beyond what was already known).
-- Final test count vs. starting test count, and confirmation of zero behavior regressions outside the explicitly-documented fixes in §2.
+- Final test count vs. starting test count, and confirmation of zero behaviour regressions outside the explicitly-documented fixes in §2.
 - Any decision left genuinely open for a human to weigh in on (e.g. the `sample-data/` git-tracking question in §0, if it wasn't clear-cut).

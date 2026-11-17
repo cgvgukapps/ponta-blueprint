@@ -1,110 +1,89 @@
 # Status and handoff
 
-**Last updated:** 17 November 2026. This is the living pick-up note: read it first when resuming. Update it at the end of each working session. For the plan itself see [roadmap.md](roadmap.md); for the build spec see [platform-extraction-task.md](platform-extraction-task.md).
+**Last updated:** 17 November 2026. This is the living pick-up note: read it first when resuming, and update it at the end of any session that changes state. It describes the present; the history of how it got here is in git and in each repo's notes. For the plan see [roadmap.md](roadmap.md); for an outside reader's summary see [platform-overview.md](platform-overview.md).
 
-**One-line state:** Phase 1 engine work is done and pushed (15 November 2026). The shareable match page (brief v2, 5.3) exists: a single-file, offline page of the data check, coverage and rule-selected moments, built from real engine output for SkillCorner 1886347 (generated outside the repos). Commits `ponta-platform` `930d652`, pushed. The UI prototype has had two visual redesigns (16 November 2026), the match page restyled to match, and brief v2 items 5.1 (names), 5.2 (coverage) and 5.4 (review fixes) done; see the Repositories table for its position. Next: the rest of Phase 1 (Supabase, FastAPI, storage), gated by evidence gate E1 (discovery calls); the page is ready for the concierge step.
+**One-line state:** pre-product, no customers. The engines, the Data check and the semantic builder are built and tested on real open data in `ponta-platform`; the AI layer, API, worker, storage and production web app are not built. A clickable UI prototype on mock data has been through two redesigns and brief v2 items 5.1 to 5.4. A single-file match page built from real engine output is ready for the founder-run concierge step. Next: discovery calls (gate E1) and the concierge step, alongside the rest of Phase 1.
 
 ## Repositories
 
 | Repo | Local path | Remote (GitHub, `cgvgukapps`) | Position |
 |---|---|---|---|
-| Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`, tag `blueprint-baseline-2026-11-15` |
-| Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final` |
-| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `930d652` (Phase 1 engine work, match page payload tool), pushed |
-| UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `26b7c1d` (16 November 2026), pushed; tag `prototype-v0.1` at `4bd8e52` |
-| Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main`, v2 live, still `noindex` |
+| Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`; tag `blueprint-baseline-2026-11-15` |
+| Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final`. Never modify. |
+| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `930d652`, pushed |
+| UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `26b7c1d`, pushed; tag `prototype-v0.1` at `4bd8e52` |
+| Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main` at `82a3429`; v2 deployed with `noindex, nofollow` |
 
-## Done
+## Where things stand
 
-- **Strategy pivot recorded** across the blueprint: one AI-native product, data tiers, AI layer, Parity Report, roadmap rewritten.
-- **Website v2** rebuilt and on `main`. Final hero: "Tactical & physical AI that sees the whole pitch, and the athlete inside it." Sign in disabled, `noindex` on.
-- **Frontend design brief v1** written: [frontend-design-brief-v1.md](frontend-design-brief-v1.md). An external agent built a clickable prototype from it (Vite, React, TypeScript, mock data only).
-- **Prototype preflight:** 964 tests pass (0 skipped, with network). Tagged `prototype-validation-final`.
-- **Golden outputs captured** for Metrica Sample Game 3 and SkillCorner match 1886347. See `ponta-platform/tools/golden/README.md`. Data is git-ignored and regenerable (about 10 minutes).
-- **`ponta-platform` skeleton:** two installable packages (empty), pinned requirements, import-graph checker with tests, GitHub Actions CI, README, `docs/ARCHITECTURE.md`. Ruff and 9 tests pass locally.
-- **Version control:** all repos above are under git with remotes. The blueprint had none before.
-- **Platform overview for review (17 November 2026):** [platform-overview.md](platform-overview.md), a self-contained snapshot of the platform and the evidence status of each part, written to hand to an independent reviewer. Also published as a private page for the founder. Refresh it if the state changes before the review.
-- **Analyses delivered, no files changed:** SoccerTrack dataset (useful for positional fusion validation only: no physiological channels, unclear licence, small); multi-provider wearable integration (see "Strategy gaps" below); hosting options.
+### Engines (`ponta-platform`)
+
+- **Extraction complete** ([platform-extraction-task.md](platform-extraction-task.md), `EXTRACTION_REPORT.md`): `matrix_engine` and `plaiq_engine` as installable packages, all prototype tests carried over, import-graph check, CI.
+- **Tests:** 1,015 in total; 1,003 in the full local suite and 12 in the opt-in equivalence test (`PONTA_EQUIVALENCE=1`, about 7 minutes). CI is green but skips data-dependent tests; the local gate is `PONTA_REQUIRE_SAMPLE_DATA=1 pytest -q`.
+- **Equivalence:** Plaiq fed through Matrix reproduces the prototype's golden outputs on Metrica Sample Game 3 and SkillCorner 1886347, except 2 of 39,589 decision rows and 12 of 36,792 alternative rows on Metrica (a characterised float near-tie). No band changes. Accepted as the baseline; `engine_version` unchanged.
+- **Data check** (`matrix_engine/parity.py`): 12 metrics in 6 families with reasons, measured figures and coverage. On the real SkillCorner match, pass option value and event ΔV are Full and shot quality is Blocked.
+- **Semantic builder** (`plaiq_engine/semantic_builder.py`): one pseudonymised row per action, no coordinates; [ai-layer.md](ai-layer.md#the-semantic-football-event) matches the implemented schema.
+- **Tools:** `tools/demo.py` (end to end on a sample match) and `tools/match_page_payload.py` (payload for the shareable match page). Golden outputs are regenerable (`tools/golden/README.md`).
+- **Open:** the unused `prev_event` parameter of `resolve_identities`. Facade decisions are parked (`docs/MATCH_ANALYSIS_INVENTORY.md`). `apps/api`, `apps/worker` and `apps/web` are empty.
+
+### UI prototype (`ponta-platform-ui`, mock data only)
+
+- Vite, React and TypeScript with a fake in-browser engine, synthetic tracking and hand-written sample brief and answer text. Not connected to any backend.
+- **Brief v2:** 5.1 (client-side names), 5.2 (coverage), 5.3 (shareable match page) and 5.4 (review fixes) are done; 5.5 (API mapping) is on hold by founder decision. Ask is also a panel inside each match.
+- **Design:** decisions are fixed in [frontend-design-brief-v2.md](frontend-design-brief-v2.md#3-fixed-decisions-do-not-reopen-without-reporting-why) section 3, with the reasoning in the UI repo's `docs/design-notes.md` (sections 6 to 17). Current look: cool near-black palette, serif page headings, white primary buttons, Ponta blue only for focus, selection marks and graphics, grey highlights for selected rows.
+- **Shareable match page:** a single offline HTML file from real engine output (SkillCorner 1886347: 1,308 of 1,371 passes and carries scored, 95.4%). Real payloads are generated outside the repos.
+- **Open:** Safari print not verified (no page numbers there; `<thead>` repetition unchecked). The UI still shows pressure as a 0 to 1 index with 0.7 as "high"; align it with the engine's 1 to 10 scale once the threshold is chosen.
+
+### Website (`ponta-website`)
+
+- v2 one-product page deployed with `noindex`; hero "Tactical & physical AI that sees the whole pitch, and the athlete inside it."; Sign in disabled.
+- Launch waits on gates G1 to G6 ([website-v2-plan.md](website-v2-plan.md#launch-gates-public-announcement-not-the-friends-only-url)): licences (G3), legal pages and sub-processor terms (G4) and the hero's fusion wording (G6) are the substantive ones. Also open: `/security`, `/privacy`, `/terms`, and hero artwork that still shows two engines.
+
+### Blueprint (this repo)
+
+- Reviewed and cleaned on 17 November 2026: status banners on every task spec and plan, stale facts corrected (pressure scale, pitch rendering, product colours, provider list, website state), the old company name "PLAIQ" replaced by Ponta where it meant the business, British spelling throughout, links checked.
+- [platform-overview.md](platform-overview.md) is a dated snapshot for an independent reviewer; also published as a private page for the founder.
 
 ## Findings that change the plan
 
-1. **`roster/` belongs in `plaiq_engine`, not `matrix_engine`.** Matrix never imports it, and it imports Plaiq's `DEFAULT_PROFILE`. `pitch_config` belongs in `matrix_engine` (both engines import it). `roster.build_roster` lazily imports `replay.load_game` (a matplotlib demo, not ported) and needs a local CSV loader. Recorded in `ponta-platform/docs/ARCHITECTURE.md`.
-2. **`compute_event_pov` row order is non-deterministic across runs; values are deterministic.** Golden `pov.parquet` is stored sorted by `(event_idx, team, jersey)`. The semantic builder must sort explicitly.
-3. **The ball is undetected in 32.2% of Metrica Game 3 frames and 26.4% of the SkillCorner match.** The prototype returns an empty control grid there. The Matrix path must match; five ball-missing frames per match are recorded as edge cases.
-4. **Decision quality ranges up to 1.5** in both golden matches (minimum 0.0), so it is not a 0 to 1 ratio. Check against the rating bands (Optimal at or above 0.95) before the UI or AI layer assumes a 0 to 1 scale.
-5. **SkillCorner event ids are inconsistent** (`From` is `'1'`, `To` is `'1.0'`). Normalise in the new code.
-6. **Ruff 0.16.1's default rules are strict.** The prototype has no ruff config, so expect a batch of lint fixes when its code moves in.
-7. **UI prototype:** Vite and React Router, not Next.js. Contains `src/lib/engine.ts`, a fake in-browser engine, plus 1.8 MB of synthetic tracking in `src/mock/packs`; neither may reach a production bundle. Its colour tokens diverged from the brief (away is teal, home is `#d6293d`). Its types are hand-written and must become generated types from the API schema.
+1. **`roster/` belongs in `plaiq_engine`, not `matrix_engine`.** Matrix never imports it, and it imports Plaiq's `DEFAULT_PROFILE`. `pitch_config` belongs in `matrix_engine` (both engines import it). Recorded in `ponta-platform/docs/ARCHITECTURE.md`.
+2. **`compute_event_pov` row order is non-deterministic across runs; values are deterministic.** The semantic builder sorts explicitly.
+3. **The ball is undetected in 32.2% of Metrica Game 3 frames and 26.4% of the SkillCorner match.** The engine returns an empty control grid there; coverage reports it.
+4. **Decision quality ranges from 0 to 1.5**, not 0 to 1. Bands: Poor below 0.55, Suboptimal 0.55 to 0.79, Good 0.80 to 0.94, Optimal 0.95 and above.
+5. **SkillCorner event ids are inconsistent** (`From` is `'1'`, `To` is `'1.0'`). Normalised in the new code.
+6. **Single-source matches have no per-frame confidence** (only `ball_detected` and `players_observed`), which leaves the confidence slot of an AI citation undefined for Tier 1 (see open decisions).
+7. **UI prototype:** its fake engine and mock packs must never reach a production bundle, and its hand-written types must become generated types from the API schema.
 
 ## Next steps, in order
 
-### A. Finish the extraction (`platform-extraction-task.md`, steps 2 to 7)
+1. **Track V (validation), now.** Discovery calls with the wedge, intercepted-pass and price questions (gate E1, at least 8 calls); check each prospect's vendor licence before taking a real export ([legal-compliance.md](legal-compliance.md#vendor-licence-check-before-the-first-real-export)).
+2. **Concierge step** (roadmap Phase 2, step 0): run a prospect's real export locally through the engines and send back the Data check and the match page (gate E2). The page and payload tool exist.
+3. **Rest of Phase 1** (not gated by E1): Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated cross-tenant access test for Parquet paths, basic ToS ([roadmap.md](roadmap.md#phase-1--platform-foundation-and-engine-extraction)).
+4. **Before the AI layer** ([ai-workflows-task.md](ai-workflows-task.md)): decide the citation confidence for single-source matches and a named high-pressure threshold; choose the LLM provider and put sub-processor terms in place before any real customer data reaches a model.
+5. **Frontend, later:** import the UI into `ponta-platform/apps/web` (subtree, or copy and record the source commit); keep the `src/api` signatures and add an HTTP client behind a mock switch; generate types from the OpenAPI schema. The Data check is the first screen that can go real. The API mapping (brief v2, 5.5) waits until then.
 
-**Progress, 15 November 2026 (pushed to `ponta-platform` `main`, head `36ef7d8`):** items 1 and 2 below are done apart from the points listed here. Import-graph check passes. 973 tests pass (964 carried from the prototype plus the 9 skeleton tests), none deleted or weakened. By location: `matrix_engine` 245, `plaiq_engine` 673, repo-level 55 (46 cross-engine, 9 import-graph). Layout: `matrix_engine/ingestion/` and `matrix_engine/pitch_config.py`; `plaiq_engine/{analytics,statsbomb,roster,ingestion/statsbomb_io}`. Added `matrix_engine/sample_data.py` (resolver: `PONTA_SAMPLE_DATA`, default `../PONTA-PROTOTYPE/sample-data`) and a local CSV loader in `roster/build_roster.py` in place of `replay.load_game`. `test_skillcorner_io.py` and `test_ss_roster.py` sit in `tests/cross_engine/` because they import `roster`; shared fixture builders are in `tests/support/`. The three path checks in `test_statsports_provider.py` now use the real repo root, so the "nothing from this dataset in the repo" scans still cover the whole repo. **Lint:** safe ruff fixes applied; the remaining style rules are ignored in `ruff.toml` with a note (not endorsed; remove entries when the code is next changed). **CI (item 3, decided):** CI is green. Data-dependent tests skip when the sample data is absent (CI: 841 passed, 132 skipped, by the local no-data run; the exact CI counts were not read). The full run is the local gate: `PONTA_REQUIRE_SAMPLE_DATA=1 pytest -q` expects 973 passed, 0 skipped. Revisit when gate G3 (Metrica and SkillCorner licences) is settled. **Still open:** `prev_event` in `resolve_identities` (not touched yet).
-
-1. **Split and move the code** (imports rewritten only, no maths changes):
-   - `matrix_engine`: `ingestion/{metrica_io, epts_io, metrica_velocities, skillcorner_io, second_spectrum_io, genius_events_io}`, the existing `matrix_engine/*` modules (`confidence`, `export`, `fusion`, `identity`, `quality`, `schema`, `sync`, `providers`, `testing`), and `pitch_config`.
-   - `plaiq_engine`: `analytics/*`, `statsbomb/*`, `roster/*`, `ingestion/statsbomb_io.py`.
-   - Not ported (stay in the prototype): `app.py`, `replay.py`, `preprocess.py`.
-   - Resolve the unused `prev_event` parameter of `resolve_identities` (remove with call sites, or keep deliberately, and say which).
-   - Git history for moved files: decided to skip (`git filter-repo` not installed; full history lives in the prototype at the tag). Revisit only if wanted.
-2. **Carry all tests over.** None deleted, skipped or weakened. Report counts before and after, by package. Tests find sample data relative to the repo root: add a resolver that reads `PONTA_SAMPLE_DATA`, defaulting to `../PONTA-PROTOTYPE/sample-data`. Do not copy the data into the repo (licence terms for Metrica and SkillCorner are unresolved, gate G3). The STATSports tests fetch a 51 MB unlicensed export to a pytest temp directory; that data must never enter the repo.
-3. ~~Decide how CI gets the sample data.~~ Done: skip in CI, full run is the local gate (see Progress above).
-4. ~~Facades.~~ Done: `MatrixPipeline` (one source: Normalise only; several: unchanged reconcile) and `MatchAnalysis` over a Matrix `NormalisedMatch` (new `matrix_engine/match.py`, with an EPTS loader for Metrica Game 3).
-5. ~~Equivalence test.~~ Done, opt-in (`PONTA_EQUIVALENCE=1`, about 7 minutes). Inputs identical; outputs equal the golden files for both matches, except on Metrica two of 39,589 decision rows and 12 of 36,792 alternative rows (four carries), caused by a 2-micrometre float-storage difference tipping near-ties. No decision-quality band changes.
-6. ~~`parity.py`.~~ Done. Reproduces the prototype's SkillCorner panel for its stated premise. Finding: the SkillCorner open data does contain 23 shot events, so on the real match pass option value and event ΔV are Full where the panel said Degraded.
-7. ~~`semantic_builder.py`.~~ Done, with tests for determinism, no names or coordinates, not-scored goalkeepers and set pieces, and scores equal to the engine's. Deviations from `ai-layer.md` listed in the report.
-8. ~~Demo and report.~~ Done: `tools/demo.py`, `EXTRACTION_REPORT.md`. Tests: 1,015 (1,003 run in the full local suite, 12 opt-in equivalence).
-
-### B. Rest of Phase 1
-
-Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated cross-tenant access test for Parquet paths, basic ToS. See [roadmap.md](roadmap.md#phase-1--platform-foundation-and-engine-extraction).
-
-### C. Frontend
-
-1. ~~Review the UI prototype against the v2 checklist.~~ Done 15 November 2026, and the changes are made in the UI repo (`a2d3e62`, see its `docs/design-notes.md` section 6): engine DQ bands and the 0 to 1.5 scale, citation chips that lead with the moment, "Data check" and source-based tier names, labelled parity counts, calmer replay overlays. Brief v2 written: [frontend-design-brief-v2.md](frontend-design-brief-v2.md) (fixed decisions; next round: client-side names, coverage in the Data check, a shareable single-file match page, colour and print fixes, an API mapping). Not started.
-   - **Visual redesign done (16 November 2026):** neutral palette, white primary buttons, one typeface, fills instead of outlines, big-figure tiles, pill controls, the Ask composer's gradient edge; Data check and replay simplified. Decisions recorded in brief v2 section 3 and the UI repo's `docs/design-notes.md` section 7.
-   - **Second redesign done (16 November 2026), to the "Davis" reference:** cool dark palette with Ponta blue as the only brand colour, serif page headings, icon rail and search dialog, faint card edges. Recorded in brief v2 section 3 ("revised 2") and the UI repo's `docs/design-notes.md` section 8.
-   - **Brief v2, 5.3 done (15 November 2026):** shareable match page in the UI repo (`match-page.html`, `docs/match-page-payload.md`), payload from `ponta-platform/tools/match_page_payload.py`. No generated prose; moments selected by stated rules; players as codes. Restyled to the new look on 16 November 2026 (light counterpart of the palette, logo inlined, figure tiles).
-   - **Brief v2, 5.2 done (16 November 2026):** coverage tile and causes line in the Data check, the figure in the brief header and print view; mock figures per match, `m_0372` is the low-coverage example. Design notes section 9.
-   - **Reference details done (16 November 2026):** tinted label pills, the selected-row treatment (accent tint plus blue underline), icon tiles on Add data, the reference chart style, Sign-in and Settings. Design notes section 10.
-   - **Brief v2, 5.1 done (16 November 2026):** names resolved in the client from fictional rosters (`{home_5}` tokens in brief text, Show names / Show codes in the account menu, code fallback), screenshots in both modes. Design notes section 11. The shareable match page still shows codes.
-   - **Brief v2, 5.4 done (16 November 2026):** status colours moved off the band ramp, print header and page numbers, pitch keyboard path, video placeholder, reasons audit. **Open:** Safari print not verified (no page numbers there, `<thead>` repetition unchecked). Design notes section 12.
-   - **Ask inside a match (16 November 2026):** Ask is now a side panel within a match (docked on Data check and Brief, a side tab on Replay), with context from a brief point or a selected moment; recorded in brief v2 section 3 and the UI repo's design notes section 13.
-   - Remaining v2 item: 5.5 API mapping (`docs/api-mapping.md`).
-2. Import into `ponta-platform/apps/web`. The UI repo now has a baseline commit. Subtree if you keep committing there first, otherwise copy and record the source commit. Archive the old repo afterwards.
-3. After import: keep the `src/api` function signatures and add an HTTP client behind a mock switch; move the fake engine and mock packs to dev-only; generate TypeScript types from the OpenAPI schema; add CI path filters.
-4. The Parity gate is the first screen that can go real (needs only the Parity Report JSON). Library and Add data follow with the upload endpoint; Replay, Brief and Ask need Phase 2.
-
-### D. Running in parallel
-
-- **Track V (validation):** design-partner outreach; the three data asks (one export, an overlap window, a paired match). Optional: write `soccertrack-validation-task.md` and update the Tier 3 gate status in `data-tiers.md` (offered, not requested).
-- **Legal gates** in [roadmap.md](roadmap.md#track-l--legal-and-compliance-runs-alongside-each-item-gated-to-a-trigger): basic ToS before the first pilot; LLM sub-processor terms before any real customer data reaches an LLM.
-- **Website:** still open are licence checks for Metrica and SkillCorner (G3), lawyer review of the held items (G4), `/security`, `/privacy`, `/terms` pages, the G6 re-decision on fusion wording, and hero artwork that still shows two engines. Cloudflare deploy confirmed 15 November 2026: pontahq.com returns 200 with `noindex, nofollow`.
+**Running in parallel:** the legal gates in [roadmap.md](roadmap.md#track-l--legal-and-compliance-runs-alongside-each-item-gated-to-a-trigger) (basic ToS before the first pilot; LLM sub-processor terms before real customer data reaches a model); the website launch gates above; optionally a `soccertrack-validation-task.md` and the Tier 3 gate status in [data-tiers.md](data-tiers.md) (offered, not requested).
 
 ## Open decisions
 
-- ~~Extraction baseline, SkillCorner Data check, semantic schema.~~ Decided 15 November 2026: the characterised Metrica differences are the baseline (`engine_version` unchanged; the carry near-tie is noted for the engine-validity work); the SkillCorner Data check follows the measured data (pass option value and event ΔV Full, shot quality Blocked); `ai-layer.md` updated to the implemented schema. Follow-up: the UI prototype's glossary still says "pressure index ≥ 0.7"; the engine's pressure is 1 to 10 and has no named threshold yet.
-
-- **Provider list on the website:** the v2 page lists Second Spectrum as supported; the engine record has it fixture-tested only and the hard rule allows four providers. Change the page or revise the rule with a reason.
+- **Citation confidence for single-source matches:** what fills the confidence slot (a documented derivation from `ball_detected` and `players_observed`, or an explicit null with the reason). Blocks the AI layer.
+- **A named high-pressure threshold** on the engine's 1 to 10 scale, documented and versioned; the UI glossary then follows.
 - **Evidence-gate thresholds (E1 to E3)** in [roadmap.md](roadmap.md#evidence-gates-proposed-15-november-2026-founder-to-confirm-the-thresholds): confirm or change.
-- **Lead wedge** (single-export brief or fragmentation and provider transition): decided by discovery calls, see [go-to-market.md](go-to-market.md#two-wedges-one-to-lead-with-added-15-november-2026).
-- **Facade decisions** (input form for `MatchAnalysis`, rendering helpers, private-name wrappers): parked pending the strategy review; recommendations are in `ponta-platform/docs/MATCH_ANALYSIS_INVENTORY.md`.
-- LLM provider and model (blocks Phase 2).
-- Whether event-only analysis ships in the first release.
-- Ask Ponta pricing: capped, metered or bundled.
-- Hosting: the blueprint says Fly.io or Render; Railway was discussed; the frontend could be static on Cloudflare. No decision made. Recommendation given: stay on managed services, keep services as plain containers, EU regions from the start, do not move to AWS now.
-- Vite versus Next.js for the frontend (the UI prototype is Vite; the blueprint says Next.js). Leaning Vite static export.
-- Final dark palette, away-team colour, heat gradient, filled versus outlined primary buttons, Plotly versus Canvas for the pitch.
-- Public naming of Matrix and Plaiq; the IP-protection call on publishing `ANALYTICS_SPECIFICATION.md`.
+- **Lead wedge** (single-export brief, or fragmentation and provider transition): decided by discovery calls ([go-to-market.md](go-to-market.md#two-wedges-one-to-lead-with-added-15-november-2026)).
+- **Provider list on the website:** the page lists Second Spectrum as supported; the engine has it fixture-tested only and the hard rule allows four providers. Change the page or revise the rule with a reason.
+- **LLM provider and model** (blocks Phase 2's AI work).
+- **Whether event-only analysis ships in the first release.**
+- **Ask Ponta pricing:** capped, metered or bundled.
+- **Hosting:** Fly.io, Render or Railway for the services, the frontend possibly static on Cloudflare. Recommendation given: managed services, plain containers, EU regions from the start, no AWS now.
+- **Vite or Next.js** for the production frontend (leaning Vite static export).
+- **Facade decisions** (`MatchAnalysis` input form, rendering helpers, private-name wrappers): parked; recommendations in `ponta-platform/docs/MATCH_ANALYSIS_INVENTORY.md`.
+- **Public naming** of Matrix and Plaiq; the IP-protection call on publishing `ANALYTICS_SPECIFICATION.md`.
+
+*Decided and no longer open:* the extraction baseline and the SkillCorner Data check (15 November 2026); the UI palette, away colour, heat gradient, primary button style and canvas pitch rendering (fixed in [frontend-design-brief-v2.md](frontend-design-brief-v2.md#3-fixed-decisions-do-not-reopen-without-reporting-why) section 3).
 
 ## Docs that now disagree with the evidence
 
-None known. Reconciled on 15 November 2026: `roster/` placement ([architecture.md](architecture.md), [platform-extraction-task.md](platform-extraction-task.md)), Next.js versus Vite ([architecture.md](architecture.md), [README.md](README.md), [roadmap.md](roadmap.md); noted as undecided, not resolved), home and away tokens ([visual-design.md](visual-design.md), [frontend-design-brief-v1.md](frontend-design-brief-v1.md)), and the decision-quality scale ([ai-layer.md](ai-layer.md)). Still to do in brief v2: the prototype's status colours (values not recorded here), and remaining "Next.js" wording in `architecture.md` and `website.md`, which is covered by the note rather than rewritten.
-
-## Strategy review, 15 November 2026
-
-Read all documents and the live site. Changes made in the blueprint: evidence gates E1 to E3 and a concierge step before the platform ([roadmap.md](roadmap.md)); two wedges ([go-to-market.md](go-to-market.md)); construct validity and coverage ([engine-governance.md](engine-governance.md), [data-tiers.md](data-tiers.md), [platform-extraction-task.md](platform-extraction-task.md)); vendor licence check before the first real export ([legal-compliance.md](legal-compliance.md)); risks 23 to 26 ([risks.md](risks.md)); stale test and function counts corrected ([architecture.md](architecture.md)); brief persona fixed ([frontend.md](frontend.md)); three website flags recorded ([website.md](website.md)). The website repo was not changed.
+None known after the 17 November 2026 review. Older sections of `architecture.md` and `website.md` still say "Next.js"; each carries a note that the framework is undecided, rather than being rewritten.
 
 ## Strategy gaps found but not acted on
 
@@ -113,19 +92,27 @@ The wearable-integration question (OAuth connections, webhooks, PlayerData, Garm
 ## How to resume
 
 ```bash
+# Engines
 cd /Users/cicerovieira/ponta-platform
 source .venv/bin/activate            # recreate if missing, see README
 python tools/check_imports.py && ruff check packages tools tests && pytest -q
+
+# UI prototype
+cd /Users/cicerovieira/Ponta_Platform_UI
+npm run dev                          # http://127.0.0.1:5173
+npm run typecheck && node scripts/check-i18n.mjs && npm run contrast && npm run build
+npm run shots                        # with the dev server running; add "-- --codes" for codes mode
 ```
 
-Prototype tests use the prototype's own interpreter: `cd /Users/cicerovieira/PONTA-PROTOTYPE && PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q -p no:cacheprovider` (about 2 minutes, expect 964 passed). Regenerate golden outputs: see `tools/golden/README.md`.
+Prototype tests use the prototype's own interpreter: `cd /Users/cicerovieira/PONTA-PROTOTYPE && PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q -p no:cacheprovider` (about 2 minutes, expect 964 passed). Regenerate golden outputs: see `tools/golden/README.md` in `ponta-platform`.
 
 ## Gotchas
 
-- **CI is observed and green** (run 4, `36ef7d8`). It skips the sample-data tests, so a green CI does not cover the whole suite. Run `PONTA_REQUIRE_SAMPLE_DATA=1 pytest -q` locally before relying on a change. `gh` is not installed; read runs with `curl https://api.github.com/repos/cgvgukapps/ponta-platform/actions/runs`.
+- **CI skips the sample-data tests,** so a green CI does not cover the whole suite. Run `PONTA_REQUIRE_SAMPLE_DATA=1 pytest -q` locally before relying on a change. `gh` is not installed; read runs with `curl https://api.github.com/repos/cgvgukapps/ponta-platform/actions/runs`.
 - **Install both engine packages in one pip command,** so the local packages resolve each other and pip never looks up an internal name on the public index (distribution names are prefixed `ponta-`).
-- **Do not commit `*.egg-info`** (now git-ignored).
-- **Sandbox:** writes outside the workspace folder need elevated permissions. Pushes to `main` are held for your approval and need a retry with the approval request. Process listing (`ps`) is blocked.
+- **Do not commit `*.egg-info`** (git-ignored).
+- **Do not rename or move blueprint documents:** other repos link to them by name (see CLAUDE.md).
 - **Folder case:** the platform folder is `Ponta-Platform` on disk; macOS ignores case, so `ponta-platform` also works. The venv records the capitalised path.
 - **Piping a long job through `grep` hides all output until it finishes,** and the shell reports the pipe's exit status, not the job's.
+- **UI screenshots need the dev server running** and use the system Chrome; real match-page payloads are generated outside the repos and never committed.
 - **Do not touch the prototype** beyond reading it. It is the validation record.

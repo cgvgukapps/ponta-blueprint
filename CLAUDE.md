@@ -18,9 +18,9 @@ This repo holds no code. It is the **planning and design blueprint** for Ponta, 
 ## Document index (by role)
 
 - **Plan:** `roadmap.md` (phases with exit criteria, Track V validation, Track L legal), `data-tiers.md` (Tier 1/2/3 and the Parity Report), `ai-layer.md` (grounded AI design).
-- **Engines and execution tasks:** `Matrix.md`; `platform-extraction-task.md` (in progress), `ai-workflows-task.md` (next); `matrix-prototype-task.md`, `matrix-statsports-adapter-task.md`, `prototype-cleanup-task.md` (complete).
+- **Engines and execution tasks:** `Matrix.md`; `ai-workflows-task.md` (next, not startable until the API skeleton exists); `platform-extraction-task.md`, `matrix-prototype-task.md`, `matrix-statsports-adapter-task.md`, `prototype-cleanup-task.md` (complete).
 - **System design:** `architecture.md`, `engine-governance.md`, `operations.md`.
-- **Product and UX:** `features.md`, `frontend.md`, `frontend-design-brief-v2.md` (v1 superseded), `visual-design.md`, `website.md`, `website-v2-plan.md`.
+- **Product and UX:** `features.md`, `frontend.md`, `frontend-design-brief-v2.md` (the fixed UI decisions live in its section 3; v1 superseded), `visual-design.md` (website-first), `website.md`, `website-v2-plan.md` (executed; launch gates open).
 - **Strategy and risk:** `risks.md`, `competitive-landscape.md`, `go-to-market.md`, `legal-compliance.md`, `roadmap_v2.md` (investor vision, not a commitment).
 - **For outside review:** `platform-overview.md` (a dated, self-contained snapshot of the platform and its evidence status; summarises, does not supersede).
 
@@ -33,8 +33,8 @@ Ponta is **one application**. **Matrix** is its data engine (Normalise → Recon
 | Repo | Path | Role |
 |---|---|---|
 | Prototype | `~/PONTA-PROTOTYPE` | Frozen validation record (tag `prototype-validation-final`). **Never modify.** |
-| Platform | `~/Ponta-Platform` | Production monorepo. Extraction work happens here. |
-| UI prototype | `~/Ponta_Platform_UI` | Vite/React mock-data prototype (tag `prototype-v0.1`). |
+| Platform | `~/Ponta-Platform` | Production monorepo: both engines, the Data check and the semantic builder; `apps/api`, `apps/worker`, `apps/web` are still empty. |
+| UI prototype | `~/Ponta_Platform_UI` | Vite/React mock-data prototype (tag `prototype-v0.1`); design decisions in its `docs/design-notes.md`. |
 | Website | `~/Ponta-Website` | Marketing site, live but `noindex`. Has its own `AGENTS.md`. |
 
 `status.md` holds the exact commit positions and resume commands for these.
@@ -47,7 +47,10 @@ Ponta is **one application**. **Matrix** is its data engine (Normalise → Recon
 - **Revise by superseding, not erasing.** Docs carry "Revised for the AI-native one-product strategy" banners and mark older sections *(pre-pivot, superseded)*. Follow that pattern so history stays readable.
 - **Phases and exit criteria, not calendar dates** in plans. Use absolute dates (for example "15 November 2026") in status notes.
 - **Keep cross-links working.** If you rename a heading, fix every `file.md#anchor` that points to it (grep for it).
+- **Do not rename or move documents.** Other repos link to them by name: the website repo to `visual-design.md` and `website-v2-plan.md`, the frozen prototype to the Matrix task specs, the platform and UI repos to the task specs and the design brief. Mark a finished or superseded document with a status banner instead.
+- **Status banners.** Every execution-task spec and plan carries a dated `> **Status: …**` line under its title (complete, next, executed, superseded). Update it when the state changes.
 - **Known contradictions** are listed in `status.md` ("Docs that now disagree with the evidence"). Reconcile them when you touch those docs, and remove items from the list once they are fixed.
+- **`platform-overview.md` is a dated snapshot.** Refresh it, or note that it is out of date, when the state it describes changes materially.
 - **Execution-task specs** follow a fixed shape: Context / Preconditions, Objective, Constraints (or Hard constraints), Steps or Deliverables, Acceptance criteria, Explicitly not in scope, Final report. Each spec is self-contained for an agent with no other context.
 
 ## Writing style
@@ -58,7 +61,8 @@ Ponta is **one application**. **Matrix** is its data engine (Normalise → Recon
 
 ## Product hard rules (carry these into any spec, brief or copy you write)
 
-- No raw coordinates in any LLM context. Every AI claim cites `[event_id, timestamp_s, confidence_score]` plus `match_id`. Parity first. No arbitrary SQL. Pseudonymised prompts.
+- No raw coordinates in any LLM context. Every AI claim cites `[event_id, timestamp_s, confidence_score]` plus `match_id` (what fills the confidence slot for single-source matches is still open). Parity first. No arbitrary SQL. Pseudonymised prompts.
+- Engine scales: decision quality runs from 0 to 1.5 (bands Poor below 0.55, Suboptimal 0.55 to 0.79, Good 0.80 to 0.94, Optimal 0.95 and above); pressure is 1v1 pressure on a 1 to 10 scale with no named threshold yet. Never present either as 0 to 1.
 - No medical, injury or causal-fatigue claims. Association only ("coincided with", never "caused by").
 - No real player names in fixtures, mocks or generated artefacts.
 - Batch only. No real-time or live claims.

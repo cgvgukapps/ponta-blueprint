@@ -16,8 +16,9 @@ A design/laydown exercise for taking the validated **PONTA-PROTOTYPE** (Matrix a
 **What is validated vs. not (still true, stated here so nothing downstream overstates it):**
 
 - *Validated:* Matrix **Normalise** across two real vendors (Track A); a real STATSports ingest; the Plaiq engine's math and spec; an event-only Plaiq mode. The prototype suite is 964 passing tests (582 of which are one parametrised ring-distance test; the behavioural core is ~382).
+- *Built and tested on real open data (15 November 2026):* both engines extracted into `ponta-platform` (1,015 tests), Plaiq-via-Matrix equivalence with the prototype's golden outputs, the Data check (`parity.py`) and the semantic event builder, plus a shareable single-file match page from real engine output. Decision Quality's agreement with expert judgement is **not** established ([engine-governance.md](engine-governance.md#construct-validity-and-reliability-of-decision-quality-added-15-november-2026)).
 - *Validated on synthetic data only:* Matrix identity matching, synchronisation, fusion, confidence and drift detection (Track B, including the 24.5% RMSE result).
-- *Not validated / not built:* any real two-vendor overlap; ingestion of heart-rate and IMU channels; per-player load baselines; any AI/semantic layer; any web product; any customer.
+- *Not validated / not built:* any real two-vendor overlap; ingestion of heart-rate and IMU channels; per-player load baselines; the AI layer (no language model is called anywhere); the API, worker and storage; a production web app (a clickable UI prototype on mock data exists); any customer.
 
 ## Baseline assumptions (revised)
 
@@ -44,8 +45,8 @@ A design/laydown exercise for taking the validated **PONTA-PROTOTYPE** (Matrix a
 **Engines and execution tasks:**
 
 - [Matrix.md](Matrix.md) — Matrix as Ponta's built-in engine: vision, layers, evidence, limits, validation protocol.
-- [platform-extraction-task.md](platform-extraction-task.md) — execution spec: stand up `ponta-platform`, extract the engines, add the semantic builder and parity report.
-- [ai-workflows-task.md](ai-workflows-task.md) — execution spec: the grounded AI workflows over the semantic store.
+- [platform-extraction-task.md](platform-extraction-task.md) — execution spec: stand up `ponta-platform`, extract the engines, add the semantic builder and parity report. **Complete** (see `EXTRACTION_REPORT.md` in `ponta-platform`).
+- [ai-workflows-task.md](ai-workflows-task.md) — execution spec: the grounded AI workflows over the semantic store. **Next**, blocked on the API skeleton and on open schema decisions listed in it.
 - [matrix-prototype-task.md](matrix-prototype-task.md) — Matrix prototype build spec. **Complete.**
 - [matrix-statsports-adapter-task.md](matrix-statsports-adapter-task.md) — real STATSports ingest. **Complete.**
 - [prototype-cleanup-task.md](prototype-cleanup-task.md) — prototype tidy-up. **Complete** (see `CLEANUP_REPORT.md` in the prototype repo).
@@ -68,10 +69,10 @@ A design/laydown exercise for taking the validated **PONTA-PROTOTYPE** (Matrix a
 
 - [features.md](features.md) — product scope: shared core, AI workflows, persona use, sequencing.
 - [frontend.md](frontend.md) — **Ponta Frontend**: Match AI Brief, Pitch Replay, Ask Ponta, Parity onboarding gate.
-- [frontend-design-brief-v2.md](frontend-design-brief-v2.md) — the brief for the next round on the existing UI prototype: fixed design decisions, client-side names, coverage, the shareable match page.
+- [frontend-design-brief-v2.md](frontend-design-brief-v2.md) — the brief for the UI prototype round and the record of fixed design decisions (section 3). Items 5.1 to 5.4 are done; 5.5 (API mapping) is on hold.
 - [frontend-design-brief-v1.md](frontend-design-brief-v1.md) — the prompt for an external agent to prototype the dark platform UI (v1; revise after reviewing the prototype). *Superseded by v2.*
 - [website.md](website.md) — **Ponta Website**: current built site, and the launch positioning for one AI-native product.
-- [website-v2-plan.md](website-v2-plan.md) — the refactor plan for the launch version of the website: decisions, section map, workstreams, launch gates.
+- [website-v2-plan.md](website-v2-plan.md) — the refactor plan for the launch version of the website: decisions, section map, workstreams, launch gates. **Executed**; the launch gates remain open.
 - [visual-design.md](visual-design.md) — visual language and brand.
 
 ## Source material
