@@ -68,6 +68,18 @@ Expected threat learned from 970 Wyscout matches (`analytics/xt_learned.py` 0.1.
 - **Not adopted; the geometric surface stays.**
 - **The value gap in POV lies in its progressive factor and distance decay** (threat at the receiver alone 0.88 against POV's value part 0.78), so a value change should look there.
 
+## Decision quality grounded, not judged (18 November 2026)
+
+**The founder decided a judge's rating should not be the truth.** Decision quality is grounded three other ways on 12,012 SkillCorner passes: independent maths (SkillCorner's expected value of every option), what happened next, and context. The replay page becomes a review tool for disagreements, with the maths shown.
+
+**Findings:**
+- **Failed passes:** Plaiq rates **89% of failed passes optimal**. The failed-pass formula never charges for the failure. Not to be reported as it stands.
+- **Completed passes have outcome evidence:** the share of possessions that lead to a shot rises from 1.2% (poor) to 9.1% (optimal); AUC 0.60, on par with SkillCorner's own analogue (0.62). Higher scores go with lower completion: the score rewards ambition, which should be stated.
+- **Independent maths agrees weakly** (rank correlation 0.31): Plaiq calls 59% optimal, while SkillCorner's model says the best option was chosen on 37%. The two models define "best" differently: threat against arrival.
+- **Context is sensible:** under heavy pressure both models judge choices more kindly.
+
+**Next (proposed):** a decision quality version 2 that scores the choice at the pass as expected value (the option split, availability × value). It would cover completed and failed passes alike, and be measured on the same three groundings with fit and held-out matches. Version 1 stays the default until it is measured.
+
 ## The models, what tests them now, and what to change
 
 | Model | How it works today | What can test it now | Proposed change |

@@ -10,7 +10,7 @@
 |---|---|---|---|
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`; tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final`. Never modify. |
-| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `359a7fd` (learned threat surface measured, not adopted; 18 November 2026), pushed; before it `a0565ea` (pressure v2 measured, not adopted); `baa9967` (Plaiq option split); `6f084d2` (Plaiq reference harness); `a589424` (context P5 0.1.0, line breaks); `fcc1efe` (line-break prototype and its 20-match results); `d33c8ab` (loose-ball rule downstream checks); `3143f45` (the loose-ball rule, built and off, thresholds 0.9.0); `26db3cf` (reference data: IDSSE and Wyscout); `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
+| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `c26319b` (decision quality grounded; 18 November 2026), **not pushed**; `359a7fd` (learned threat surface measured, not adopted) is the last pushed commit; before it `a0565ea` (pressure v2 measured, not adopted); `baa9967` (Plaiq option split); `6f084d2` (Plaiq reference harness); `a589424` (context P5 0.1.0, line breaks); `fcc1efe` (line-break prototype and its 20-match results); `d33c8ab` (loose-ball rule downstream checks); `3143f45` (the loose-ball rule, built and off, thresholds 0.9.0); `26db3cf` (reference data: IDSSE and Wyscout); `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
 | UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `26b7c1d`, pushed; tag `prototype-v0.1` at `4bd8e52` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main` at `82a3429`; v2 deployed with `noindex, nofollow` |
 
@@ -70,6 +70,11 @@
   - **On held-out Wyscout matches** it wins on scoring within 10 s.
   - **On SkillCorner's threat, shot goal rates and the league's xG and goals,** it loses slightly to Plaiq's geometric surface.
   - **Not adopted; the geometric surface stays.** POV's value gap lies in its progressive factor and distance decay.
+- **Decision quality grounded (18 November 2026), not judged**, at the founder's direction. Measured against SkillCorner's option values, outcomes and context on 12,012 passes.
+  - **Completed passes have outcome evidence:** shots 1.2% at poor rising to 9.1% at optimal, on par with SkillCorner's analogue.
+  - **Plaiq rates 89% of failed passes optimal** (a flaw).
+  - **Weak agreement with SkillCorner on the best option** (0.31).
+  - **Next proposed:** decision quality version 2 as expected value from the option split.
 - **Plaiq review (18 November 2026):** [plaiq-review.md](plaiq-review.md).
   - **Evidence:** Plaiq's maths is tested, but its football validity is not.
   - **Two building blocks fell short this week:** failed-pass intent did not help line breaks (its cause is not yet established, since SkillCorner's data cannot test it); option value is not an availability test.
