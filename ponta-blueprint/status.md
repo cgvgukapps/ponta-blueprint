@@ -10,7 +10,7 @@
 |---|---|---|---|
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`; tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final`. Never modify. |
-| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `3143f45` (the founder's loose-ball rule, built and off, thresholds 0.9.0; 18 November 2026), pushed; before it `26db3cf` (reference data: IDSSE and Wyscout); `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
+| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `d33c8ab` (loose-ball rule downstream checks; 18 November 2026), **not pushed**; `3143f45` (the loose-ball rule, built and off, thresholds 0.9.0) is the last pushed commit; before it `26db3cf` (reference data: IDSSE and Wyscout); `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
 | UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `26b7c1d`, pushed; tag `prototype-v0.1` at `4bd8e52` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main` at `82a3429`; v2 deployed with `noindex, nofollow` |
 
@@ -48,6 +48,11 @@
   - **Phases:** pooled κ 0.61 (0.62 and 0.59 by half), but only 11 of 20 matches clear κ 0.55 on both halves; none falls below 0.50.
   - **Roles:** median 75.4% by playing time; only 12 of 20 matches clear 75%. Most misses are wide midfielders given central slots (44%) or centre forwards given an attacking-midfield slot (15%).
   - **Summary:** Gate 2a is met on the reference match, and not across the set for roles.
+- **FIFA alignment (18 November 2026):** [fifa-alignment.md](fifa-alignment.md) compares Ponta with FIFA's Football Language (117 term pages) and EFI metrics.
+  - **Same approach:** units and phases by rules on tracking.
+  - **Already matching:** line height, team length, compactness, five channels, between-units receiving location.
+  - **Gaps:** in-contest, line breaks, FIFA's phase splits (opposed and unopposed build-up, press against block, counter-press), and the manually coded concepts.
+  - **No public FIFA claim** without legal advice.
 - **New reference data (18 November 2026)**, downloaded outside the repos with `tools/fetch_reference_data.py` (checksums and a `SOURCE.json`; licences in [legal-compliance.md](legal-compliance.md#open-reference-datasets-added-18-november-2026)):
   - **IDSSE** (`~/ponta-reference-data/idsse`, 2.6 GB). Seven 2022/23 German league matches with official TRACAB tracking, events, playing positions and line-ups, and frame-level official ball status and possession. CC BY 4.0: credit the DFL and cite Bassek et al. (2025). Read by `tools/idsse.py` as a reference reader, not a supported provider.
   - **Wyscout open events** (`~/ponta-reference-data/wyscout-opendata`, 80 MB). 1,941 matches, 3.25 million events, 2017/18. CC BY 4.0. Events only; the players file is never opened.
@@ -100,11 +105,12 @@
      - ~~P1 tuned against the official frame-level possession~~ done 18 November 2026: no threshold change. The league's possession is anchored to its event log, so it is a second definition, not a truth; the best guard-keeping change adds under 1 point. The founder's blind replay check (50 moments): controls 10 of 10. On the 40 disagreements: P1's team 11, the league's 15, nobody (ball in flight or loose) 14. Short disagreements are a draw. In long ones (2.4 s or more) P1 is never right: it holds the old team while a pass or clearance travels.
        - **The founder's rule:** a deflection or clearance by the other team leaves the ball loose until a player gains control. It fits 8 of the 14 "nobody" moments.
        - **Built as `p1_loose_on_opponent_touch`, off.** On, P1's team labels agree better with every reference (league 87% to 92%, Metrica 94–96% to 97–98%, SkillCorner 95% to 97%), at the cost of about 9% of in-play time labelled loose. On the judged moments it is a wash (22 against 21).
-       - **Founder decision:** turn it on, which needs the downstream checks on phases first and ideally a larger judged sample, or leave it off.
+       - **Downstream checks with it on (18 November 2026):** the founder's phase review falls from 36 to 34, matches below the 0.50 phase floor rise from 2 to 4, and roles drop one match. Only the phases-file κ gains (0.625 to 0.632). **Recommended: keep it off.**
+       - FIFA defines "in contest" as this rule and computes it from the event sequence. The next step is in-contest from logged clearances, blocks and duels where a feed exists ([fifa-alignment.md](fifa-alignment.md#possession-states)).
      - corner starts in P1;
      - counter-attacks in P4, measurable against the league's and Wyscout's flags;
      - a goal-kick rule, now measurable on full-pitch tracking.
-   - **Then:** a Stage C spec (P5 relationships, P6 movement types, P7 space and value).
+   - **Then:** a Stage C spec (P5 relationships, P6 movement types, P7 space and value), shaped by [fifa-alignment.md](fifa-alignment.md#recommendations-in-order): line breaks in P5, FIFA's movement-to-receive categories in P6, in-contest from events in P1, and a FIFA-vocabulary view of phases.
    - Analyst agreement (Gate 2b) is still needed before anything is player-facing.
 3. **Concierge step** (roadmap Phase 2, step 0): run a prospect's real export locally through the engines and send back the Data check and the match page (gate E2). The page and payload tool exist.
 4. **Rest of Phase 1** (not gated by E1), alongside context Stage A: Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated cross-tenant access test for Parquet paths, basic ToS ([roadmap.md](roadmap.md#phase-1--platform-foundation-and-engine-extraction)).

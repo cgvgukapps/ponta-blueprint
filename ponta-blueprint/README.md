@@ -58,6 +58,7 @@ A design/laydown exercise for taking the validated **PONTA-PROTOTYPE** (Matrix a
 **Strategy and risk:**
 
 - [risks.md](risks.md) — the master risk register, extended for the AI-native pivot.
+- [fifa-alignment.md](fifa-alignment.md) — how Ponta's context model compares with FIFA's published Football Language and EFI metrics, what already matches, the gaps, and the limits on using FIFA's name. Analysis, 18 November 2026.
 - [competitive-landscape.md](competitive-landscape.md) — competitor teardown (StatsBomb IQ, SkillCorner Game Intelligence, Impect/Catapult, TacticAI) and what the AI-native angle does and does not change.
 - [go-to-market.md](go-to-market.md) — founder-led motion, ICPs, design-partner program.
 - [legal-compliance.md](legal-compliance.md) — player data rights, vendor ToS, DPA, plus LLM sub-processor and health-adjacent data.

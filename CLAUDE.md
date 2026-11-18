@@ -5,7 +5,7 @@ This repo holds no code. It is the **planning and design blueprint** for Ponta, 
 ## Layout
 
 - Git root: `~/PontaPlan` (remote `cgvgukapps/ponta-blueprint`). All documents live in `ponta-blueprint/`.
-- `ponta-blueprint/*.md`: 30 flat Markdown documents that link to each other with relative links and `#anchor`s.
+- `ponta-blueprint/*.md`: 31 flat Markdown documents that link to each other with relative links and `#anchor`s.
 - `ponta-blueprint/assets/`: logos, icons, the PontaFlow diagram and a reference image. Binary; do not edit.
 - `.cursor/` is git-ignored and holds only an empty `mcp.json`. There are no Cursor rules to follow.
 
@@ -21,7 +21,7 @@ This repo holds no code. It is the **planning and design blueprint** for Ponta, 
 - **Engines and execution tasks:** `Matrix.md`; `context-foundations-task.md` (complete: Stage A built, Gate 1 passed); `context-structure-task.md` (Stage B built; Gate 2a bars agreed and met on the reference match, a role-fit revision pending); `ai-workflows-task.md` (not startable until context Stage A and the API skeleton exist); `platform-extraction-task.md`, `matrix-prototype-task.md`, `matrix-statsports-adapter-task.md`, `prototype-cleanup-task.md` (complete).
 - **System design:** `architecture.md`, `engine-governance.md`, `operations.md`.
 - **Product and UX:** `features.md`, `frontend.md`, `frontend-design-brief-v2.md` (the fixed UI decisions live in its section 3; v1 superseded), `visual-design.md` (website-first), `website.md`, `website-v2-plan.md` (executed; launch gates open).
-- **Strategy and risk:** `risks.md`, `competitive-landscape.md`, `go-to-market.md`, `legal-compliance.md`, `roadmap_v2.md` (investor vision, not a commitment).
+- **Strategy and risk:** `risks.md`, `competitive-landscape.md`, `fifa-alignment.md` (how Ponta compares with FIFA's Football Language and EFI; no public FIFA claims), `go-to-market.md`, `legal-compliance.md`, `roadmap_v2.md` (investor vision, not a commitment).
 - **For outside review:** `platform-overview.md` (a dated, self-contained snapshot of the platform and its evidence status; summarises, does not supersede).
 
 ## The product in one paragraph

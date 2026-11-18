@@ -86,6 +86,7 @@ Open datasets are used to **measure** Ponta's engines and context packages, neve
 - **Any publication** that uses results from these datasets (a website claim, a deck, a paper) carries the attribution above. Internal reports in the platform repo already do.
 - **None of these providers becomes a supported provider** by being used here; the provider rule (four real providers, others "Coming soon") is unchanged.
 - **PFF FC's World Cup 2022 data** has no licence statement in its release post; it is not used until its terms are read.
+- **FIFA's Football Language and EFI documents** (read 18 November 2026; [fifa-alignment.md](fifa-alignment.md)) are reference material, not data. The FIFA Training Centre's terms allow private, non-commercial use only and reserve FIFA's names and marks. Ponta writes its own definitions, never copies FIFA's text, and makes no public FIFA claim without legal advice and, most likely, FIFA's written consent.
 
 ## AI and health-adjacent data
 
