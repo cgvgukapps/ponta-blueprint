@@ -73,6 +73,20 @@ This keeps legal spend proportional to actual risk exposure at each stage, rathe
 - Ask the prospect, in the first call, whether their licence permits it. Get the answer in writing with the export.
 - Keep the Track A open-data position separate: licence terms for the Metrica and SkillCorner open samples are still unverified (gate G3 in [website-v2-plan.md](website-v2-plan.md)).
 
+## Open reference datasets (added 18 November 2026)
+
+Open datasets are used to **measure** Ponta's engines and context packages, never as product data or customer-facing content. They are downloaded outside every repository (`ponta-platform/tools/fetch_reference_data.py`, which records source, licence and checksums in a `SOURCE.json` beside the files), and no reader opens a player-name field.
+
+| Dataset | Licence | Attribution required | Notes |
+|---|---|---|---|
+| SkillCorner open data (20 A-League matches) | MIT | Credit SkillCorner, as its README asks | Broadcast tracking, dynamic events, phases of play |
+| IDSSE (Bassek et al. 2025; 7 German league matches) | CC BY 4.0 | **Name the Deutsche Fußball Liga (DFL)** and cite Bassek, Rein, Weber and Memmert (2025), *Scientific Data* 12, 195 | Official TRACAB tracking, events, positions; released with the DFL's authorisation |
+| Wyscout open events (Pappalardo et al. 2019; seven competitions, 2017/18) | CC BY 4.0 | Cite Pappalardo et al. (2019), *Scientific Data* 6, 236 | Events only; the players file holds real names and is never read |
+
+- **Any publication** that uses results from these datasets (a website claim, a deck, a paper) carries the attribution above. Internal reports in the platform repo already do.
+- **None of these providers becomes a supported provider** by being used here; the provider rule (four real providers, others "Coming soon") is unchanged.
+- **PFF FC's World Cup 2022 data** has no licence statement in its release post; it is not used until its terms are read.
+
 ## AI and health-adjacent data
 
 *Added with the AI-native revision. Nothing here is legal advice; these are the questions the fixed-scope lawyer consultation above must now also cover, and the triggers for each.*

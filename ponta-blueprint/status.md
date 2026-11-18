@@ -10,7 +10,7 @@
 |---|---|---|---|
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`; tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final`. Never modify. |
-| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `8251e93` (throw-in thresholds agreed, 0.8.0; 18 November 2026), pushed; before it `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
+| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `26db3cf` (reference data: IDSSE and Wyscout readers and measurements; 18 November 2026), **not pushed**; `8251e93` (throw-in thresholds agreed, 0.8.0) is the last pushed commit; before it `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
 | UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `26b7c1d`, pushed; tag `prototype-v0.1` at `4bd8e52` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main` at `82a3429`; v2 deployed with `noindex, nofollow` |
 
@@ -19,7 +19,7 @@
 ### Engines (`ponta-platform`)
 
 - **Extraction complete** ([platform-extraction-task.md](platform-extraction-task.md), `EXTRACTION_REPORT.md`): `matrix_engine` and `plaiq_engine` as installable packages, all prototype tests carried over, import-graph check, CI.
-- **Tests:** 1,082 in total; 1,070 in the full local suite and 12 in the opt-in equivalence test (`PONTA_EQUIVALENCE=1`, about 7 minutes). CI is green but skips data-dependent tests; the local gate is `PONTA_REQUIRE_SAMPLE_DATA=1 pytest -q`.
+- **Tests:** 1,085 in total; 1,073 in the full local suite and 12 in the opt-in equivalence test (`PONTA_EQUIVALENCE=1`, about 7 minutes). CI is green but skips data-dependent tests; the local gate is `PONTA_REQUIRE_SAMPLE_DATA=1 pytest -q`.
 - **Equivalence:** Plaiq fed through Matrix reproduces the prototype's golden outputs on Metrica Sample Game 3 and SkillCorner 1886347, except 2 of 39,589 decision rows and 12 of 36,792 alternative rows on Metrica (a characterised float near-tie). No band changes. Accepted as the baseline; `engine_version` unchanged.
 - **Data check** (`matrix_engine/parity.py`): 12 metrics in 6 families with reasons, measured figures and coverage. On the real SkillCorner match, pass option value and event ΔV are Full and shot quality is Blocked.
 - **Semantic builder** (`plaiq_engine/semantic_builder.py`): one pseudonymised row per action, no coordinates; [ai-layer.md](ai-layer.md#the-semantic-football-event) matches the implemented schema.
@@ -48,6 +48,17 @@
   - **Phases:** pooled κ 0.61 (0.62 and 0.59 by half), but only 11 of 20 matches clear κ 0.55 on both halves; none falls below 0.50.
   - **Roles:** median 75.4% by playing time; only 12 of 20 matches clear 75%. Most misses are wide midfielders given central slots (44%) or centre forwards given an attacking-midfield slot (15%).
   - **Summary:** Gate 2a is met on the reference match, and not across the set for roles.
+- **New reference data (18 November 2026)**, downloaded outside the repos with `tools/fetch_reference_data.py` (checksums and a `SOURCE.json`; licences in [legal-compliance.md](legal-compliance.md#open-reference-datasets-added-18-november-2026)):
+  - **IDSSE** (`~/ponta-reference-data/idsse`, 2.6 GB). Seven 2022/23 German league matches with official TRACAB tracking, events, playing positions and line-ups, and frame-level official ball status and possession. CC BY 4.0: credit the DFL and cite Bassek et al. (2025). Read by `tools/idsse.py` as a reference reader, not a supported provider.
+  - **Wyscout open events** (`~/ponta-reference-data/wyscout-opendata`, 80 MB). 1,941 matches, 3.25 million events, 2017/18. CC BY 4.0. Events only; the players file is never opened.
+- **Findings from them** (`CONTEXT_STRUCTURE_REPORT.md`):
+  - **P1 against the official frame-level possession: 82% to 89%** (median 88%), below Gate 1's 93%, which was measured against event-inferred possession. Disagreement concentrates just after P1 switches possession and on short passes.
+  - **The league logs restarts 1 to 3 s before the ball is played.**
+  - **Main roles agree with official positions at a median 91%**, and reading roles from the defensive shape is confirmed here too.
+  - **Restarts from positions on full-pitch tracking:** corners 93% found and 67% right; throw-ins 83% and 79%.
+  - **Possession from events alone:** a median 85% against the official reference, so tracking adds about 3 points.
+  - **P1's possession starts match Wyscout's norms** over 1,941 matches. P1 finds fewer, longer possessions than an event rule (247 against about 300 to 350 a match).
+  - **P4's breaks** agree with the league's counter-attack flag when Ponta labels one (5 of 7), but catch only about a third of the flagged counter-attacks (5 of 14 shots).
 - **Zone spot check (17 November 2026):** the founder judged 47 of 50 zone cards right (bar 45), so zones meet Gate 2a. Phases on the same still cards scored 34 of 50, with finish weakest at 9 of 17. A still frame rarely shows a phase, so the phase check was redone as 7-second replays (`tools/context_spotcheck.py --replay`).
 - **Founder's phase replay review and refinements (17 and 18 November 2026):** 29 of 50 replays judged right, with notes; kept in `ponta-platform/tools/data/phase_review_2026-11-17.json`.
   - **Three P4 refinements adopted** (P4 0.2.0): finish needs the ball in the attacking half, build-up whenever the ball is in the own third, a break ends in the final third. Each was scored on the review and against SkillCorner's 20 matches, and kept only if it lost nothing there. Three more were tried and dropped.
@@ -85,6 +96,11 @@
    - **Open from the review:** long balls lost in flight, a goal kick credited to the receiving team while the ball is undetected (P1), goal kicks and free kicks without an event feed (goal kicks are hidden by broadcast tracking gaps), recycling backwards as build-up, and regains that gain under 15 m.
    - **Roles:** done (P2 0.2.0). Later packages may use each player's main role, labelled estimated. Still short of a bar on three matches (1959846, 2006229, 2016236).
    - **Phases short of the 0.50 floor** on two matches (2013725, 2017461).
+   - **Leads from the official data** (each a short round with a fit and test split by match):
+     - P1 tuned against the official frame-level possession (its lag at switches and on shots);
+     - corner starts in P1;
+     - counter-attacks in P4, measurable against the league's and Wyscout's flags;
+     - a goal-kick rule, now measurable on full-pitch tracking.
    - **Then:** a Stage C spec (P5 relationships, P6 movement types, P7 space and value).
    - Analyst agreement (Gate 2b) is still needed before anything is player-facing.
 3. **Concierge step** (roadmap Phase 2, step 0): run a prospect's real export locally through the engines and send back the Data check and the match page (gate E2). The page and payload tool exist.
@@ -135,6 +151,9 @@ python tools/context_structure_measure.py --cache /tmp/ponta-context/cache --out
 python tools/context_reference_set.py --data ~/ponta-reference-data/skillcorner-opendata --cache /tmp/ponta-context/sc-cache --out /tmp/ponta-context/reference_set.json
 python tools/context_phase_review.py --cache /tmp/ponta-context/cache --sc-data ~/ponta-reference-data/skillcorner-opendata --sc-cache /tmp/ponta-context/sc-cache --out /tmp/ponta-context/phase_review.json
 python tools/context_corner_sweep.py --cache /tmp/ponta-context/cache --sc-data ~/ponta-reference-data/skillcorner-opendata --sc-cache /tmp/ponta-context/sc-cache --out /tmp/ponta-context/corner_sweep.json
+python tools/fetch_reference_data.py idsse            # and: wyscout --dest ~/ponta-reference-data/wyscout-opendata
+python tools/context_idsse.py --data ~/ponta-reference-data/idsse --cache /tmp/ponta-context/idsse-cache --out /tmp/ponta-context/idsse.json
+python tools/context_event_chains.py --cache /tmp/ponta-context/cache --idsse ~/ponta-reference-data/idsse --idsse-cache /tmp/ponta-context/idsse-cache --wyscout ~/ponta-reference-data/wyscout-opendata --out /tmp/ponta-context/event_chains.json
 python tools/context_restart_sweep.py --cache /tmp/ponta-context/cache --sc-data ~/ponta-reference-data/skillcorner-opendata --sc-cache /tmp/ponta-context/sc-cache --out /tmp/ponta-context/restart_sweep.json
 
 # UI prototype
@@ -158,4 +177,5 @@ Prototype tests use the prototype's own interpreter: `cd /Users/cicerovieira/PON
 - **UI screenshots need the dev server running** and use the system Chrome; real match-page payloads are generated outside the repos and never committed.
 - **Do not touch the prototype** beyond reading it. It is the validation record.
 - **SkillCorner's open data (20 matches, about 2 GB) lives at `~/ponta-reference-data/skillcorner-opendata`,** outside every repo. Tracking files are Git LFS objects, fetched from `media.githubusercontent.com`. The regression match 1886347 is still read from the prototype's older copy; the newer copy's revised event file gives κ 0.59 instead of 0.60.
+- **IDSSE parsing takes about 30 s per match** (370 MB of XML each); `tools/idsse.py` caches parsed matches as pickles and rebuilds the P1 event table on every load. Its restart times are logged 1 to 3 s early; score restarts against the official ball status turning live.
 - **Measurement tool caches hold pickled matches.** Delete a match's pickle after changing a loader, or the tools keep using the old normalisation.
