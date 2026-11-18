@@ -10,7 +10,7 @@
 |---|---|---|---|
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`; tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final`. Never modify. |
-| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0; 18 November 2026), pushed; before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
+| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `64301e0` (founder's re-check of the seven changed replays; 18 November 2026), pushed; before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
 | UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `26b7c1d`, pushed; tag `prototype-v0.1` at `4bd8e52` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main` at `82a3429`; v2 deployed with `noindex, nofollow` |
 
@@ -53,7 +53,7 @@
   - **Three P4 refinements adopted** (P4 0.2.0): finish needs the ball in the attacking half, build-up whenever the ball is in the own third, a break ends in the final third. Each was scored on the review and against SkillCorner's 20 matches, and kept only if it lost nothing there. Three more were tried and dropped.
   - **Corners from player positions** (the founder's idea: one attacker at a flag, a crowd in the box), used without an event feed: 73% of SkillCorner's held-out corners and 69% of Metrica's, against 4% and 23% for the ball rule; about 55% of detections are right.
   - **P1 bug fixed** (P1 0.2.0): a set piece was credited to whichever team touched the ball first, so a cleared corner made the defenders' chain a set play.
-  - **Result:** review 34 of 50 (28 before, with the corrected P1); SkillCorner κ pooled 0.610 (0.609 and 0.611 by half); per match, 13 of 20 clear 0.55 on both halves (11 before), but three now sit just under 0.50.
+  - **Result:** review 34 of 50 (28 before, with the corrected P1); the founder re-judged the seven changed replays on 18 November 2026 and found all seven right, so 35 of 50 (`tools/data/phase_review_2026-11-18_recheck.json`); SkillCorner κ pooled 0.610 (0.609 and 0.611 by half); per match, 13 of 20 clear 0.55 on both halves (11 before), but three now sit just under 0.50.
   - The six new thresholds were agreed by the founder on 18 November 2026 (thresholds 0.6.0).
 - **P2 role revision (18 November 2026, P2 0.2.0):**
   - **Most role misses were in the comparison, not Ponta.** SkillCorner files LM and RM under "Midfield" (the central pair of its 4-4-2) and LF and RF under "Wide Attacker"; the comparison had read them as wide midfielders and centre forwards. Corrected from SkillCorner's own position groups, confirmed by mean positions.
@@ -81,7 +81,6 @@
 
 1. **Track V (validation), now.** Discovery calls with the wedge, intercepted-pass and price questions (gate E1, at least 8 calls); check each prospect's vendor licence before taking a real export ([legal-compliance.md](legal-compliance.md#vendor-licence-check-before-the-first-real-export)).
 2. **Finish Gate 2a, then Stage C.**
-   - **Optional:** re-judge the 50 replays with P4 0.2.0 (`tools/context_spotcheck.py --replay`).
    - **Open from the review:** long balls lost in flight, a goal kick credited to the receiving team while the ball is undetected (P1), throw-ins and goal kicks without an event feed (the corner approach could extend to them), recycling backwards as build-up, and regains that gain under 15 m.
    - **Roles:** done (P2 0.2.0). Later packages may use each player's main role, labelled estimated. Still short of a bar on three matches (1959846, 2006229, 2016236).
    - **Phases short of the 0.50 floor** on three matches (2013725, 2015213, 2017461): the open review items above are the likely place to recover them.
