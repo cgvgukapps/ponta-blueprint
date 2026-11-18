@@ -10,7 +10,7 @@
 |---|---|---|---|
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`; tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final`. Never modify. |
-| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `d33c8ab` (loose-ball rule downstream checks; 18 November 2026), pushed; before it `3143f45` (the loose-ball rule, built and off, thresholds 0.9.0); `26db3cf` (reference data: IDSSE and Wyscout); `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
+| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `fcc1efe` (line-break prototype and its 20-match results; 18 November 2026), **not pushed**; `d33c8ab` (loose-ball rule downstream checks) is the last pushed commit; before it `3143f45` (the loose-ball rule, built and off, thresholds 0.9.0); `26db3cf` (reference data: IDSSE and Wyscout); `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
 | UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `26b7c1d`, pushed; tag `prototype-v0.1` at `4bd8e52` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main` at `82a3429`; v2 deployed with `noindex, nofollow` |
 
@@ -48,6 +48,15 @@
   - **Phases:** pooled κ 0.61 (0.62 and 0.59 by half), but only 11 of 20 matches clear κ 0.55 on both halves; none falls below 0.50.
   - **Roles:** median 75.4% by playing time; only 12 of 20 matches clear 75%. Most misses are wide midfielders given central slots (44%) or centre forwards given an attacking-midfield slot (15%).
   - **Summary:** Gate 2a is met on the reference match, and not across the set for roles.
+- **Line breaks, a prototype for Stage C (18 November 2026):** a rule on FIFA's definition, measured against SkillCorner's labels on 20 matches (6,628 passes).
+  - **Lines:** grouped at the pass moment, which beat P2's window lines on fit and held-out matches.
+  - **Agreement:** any line broken κ 0.68 / 0.66; furthest line κ 0.52; through or around 82%.
+  - **Plaiq's failed-pass intent does not help:** it finds the nearest viable receiver, not a long ball's target.
+  - **Line-breaking options:** the geometry agrees (κ 0.63), but Plaiq's option value is not an availability test.
+  - **Founder decisions:**
+    - bring completed-pass line breaks into P5;
+    - a target rule for failed passes (in the context layer, or a Plaiq change);
+    - an availability model for options.
 - **FIFA alignment (18 November 2026):** [fifa-alignment.md](fifa-alignment.md) compares Ponta with FIFA's Football Language (117 term pages) and EFI metrics.
   - **Same approach:** units and phases by rules on tracking.
   - **Already matching:** line height, team length, compactness, five channels, between-units receiving location.
