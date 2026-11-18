@@ -36,6 +36,22 @@
 - **A data-driven threat surface** has two Wyscout baselines to beat.
 - **Failed-pass targets need a judged reference** (the replay method) before any change.
 
+## Step 3 results: availability and value split (18 November 2026)
+
+`plaiq_engine/analytics/option_split.py` (0.1.0) writes POV as availability × value, exactly, as a new metric beside POV; POV and decision quality are untouched. Measured on SkillCorner's 20 matches (fit / held out):
+
+| | Result |
+|---|---|
+| Availability predicting completion | AUC **0.79 / 0.77** (POV 0.66 / 0.66) |
+| Value of the targeted player against SkillCorner's threat | **0.79 / 0.78** (POV 0.30 / 0.26) |
+| Value against SkillCorner's "dangerous" flag | AUC **0.87 / 0.88** (POV 0.54 / 0.51) |
+| Availability picking SkillCorner's listed passing options | AUC 0.67 / 0.66 |
+| Line-breaking options from availability (threshold chosen on fit) | Ponta about 5 a pass, SkillCorner about 0.5; κ 0.01 |
+
+- **Pass option value's weak scores came from multiplying two sound halves,** not from either half. The split should be how Ponta reports a passing option: how likely it is to arrive, and what it is worth if it does.
+- **Decision quality still uses POV,** so changing it is the decision-quality study's question, not this step's.
+- **Passing options are offers to receive** (FIFA's term), which is movement. That moves line-breaking options to P6.
+
 ## The models, what tests them now, and what to change
 
 | Model | How it works today | What can test it now | Proposed change |

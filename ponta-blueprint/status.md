@@ -10,7 +10,7 @@
 |---|---|---|---|
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`; tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final`. Never modify. |
-| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `6f084d2` (Plaiq reference harness; 18 November 2026), pushed; before it `a589424` (context P5 0.1.0, line breaks); `fcc1efe` (line-break prototype and its 20-match results); `d33c8ab` (loose-ball rule downstream checks); `3143f45` (the loose-ball rule, built and off, thresholds 0.9.0); `26db3cf` (reference data: IDSSE and Wyscout); `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
+| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `baa9967` (Plaiq option split; 18 November 2026), **not pushed**; `6f084d2` (Plaiq reference harness) is the last pushed commit; before it `a589424` (context P5 0.1.0, line breaks); `fcc1efe` (line-break prototype and its 20-match results); `d33c8ab` (loose-ball rule downstream checks); `3143f45` (the loose-ball rule, built and off, thresholds 0.9.0); `26db3cf` (reference data: IDSSE and Wyscout); `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
 | UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `26b7c1d`, pushed; tag `prototype-v0.1` at `4bd8e52` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main` at `82a3429`; v2 deployed with `noindex, nofollow` |
 
@@ -19,7 +19,7 @@
 ### Engines (`ponta-platform`)
 
 - **Extraction complete** ([platform-extraction-task.md](platform-extraction-task.md), `EXTRACTION_REPORT.md`): `matrix_engine` and `plaiq_engine` as installable packages, all prototype tests carried over, import-graph check, CI.
-- **Tests:** 1,092 in total; 1,080 in the full local suite and 12 in the opt-in equivalence test (`PONTA_EQUIVALENCE=1`, about 7 minutes). CI is green but skips data-dependent tests; the local gate is `PONTA_REQUIRE_SAMPLE_DATA=1 pytest -q`.
+- **Tests:** 1,097 in total; 1,085 in the full local suite and 12 in the opt-in equivalence test (`PONTA_EQUIVALENCE=1`, about 7 minutes). CI is green but skips data-dependent tests; the local gate is `PONTA_REQUIRE_SAMPLE_DATA=1 pytest -q`.
 - **Equivalence:** Plaiq fed through Matrix reproduces the prototype's golden outputs on Metrica Sample Game 3 and SkillCorner 1886347, except 2 of 39,589 decision rows and 12 of 36,792 alternative rows on Metrica (a characterised float near-tie). No band changes. Accepted as the baseline; `engine_version` unchanged.
 - **Data check** (`matrix_engine/parity.py`): 12 metrics in 6 families with reasons, measured figures and coverage. On the real SkillCorner match, pass option value and event ΔV are Full and shot quality is Blocked.
 - **Semantic builder** (`plaiq_engine/semantic_builder.py`): one pseudonymised row per action, no coordinates; [ai-layer.md](ai-layer.md#the-semantic-football-event) matches the implemented schema.
@@ -58,6 +58,11 @@
   - **pressure** against the league's shot pressure: 0.30 (1v1), 0.49 (zonal);
   - **threat surface:** 0.54 against the league's xG; 0.81 against Wyscout's shot goal rate by zone.
   - **Failed-pass targets cannot be tested on SkillCorner** (its end point is its own target), which also corrects the earlier line-break explanation.
+- **Plaiq option split (18 November 2026):** pass option value written as availability × value (`analytics/option_split.py` 0.1.0, beside POV).
+  - **Availability** predicts completion at AUC 0.77 held out (POV 0.66).
+  - **Value** tracks SkillCorner's threat at 0.78 (POV 0.26).
+  - **POV's weak reference scores came from multiplying the two.**
+  - **Passing options are offers to receive** (movement), so line-breaking options move to P6.
 - **Plaiq review (18 November 2026):** [plaiq-review.md](plaiq-review.md).
   - **Evidence:** Plaiq's maths is tested, but its football validity is not.
   - **Two building blocks fell short this week:** failed-pass intent did not help line breaks (its cause is not yet established, since SkillCorner's data cannot test it); option value is not an availability test.
