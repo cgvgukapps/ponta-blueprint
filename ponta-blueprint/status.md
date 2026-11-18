@@ -10,7 +10,7 @@
 |---|---|---|---|
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`; tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final`. Never modify. |
-| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `a589424` (context P5 0.1.0, line breaks; 18 November 2026), pushed; before it `fcc1efe` (line-break prototype and its 20-match results); `d33c8ab` (loose-ball rule downstream checks); `3143f45` (the loose-ball rule, built and off, thresholds 0.9.0); `26db3cf` (reference data: IDSSE and Wyscout); `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
+| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `6f084d2` (Plaiq reference harness; 18 November 2026), **not pushed**; `a589424` (context P5 0.1.0, line breaks) is the last pushed commit; before it `fcc1efe` (line-break prototype and its 20-match results); `d33c8ab` (loose-ball rule downstream checks); `3143f45` (the loose-ball rule, built and off, thresholds 0.9.0); `26db3cf` (reference data: IDSSE and Wyscout); `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
 | UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `26b7c1d`, pushed; tag `prototype-v0.1` at `4bd8e52` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main` at `82a3429`; v2 deployed with `noindex, nofollow` |
 
@@ -52,14 +52,20 @@
   - **Covers:** completed passes; failed passes listed with their breaks unknown.
   - **Threshold:** `p5_min_unit_players` (2, FIFA's definition), proposed.
   - **Its own output against SkillCorner:** any break κ 0.65 / 0.63, furthest line κ 0.53 / 0.54, through or around 87%.
+- **Plaiq reference harness (18 November 2026)**, step 1 of the review (`PLAIQ_REFERENCES_REPORT.md` in `ponta-platform`):
+  - **completion:** AUC 0.78, against SkillCorner's own model at 0.90;
+  - **pass option value:** rank correlation 0.28 with SkillCorner's threat; AUC 0.53 for its "dangerous" flag;
+  - **pressure** against the league's shot pressure: 0.30 (1v1), 0.49 (zonal);
+  - **threat surface:** 0.54 against the league's xG; 0.81 against Wyscout's shot goal rate by zone.
+  - **Failed-pass targets cannot be tested on SkillCorner** (its end point is its own target), which also corrects the earlier line-break explanation.
 - **Plaiq review (18 November 2026):** [plaiq-review.md](plaiq-review.md).
   - **Evidence:** Plaiq's maths is tested, but its football validity is not.
-  - **Two building blocks fell short this week:** failed-pass intent finds the nearest receiver, not the target; option value is not an availability test.
+  - **Two building blocks fell short this week:** failed-pass intent did not help line breaks (its cause is not yet established, since SkillCorner's data cannot test it); option value is not an availability test.
   - **The plan:** an ordered, versioned programme starting with a reference harness that measures every model against SkillCorner, the league's shot pressure and xG, and Wyscout.
 - **Line breaks, a prototype for Stage C (18 November 2026):** a rule on FIFA's definition, measured against SkillCorner's labels on 20 matches (6,628 passes).
   - **Lines:** grouped at the pass moment, which beat P2's window lines on fit and held-out matches.
   - **Agreement:** any line broken κ 0.68 / 0.66; furthest line κ 0.52; through or around 82%.
-  - **Plaiq's failed-pass intent does not help:** it finds the nearest viable receiver, not a long ball's target.
+  - **Plaiq's failed-pass intent does not help** (κ 0.27 to 0.26). The cause is not established: on SkillCorner's data a failed pass's end point is already SkillCorner's own target.
   - **Line-breaking options:** the geometry agrees (κ 0.63), but Plaiq's option value is not an availability test.
   - **Founder decisions:**
     - bring completed-pass line breaks into P5;

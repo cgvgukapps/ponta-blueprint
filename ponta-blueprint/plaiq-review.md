@@ -6,7 +6,7 @@
 
 - **Plaiq's maths is specified and tested; its football validity is not.** "Validated" in the README means the code matches the specification. No Plaiq output has yet been compared with an independent reference or an expert, and [engine-governance.md](engine-governance.md#construct-validity-and-reliability-of-decision-quality-added-15-november-2026) already lists the open questions: the decision-quality bands were tuned on the match used for the worked example, and the passer is the best option in about 65% of scored passes.
 - **This week gave Plaiq its first external evidence, and two of its building blocks did not do the job the context layer asked of them:**
-  - the **failed-pass inference** finds the nearest team-mate who could have won the ball, not the pass's target. For line breaks it changed nothing (κ 0.27 to 0.26), and long balls aimed beyond the back line were credited to a nearer player;
+  - the **failed-pass inference** did not help line breaks (κ 0.27 to 0.26). *(Corrected 18 November 2026: the first reading, that it finds the nearest receiver rather than the target, was not established. On SkillCorner's data a failed pass's end point is already SkillCorner's own target, so Plaiq's inference cannot be tested there; see step 1 below.)*
   - **pass option value** ranks a pass's worth, but is not a test of whether a team-mate is available. As a filter for line-breaking options it reached κ 0.11.
 - **The references to test the rest now exist:**
   - SkillCorner's per-pass labels: expected pass completion, threat, the targeted player (including for failed passes), the list of passing options;
@@ -17,6 +17,24 @@
   - its pressure uses distance, the angle of the presser and the number of pressers, where Plaiq uses the nearest opponent's distance alone;
   - its value of a pass rests on breaking the opposition's units, which Plaiq does not see;
   - its expected goals is learned from historical shots, where Plaiq's threat surface is a hand-built geometric formula.
+
+## Step 1 results: the reference harness (18 November 2026)
+
+`tools/plaiq_references.py` and `PLAIQ_REFERENCES_REPORT.md` in `ponta-platform`. Measurement only, default player profiles.
+
+| Model | Reference | Result |
+|---|---|---|
+| Completion (control × no interception) | 12,103 SkillCorner passes completed or not | AUC **0.78**; SkillCorner's own model 0.90; rank correlation with it 0.62 |
+| Pass option value (targeted player) | SkillCorner's threat; its "dangerous" flag | Rank correlation **0.28**; AUC **0.53** (close to chance) |
+| Pressure on the shooter | The league's shot pressure (164 shots) | 1v1 **0.30**; zonal (three nearest) **0.49** |
+| Threat surface | The league's xG; Wyscout zone goal rate of shots; Wyscout scoring within 10 s | 0.54 (goals AUC 0.67 against xG's 0.81); **0.81**; 0.51 |
+| Failed-pass target | — | Not measurable here: SkillCorner's failed-pass end point is its own target, and the other feeds name no intended receiver |
+
+**What this changes in the programme:**
+- **Pass option value is the weakest model,** so splitting availability from value and rebuilding the value part moves up.
+- **Pressure version 2 now has a reference to beat:** count the pressers.
+- **A data-driven threat surface** has two Wyscout baselines to beat.
+- **Failed-pass targets need a judged reference** (the replay method) before any change.
 
 ## The models, what tests them now, and what to change
 
