@@ -182,7 +182,12 @@ Thresholds marked "agreed" are set in [Open decisions](#open-decisions). "Layer"
 - **Vocabulary** *(revised: replaces the taxonomy above)*: SkillCorner's published phases (build_up, create, finish, direct, quick_break, transition, set_play, chaotic, with the paired blocks), so the labels can be measured against a reference.
 - **Established play:** follows the defending block from the three deepest defenders. The measured boundaries (26 m and 47 m from goal) replaced equal pitch thirds, which gave κ 0.20.
 - **Not used or not built:** Plaiq pressure is not an input and counter-press is not labelled.
-- **Set pieces:** Metrica's logged set pieces are an input, not a test. Without a logged feed only corners are found, about a quarter of them.
+- **Set pieces:** Metrica's logged set pieces are an input, not a test. Without a logged feed only corners are found, about a quarter of them. *(Revised 18 November 2026.)* Corners are now found from player positions (the founder's rule: one attacker at a flag, a crowd in the box), about 70% of them on both providers.
+- **Founder's replay review (17 and 18 November 2026):** 29 of 50 replays judged right against the first rules.
+  - Three refinements adopted (P4 0.2.0): finish needs the ball in the attacking half; build-up whenever the ball is in the own third; a break ends in the final third.
+  - Each was kept only if it agreed better with the review and lost nothing against SkillCorner.
+  - Result: 34 of 50 on the review; κ 0.610 pooled over SkillCorner's 20 matches.
+  - A P1 bug was fixed on the way (P1 0.2.0): a set piece now starts only the taking team's chain.
 
 ### P5 Continuous relationships (Stage C, planned; layer 4)
 
@@ -275,6 +280,7 @@ Each is decided before its package starts, from measurements where the table say
 | Phase taxonomy: final list and minimum phase duration | P4 | *(Superseded by decision 4a.)* SkillCorner's published vocabulary adopted so it can be measured; minimum phase 1 s (no measurable effect). Analysts review it at Gate 2b |
 | Agreement bar with reference labels (roles, phases, zones) | Gate 2a | **Measured 17 November 2026; proposed:** roles at least 75% by position group, weighted by playing time (measured 79%), and at least 85% with central midfield merged (91%); formations at most 2 changes per team, state and half (measured at most 1); phases Cohen's κ at least 0.55 on each half (0.58 and 0.61); zones at least 45 of 50 on the founder's spot check. **Agreed 17 November 2026.** Met on the reference match (zones 47 of 50). Across SkillCorner's 20 open-data matches: formations 20 of 20; phases 11 of 20 per match (pooled κ 0.61); roles 12 of 20. Open: whether to restate the phase bar for a set of matches (for example pooled, with a per-match floor of 0.50) |
 | Stage B thresholds (P2 to P4) | Gate 2a | **Agreed 17 November 2026** (thresholds 0.4.0): three measured (low block 26 m, high block 47 m, break gain 15 m), the rest from published sources or engineering choices; listed in `CONTEXT_STRUCTURE_REPORT.md` |
+| P4 refinements from the founder's review and corners from positions | Gate 2a | **Measured 18 November 2026** (thresholds 0.5.0, P4 0.2.0): finish in the attacking half, build-up in the own third, a break ends in the final third; corner set-up of a taker within 4 m of the flag, at least 12 players in the box, held 1 s. Founder to agree |
 | Agreement bar for analyst studies | Gate 2b | Same method as the decision-quality study |
 | Free-player distance and overload rules | P5 | Named and versioned like the high-pressure threshold |
 | Runtime and storage budget per match | Gate 3 | Sets how much of P5 runs on the full grid |
