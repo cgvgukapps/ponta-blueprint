@@ -1,6 +1,6 @@
 # Context Structure (P2, P3, P4) — Execution Task
 
-> **Status: built (17 November 2026); Gate 2a bars and thresholds agreed by the founder the same day; zones passed the spot check (47 of 50); phases revised after the founder's replay review (P4 0.2.0) and roles revised (P2 0.2.0), both 18 November 2026, with every new threshold agreed; restarts from positions added the same day (P4 0.3.0, four throw-in thresholds measured, not yet agreed).** Stage B of [context-packages.md](context-packages.md), started under decision 4a (proceed without waiting for analysts). Built in `ponta-platform` (`plaiq_engine/context/structure.py`, `zones.py`, `phase.py`); results in `CONTEXT_STRUCTURE_REPORT.md` there.
+> **Status: built (17 November 2026); Gate 2a bars and thresholds agreed by the founder the same day; zones passed the spot check (47 of 50); phases revised after the founder's replay review (P4 0.2.0) and roles revised (P2 0.2.0), both 18 November 2026, with every new threshold agreed; restarts from positions added the same day (P4 0.3.0, its four throw-in thresholds agreed).** Stage B of [context-packages.md](context-packages.md), started under decision 4a (proceed without waiting for analysts). Built in `ponta-platform` (`plaiq_engine/context/structure.py`, `zones.py`, `phase.py`); results in `CONTEXT_STRUCTURE_REPORT.md` there.
 >
 > - **Reference match (1886347):** roles agree with SkillCorner's by position group for 79% of playing time; phases at Cohen's κ 0.60.
 > - **All 20 SkillCorner open-data matches** (measured afterwards, nothing tuned):
