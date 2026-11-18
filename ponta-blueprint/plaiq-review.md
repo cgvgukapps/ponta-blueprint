@@ -52,6 +52,14 @@
 - **Decision quality still uses POV,** so changing it is the decision-quality study's question, not this step's.
 - **Passing options are offers to receive** (FIFA's term), which is movement. That moves line-breaking options to P6.
 
+## Step 4 results: pressure version 2 (18 November 2026)
+
+Directional, count-aware pressure (`analytics/pressure_v2.py` 0.1.0, after FIFA's EFI inputs and Andrienko et al. 2017) was measured against SkillCorner's pressure level on 33,270 moments and the league's shot pressure.
+- **Not adopted.** Plaiq's existing measures win on both references: 1v1 against SkillCorner (rank correlation 0.82, weighted κ 0.80 held out), zonal against the league (0.49).
+- **The two references, like FIFA's two notions, measure different things:** the nearest engaging defender (coded direct, indirect or no pressure), and collective pressure on the ball.
+- **Correction:** step 1's reading that 1v1 pressure is weak came from the wrong reference.
+- **Proposed named bands on the 1v1 scale,** anchored to SkillCorner's levels: 1–2 none, 3–5 low, 6–7 medium, **8–9 high**, 10 very high. For FIFA's three levels: direct ≈ 8 or more, indirect ≈ 3 to 7, none ≈ 1 to 2, to confirm on a judged sample.
+
 ## The models, what tests them now, and what to change
 
 | Model | How it works today | What can test it now | Proposed change |

@@ -10,7 +10,7 @@
 |---|---|---|---|
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`; tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final`. Never modify. |
-| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `baa9967` (Plaiq option split; 18 November 2026), pushed; before it `6f084d2` (Plaiq reference harness); `a589424` (context P5 0.1.0, line breaks); `fcc1efe` (line-break prototype and its 20-match results); `d33c8ab` (loose-ball rule downstream checks); `3143f45` (the loose-ball rule, built and off, thresholds 0.9.0); `26db3cf` (reference data: IDSSE and Wyscout); `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
+| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `a0565ea` (pressure v2 measured, not adopted; 18 November 2026), **not pushed**; `baa9967` (Plaiq option split) is the last pushed commit; before it `6f084d2` (Plaiq reference harness); `a589424` (context P5 0.1.0, line breaks); `fcc1efe` (line-break prototype and its 20-match results); `d33c8ab` (loose-ball rule downstream checks); `3143f45` (the loose-ball rule, built and off, thresholds 0.9.0); `26db3cf` (reference data: IDSSE and Wyscout); `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
 | UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `26b7c1d`, pushed; tag `prototype-v0.1` at `4bd8e52` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main` at `82a3429`; v2 deployed with `noindex, nofollow` |
 
@@ -19,7 +19,7 @@
 ### Engines (`ponta-platform`)
 
 - **Extraction complete** ([platform-extraction-task.md](platform-extraction-task.md), `EXTRACTION_REPORT.md`): `matrix_engine` and `plaiq_engine` as installable packages, all prototype tests carried over, import-graph check, CI.
-- **Tests:** 1,097 in total; 1,085 in the full local suite and 12 in the opt-in equivalence test (`PONTA_EQUIVALENCE=1`, about 7 minutes). CI is green but skips data-dependent tests; the local gate is `PONTA_REQUIRE_SAMPLE_DATA=1 pytest -q`.
+- **Tests:** 1,100 in total; 1,088 in the full local suite and 12 in the opt-in equivalence test (`PONTA_EQUIVALENCE=1`, about 7 minutes). CI is green but skips data-dependent tests; the local gate is `PONTA_REQUIRE_SAMPLE_DATA=1 pytest -q`.
 - **Equivalence:** Plaiq fed through Matrix reproduces the prototype's golden outputs on Metrica Sample Game 3 and SkillCorner 1886347, except 2 of 39,589 decision rows and 12 of 36,792 alternative rows on Metrica (a characterised float near-tie). No band changes. Accepted as the baseline; `engine_version` unchanged.
 - **Data check** (`matrix_engine/parity.py`): 12 metrics in 6 families with reasons, measured figures and coverage. On the real SkillCorner match, pass option value and event ΔV are Full and shot quality is Blocked.
 - **Semantic builder** (`plaiq_engine/semantic_builder.py`): one pseudonymised row per action, no coordinates; [ai-layer.md](ai-layer.md#the-semantic-football-event) matches the implemented schema.
@@ -63,6 +63,9 @@
   - **Value** tracks SkillCorner's threat at 0.78 (POV 0.26).
   - **POV's weak reference scores came from multiplying the two.**
   - **Passing options are offers to receive** (movement), so line-breaking options move to P6.
+- **Pressure version 2 (18 November 2026):** directional and count-aware, after FIFA and Andrienko et al.
+  - **Measured and not adopted:** Plaiq's 1v1 pressure matches SkillCorner's pressure levels best (κ 0.80), and zonal matches the league's shot pressure best.
+  - **Gave a measured candidate for the named high-pressure threshold** (8 or more on the 1v1 scale).
 - **Plaiq review (18 November 2026):** [plaiq-review.md](plaiq-review.md).
   - **Evidence:** Plaiq's maths is tested, but its football validity is not.
   - **Two building blocks fell short this week:** failed-pass intent did not help line breaks (its cause is not yet established, since SkillCorner's data cannot test it); option value is not an availability test.
@@ -151,7 +154,7 @@
 ## Open decisions
 
 - **Citation confidence for single-source matches:** what fills the confidence slot (a documented derivation from `ball_detected` and `players_observed`, or an explicit null with the reason). Blocks the AI layer.
-- **A named high-pressure threshold** on the engine's 1 to 10 scale, documented and versioned; the UI glossary then follows.
+- **A named high-pressure threshold** on the engine's 1 to 10 scale, documented and versioned; the UI glossary then follows. *Measured candidate (18 November 2026):* 1v1 pressure of 8 or more is "high", from cut points 3 / 6 / 8 / 10 that reproduce SkillCorner's five pressure levels (weighted κ 0.80 held out). For FIFA's coded levels: direct ≈ 8 or more, indirect ≈ 3 to 7, none ≈ 1 to 2. To confirm on a judged sample ([plaiq-review.md](plaiq-review.md)).
 - **Context P1 refinements (open, with recommendations):** a control radius per provider (once a second broadcast match confirms SkillCorner's fit at 2.0 to 2.5 m), a hand-labelled possession sample before Stage B, and movement-based gap inference when a feed needs it ([context-packages.md](context-packages.md#open-decisions)).
 - **Context package thresholds:** grid rate, inferred-possession share, possession agreement bar (Gate 1), and the later ones per package; listed in [context-packages.md](context-packages.md#open-decisions), each decided before its package starts, from measurements where possible.
 - **Recruit one or two analysts** through discovery calls for context Gates 2 and 3 (formation, phase, movement labels).
