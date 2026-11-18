@@ -60,6 +60,14 @@ Directional, count-aware pressure (`analytics/pressure_v2.py` 0.1.0, after FIFA'
 - **Correction:** step 1's reading that 1v1 pressure is weak came from the wrong reference.
 - **Proposed named bands on the 1v1 scale,** anchored to SkillCorner's levels: 1–2 none, 3–5 low, 6–7 medium, **8–9 high**, 10 very high. For FIFA's three levels: direct ≈ 8 or more, indirect ≈ 3 to 7, none ≈ 1 to 2, to confirm on a judged sample.
 
+## Step 5 results: a learned threat surface (18 November 2026)
+
+Expected threat learned from 970 Wyscout matches (`analytics/xt_learned.py` 0.1.0, 16 × 12 zones) against Plaiq's geometric surface, on data it never saw:
+- **On Wyscout's held-out matches it wins:** scoring within 10 s, AUC 0.671 against 0.641.
+- **Everywhere else it loses slightly:** SkillCorner's threat 0.87 against 0.89, shot goal rate by zone 0.83 against 0.89, the league's goals AUC 0.62 against 0.67.
+- **Not adopted; the geometric surface stays.**
+- **The value gap in POV lies in its progressive factor and distance decay** (threat at the receiver alone 0.88 against POV's value part 0.78), so a value change should look there.
+
 ## The models, what tests them now, and what to change
 
 | Model | How it works today | What can test it now | Proposed change |
