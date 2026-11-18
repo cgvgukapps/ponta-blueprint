@@ -10,7 +10,7 @@
 |---|---|---|---|
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`; tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final`. Never modify. |
-| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `26db3cf` (reference data: IDSSE and Wyscout readers and measurements; 18 November 2026), pushed; before it `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
+| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `0a0e639` (possession round against the official possession; 18 November 2026), **not pushed**; `26db3cf` (reference data: IDSSE and Wyscout) is the last pushed commit; before it `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
 | UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `26b7c1d`, pushed; tag `prototype-v0.1` at `4bd8e52` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main` at `82a3429`; v2 deployed with `noindex, nofollow` |
 
@@ -97,7 +97,7 @@
    - **Roles:** done (P2 0.2.0). Later packages may use each player's main role, labelled estimated. Still short of a bar on three matches (1959846, 2006229, 2016236).
    - **Phases short of the 0.50 floor** on two matches (2013725, 2017461).
    - **Leads from the official data** (each a short round with a fit and test split by match):
-     - P1 tuned against the official frame-level possession (its lag at switches and on shots);
+     - ~~P1 tuned against the official frame-level possession~~ done 18 November 2026: no threshold change. The league's possession is anchored to its event log, so it is a second definition, not a truth; the best guard-keeping change adds under 1 point. **Waiting on the founder:** the blind possession replay check (50 moments; `tools/context_possession_replay.py`).
      - corner starts in P1;
      - counter-attacks in P4, measurable against the league's and Wyscout's flags;
      - a goal-kick rule, now measurable on full-pitch tracking.
