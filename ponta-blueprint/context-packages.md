@@ -193,6 +193,11 @@ Thresholds marked "agreed" are set in [Open decisions](#open-decisions). "Layer"
 
 **Depends on:** P1, P3, Plaiq.
 
+*(Revised 18 November 2026.)* **Line breaks are built as P5 0.1.0** (`plaiq_engine/context/line_breaks.py`), after FIFA's definitions ([fifa-alignment.md](fifa-alignment.md#units-lines-and-where-the-ball-is-received)).
+- **The rule:** the defending team's units are grouped at the pass moment, each with at least two players. A completed pass breaks a unit when it goes from in front of the unit's deepest player to beyond it, through or around.
+- **Agreement with SkillCorner's labels on 20 matches:** any break κ 0.65 / 0.63, furthest line κ 0.53 / 0.54, through or around 87%.
+- **Failed passes** wait for a target inference, and line-breaking options for an availability model ([plaiq-review.md](plaiq-review.md)). The fields below remain planned.
+
 - Plaiq pressure on the context grid, not only at events.
 - Goal-side counts per team, offside line height, marking distance per defender.
 - Players by zone; overloads and free players (no opponent within the agreed distance), especially between the lines.

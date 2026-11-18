@@ -10,7 +10,7 @@
 |---|---|---|---|
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`; tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final`. Never modify. |
-| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `fcc1efe` (line-break prototype and its 20-match results; 18 November 2026), pushed; before it `d33c8ab` (loose-ball rule downstream checks); `3143f45` (the loose-ball rule, built and off, thresholds 0.9.0); `26db3cf` (reference data: IDSSE and Wyscout); `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
+| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `a589424` (context P5 0.1.0, line breaks; 18 November 2026), **not pushed**; `fcc1efe` (line-break prototype and its 20-match results) is the last pushed commit; before it `d33c8ab` (loose-ball rule downstream checks); `3143f45` (the loose-ball rule, built and off, thresholds 0.9.0); `26db3cf` (reference data: IDSSE and Wyscout); `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
 | UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `26b7c1d`, pushed; tag `prototype-v0.1` at `4bd8e52` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main` at `82a3429`; v2 deployed with `noindex, nofollow` |
 
@@ -19,7 +19,7 @@
 ### Engines (`ponta-platform`)
 
 - **Extraction complete** ([platform-extraction-task.md](platform-extraction-task.md), `EXTRACTION_REPORT.md`): `matrix_engine` and `plaiq_engine` as installable packages, all prototype tests carried over, import-graph check, CI.
-- **Tests:** 1,086 in total; 1,074 in the full local suite and 12 in the opt-in equivalence test (`PONTA_EQUIVALENCE=1`, about 7 minutes). CI is green but skips data-dependent tests; the local gate is `PONTA_REQUIRE_SAMPLE_DATA=1 pytest -q`.
+- **Tests:** 1,092 in total; 1,080 in the full local suite and 12 in the opt-in equivalence test (`PONTA_EQUIVALENCE=1`, about 7 minutes). CI is green but skips data-dependent tests; the local gate is `PONTA_REQUIRE_SAMPLE_DATA=1 pytest -q`.
 - **Equivalence:** Plaiq fed through Matrix reproduces the prototype's golden outputs on Metrica Sample Game 3 and SkillCorner 1886347, except 2 of 39,589 decision rows and 12 of 36,792 alternative rows on Metrica (a characterised float near-tie). No band changes. Accepted as the baseline; `engine_version` unchanged.
 - **Data check** (`matrix_engine/parity.py`): 12 metrics in 6 families with reasons, measured figures and coverage. On the real SkillCorner match, pass option value and event ΔV are Full and shot quality is Blocked.
 - **Semantic builder** (`plaiq_engine/semantic_builder.py`): one pseudonymised row per action, no coordinates; [ai-layer.md](ai-layer.md#the-semantic-football-event) matches the implemented schema.
@@ -48,6 +48,14 @@
   - **Phases:** pooled κ 0.61 (0.62 and 0.59 by half), but only 11 of 20 matches clear κ 0.55 on both halves; none falls below 0.50.
   - **Roles:** median 75.4% by playing time; only 12 of 20 matches clear 75%. Most misses are wide midfielders given central slots (44%) or centre forwards given an attacking-midfield slot (15%).
   - **Summary:** Gate 2a is met on the reference match, and not across the set for roles.
+- **P5 0.1.0, line breaks, built (18 November 2026)** in `plaiq_engine/context/line_breaks.py`.
+  - **Covers:** completed passes; failed passes listed with their breaks unknown.
+  - **Threshold:** `p5_min_unit_players` (2, FIFA's definition), proposed.
+  - **Its own output against SkillCorner:** any break κ 0.65 / 0.63, furthest line κ 0.53 / 0.54, through or around 87%.
+- **Plaiq review (18 November 2026):** [plaiq-review.md](plaiq-review.md).
+  - **Evidence:** Plaiq's maths is tested, but its football validity is not.
+  - **Two building blocks fell short this week:** failed-pass intent finds the nearest receiver, not the target; option value is not an availability test.
+  - **The plan:** an ordered, versioned programme starting with a reference harness that measures every model against SkillCorner, the league's shot pressure and xG, and Wyscout.
 - **Line breaks, a prototype for Stage C (18 November 2026):** a rule on FIFA's definition, measured against SkillCorner's labels on 20 matches (6,628 passes).
   - **Lines:** grouped at the pass moment, which beat P2's window lines on fit and held-out matches.
   - **Agreement:** any line broken κ 0.68 / 0.66; furthest line κ 0.52; through or around 82%.
@@ -119,7 +127,8 @@
      - corner starts in P1;
      - counter-attacks in P4, measurable against the league's and Wyscout's flags;
      - a goal-kick rule, now measurable on full-pitch tracking.
-   - **Then:** a Stage C spec (P5 relationships, P6 movement types, P7 space and value), shaped by [fifa-alignment.md](fifa-alignment.md#recommendations-in-order): line breaks in P5, FIFA's movement-to-receive categories in P6, in-contest from events in P1, and a FIFA-vocabulary view of phases.
+   - **Plaiq:** the reference harness first ([plaiq-review.md](plaiq-review.md#proposed-programme-in-order)), then failed-pass target inference and option availability, which unblock the rest of P5's line breaks.
+   - **Then:** a Stage C spec (the rest of P5 relationships, P6 movement types, P7 space and value), shaped by [fifa-alignment.md](fifa-alignment.md#recommendations-in-order): line breaks in P5, FIFA's movement-to-receive categories in P6, in-contest from events in P1, and a FIFA-vocabulary view of phases.
    - Analyst agreement (Gate 2b) is still needed before anything is player-facing.
 3. **Concierge step** (roadmap Phase 2, step 0): run a prospect's real export locally through the engines and send back the Data check and the match page (gate E2). The page and payload tool exist.
 4. **Rest of Phase 1** (not gated by E1), alongside context Stage A: Supabase (Postgres, RLS, Auth), FastAPI skeleton, object storage, the automated cross-tenant access test for Parquet paths, basic ToS ([roadmap.md](roadmap.md#phase-1--platform-foundation-and-engine-extraction)).
