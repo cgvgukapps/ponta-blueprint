@@ -10,7 +10,7 @@
 |---|---|---|---|
 | Blueprint (this repo) | `/Users/cicerovieira/PontaPlan` | `ponta-blueprint` | `main`; tag `blueprint-baseline-2026-11-15` |
 | Prototype (frozen) | `/Users/cicerovieira/PONTA-PROTOTYPE` | `ponta-prototype` | `main` at `41bd812`, tag `prototype-validation-final`. Never modify. |
-| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `0cd8367` (possession round and the founder's blind possession calls; 18 November 2026), **not pushed**; `26db3cf` (reference data: IDSSE and Wyscout) is the last pushed commit; before it `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
+| Platform (production) | `/Users/cicerovieira/ponta-platform` (on disk: `Ponta-Platform`) | `ponta-platform` | `main` at `3143f45` (the founder's loose-ball rule, built and off, thresholds 0.9.0; 18 November 2026), **not pushed**; `26db3cf` (reference data: IDSSE and Wyscout) is the last pushed commit; before it `8251e93` (throw-in thresholds agreed, 0.8.0); `61e2bc8` (restarts from player positions, P4 0.3.0) and `64301e0` (founder's re-check of the seven changed replays); before it `8895f89` (role revision, P2 0.2.0, thresholds 0.6.0); before it `d14a56c` (founder's phase review, corner rule, P1 and P4 0.2.0) and `0263e9f` (Stage B thresholds agreed, 20 open-data matches; Game 2 fix at `f284563`) |
 | UI prototype | `/Users/cicerovieira/Ponta_Platform_UI` | `ponta-platform-ui` | `main` at `26b7c1d`, pushed; tag `prototype-v0.1` at `4bd8e52` |
 | Marketing website | `/Users/cicerovieira/Ponta-Website` | `ponta-website` | `main` at `82a3429`; v2 deployed with `noindex, nofollow` |
 
@@ -19,7 +19,7 @@
 ### Engines (`ponta-platform`)
 
 - **Extraction complete** ([platform-extraction-task.md](platform-extraction-task.md), `EXTRACTION_REPORT.md`): `matrix_engine` and `plaiq_engine` as installable packages, all prototype tests carried over, import-graph check, CI.
-- **Tests:** 1,085 in total; 1,073 in the full local suite and 12 in the opt-in equivalence test (`PONTA_EQUIVALENCE=1`, about 7 minutes). CI is green but skips data-dependent tests; the local gate is `PONTA_REQUIRE_SAMPLE_DATA=1 pytest -q`.
+- **Tests:** 1,086 in total; 1,074 in the full local suite and 12 in the opt-in equivalence test (`PONTA_EQUIVALENCE=1`, about 7 minutes). CI is green but skips data-dependent tests; the local gate is `PONTA_REQUIRE_SAMPLE_DATA=1 pytest -q`.
 - **Equivalence:** Plaiq fed through Matrix reproduces the prototype's golden outputs on Metrica Sample Game 3 and SkillCorner 1886347, except 2 of 39,589 decision rows and 12 of 36,792 alternative rows on Metrica (a characterised float near-tie). No band changes. Accepted as the baseline; `engine_version` unchanged.
 - **Data check** (`matrix_engine/parity.py`): 12 metrics in 6 families with reasons, measured figures and coverage. On the real SkillCorner match, pass option value and event ΔV are Full and shot quality is Blocked.
 - **Semantic builder** (`plaiq_engine/semantic_builder.py`): one pseudonymised row per action, no coordinates; [ai-layer.md](ai-layer.md#the-semantic-football-event) matches the implemented schema.
@@ -98,7 +98,9 @@
    - **Phases short of the 0.50 floor** on two matches (2013725, 2017461).
    - **Leads from the official data** (each a short round with a fit and test split by match):
      - ~~P1 tuned against the official frame-level possession~~ done 18 November 2026: no threshold change. The league's possession is anchored to its event log, so it is a second definition, not a truth; the best guard-keeping change adds under 1 point. The founder's blind replay check (50 moments): controls 10 of 10. On the 40 disagreements: P1's team 11, the league's 15, nobody (ball in flight or loose) 14. Short disagreements are a draw. In long ones (2.4 s or more) P1 is never right: it holds the old team while a pass or clearance travels.
-       - **Founder decision:** keep team possession as it is (it carries through the ball's flight, like SkillCorner's and Gate 1's references) and add a separate observed ball-state field (home, away, in flight, loose), or change possession itself. Either way, its thresholds are measured against a larger judged sample first.
+       - **The founder's rule:** a deflection or clearance by the other team leaves the ball loose until a player gains control. It fits 8 of the 14 "nobody" moments.
+       - **Built as `p1_loose_on_opponent_touch`, off.** On, P1's team labels agree better with every reference (league 87% to 92%, Metrica 94–96% to 97–98%, SkillCorner 95% to 97%), at the cost of about 9% of in-play time labelled loose. On the judged moments it is a wash (22 against 21).
+       - **Founder decision:** turn it on, which needs the downstream checks on phases first and ideally a larger judged sample, or leave it off.
      - corner starts in P1;
      - counter-attacks in P4, measurable against the league's and Wyscout's flags;
      - a goal-kick rule, now measurable on full-pitch tracking.
