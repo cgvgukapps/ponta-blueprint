@@ -1,6 +1,6 @@
 # Context Structure (P2, P3, P4) — Execution Task
 
-> **Status: built (17 November 2026); Gate 2a bars and thresholds agreed by the founder the same day; zones passed the spot check (47 of 50); phases revised after the founder's replay review (P4 0.2.0) and roles revised (P2 0.2.0), both 18 November 2026, with every new threshold agreed.** Stage B of [context-packages.md](context-packages.md), started under decision 4a (proceed without waiting for analysts). Built in `ponta-platform` (`plaiq_engine/context/structure.py`, `zones.py`, `phase.py`); results in `CONTEXT_STRUCTURE_REPORT.md` there.
+> **Status: built (17 November 2026); Gate 2a bars and thresholds agreed by the founder the same day; zones passed the spot check (47 of 50); phases revised after the founder's replay review (P4 0.2.0) and roles revised (P2 0.2.0), both 18 November 2026, with every new threshold agreed; restarts from positions added the same day (P4 0.3.0, four throw-in thresholds measured, not yet agreed).** Stage B of [context-packages.md](context-packages.md), started under decision 4a (proceed without waiting for analysts). Built in `ponta-platform` (`plaiq_engine/context/structure.py`, `zones.py`, `phase.py`); results in `CONTEXT_STRUCTURE_REPORT.md` there.
 >
 > - **Reference match (1886347):** roles agree with SkillCorner's by position group for 79% of playing time; phases at Cohen's κ 0.60.
 > - **All 20 SkillCorner open-data matches** (measured afterwards, nothing tuned):
@@ -9,10 +9,10 @@
 >   - roles reach a median 75.4% and clear the bar on 12 matches, so they do not generalise.
 > - **After the revisions (18 November 2026):**
 >   - roles reach a median 92.2% and meet the grouped bar on 19 matches and the merged bar on 17 (most earlier misses were the comparison misreading SkillCorner's LM and RM, its central pair);
->   - phases pool at κ 0.61 and meet the founder's set bar pooled, with three matches just under the 0.50 floor;
+>   - phases pool at κ 0.61 and meet the founder's set bar pooled, with two matches just under the 0.50 floor (after P4 0.3.0);
 >   - all four bars are met on 10 of 20 matches.
 >
-> Gate 2a is met on the reference match, zones included. Across the set it is met for formations and for phases pooled, and not yet on six matches (three for roles, three for the phase floor).
+> Gate 2a is met on the reference match, zones included. Across the set it is met for formations and for phases pooled, and not yet on five matches (three for roles, two for the phase floor).
 
 Self-contained task for a coding agent working in the `ponta-platform` monorepo. It builds context packages P2 (team structure), P3 (relative zones) and P4 (phase of play) on the framework from [context-foundations-task.md](context-foundations-task.md) (complete: context grid, registry, Data check entries, P1 possession and game state). Read [context-packages.md](context-packages.md) first.
 
