@@ -273,3 +273,32 @@ Version 2 shipped 0 to 1 with no bands. Four cut-off sets were measured on the s
 - **Limits:** one provider and one outcome (a shot in the possession, which credits a pass for what follows it). Bands describe the score; they do not validate it.
 
 Evidence: `ponta-platform/PLAIQ_REFERENCES_REPORT.md`, "Candidate bands for decision quality version 2".
+
+## Decision quality version 2 on the hex grid (19 November 2026)
+
+**Question:** can version 2 compute on Plaiq's honeycomb while evaluating only cells that matter? The founder's rule: if the cells cannot be chosen selectively, version 2 does not use the grid.
+- **"Every cell a team-mate can reach" is not selective:** a median of 1,407 of the pitch's 7,463 cells per pass.
+- **"The cells around where each run is heading" is selective:** 7 cells per team-mate (one ring) or 19 (two rings), around the point their run reaches when the ball arrives.
+- Version 1 offers no cell selection for passes (it scores team-mates where they stand); its cell selection serves carries only.
+
+**Candidates** (measured, not adopted): each team-mate's option is **the best ball into their run**, the best of their cells (completion probability times the cell's threat value). The chosen pass is scored the same way, so its exact placement (execution) is not charged to the choice. Ring 0 is the grid alone.
+
+| | Shipped (points) | Ring 0 | **Ring 1** | Ring 2 |
+|---|---|---|---|---|
+| Option evaluations per pass | 10 | 10 | **70** | 190 |
+| Shot AUC, completed passes | 0.62 | 0.62 | **0.62** | 0.62 |
+| Rank correlation with SkillCorner's analogue (version 1: 0.31) | 0.288 | 0.288 | **0.294** | 0.296 |
+| Optimal share: completed / failed | 31% / 27% | 31% / 27% | **31% / 30%** | 31% / 31% |
+| Predicts completion, AUC (0.5 is neutral) | 0.510 | 0.511 | **0.496** | 0.490 |
+| Passes changing band | | 5% | **9%** | 14% |
+
+- **The grid alone changes nothing:** ring 0 matches the shipped score (rank correlation 0.993).
+- **The rings are no worse on chances and slightly closer to the independent reference,** outside the resampling noise. The goal gain sits on the fit half only, so it is not established.
+- **Failed passes gain more than completed ones,** because a hard ball into a run is credited with the best ball into that run. They now match completed passes in the optimal band rather than exceeding them.
+- **The cost is a small lean towards risk** (completion AUC just under 0.5).
+- **Ring 2 adds little over ring 1** for nearly three times the cells and more lean towards risk.
+- **The recommended bands hold on ring 1:** 0.45 / 0.60 / 0.95 gives shots of 2.6%, 4.5%, 7.0%, 9.2% on the held-out matches and rises in 99% of match resamples.
+- **Recommended for the founder: ring 1 as decision quality version 2 1.1.0,** replacing the point-based 1.0.0 beside version 1, labelled estimated. It puts version 2 on the honeycomb. Passes into space no run is heading for stay outside the option set.
+- **For the AI layer:** a 1 m² cell is effectively a coordinate. Cells are for storage, aggregation and the replay; the AI layer keeps receiving zones and player references.
+
+Evidence: `ponta-platform/PLAIQ_REFERENCES_REPORT.md`, "Decision quality version 2 on Plaiq's hex grid".
