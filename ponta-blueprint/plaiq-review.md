@@ -87,8 +87,31 @@ Expected value at the moment of the pass (`analytics/decision_quality_v2.py` 0.1
 - **But it becomes a measure of risk:** it predicts completion with AUC 0.69.
 - **It loses the link to chances and to SkillCorner's analogue:** shot AUC 0.51 against 0.60; rank correlation 0.15 against 0.31.
 - **Not adopted; version 1 stays.** Version 1's end-of-pass credit (playing the ball into a run) carries the signal.
-- **Plaiq's slow ball-speed model makes long forward passes look riskier than they are,** so calibrating it (step 6) comes before any risk-weighted decision quality.
+- **Plaiq's slow ball-speed model makes long forward passes look riskier than they are,** so calibrating it (step 6) comes before any risk-weighted decision quality. *(Corrected 19 November 2026: step 6 measured v1's ball as 30% to 40% too slow on passes up to 30 m and close to right beyond 45 m, so the bias falls on short and medium passes, not long ones.)*
 - **Failed-pass decision quality stays unreported** until fixed.
+
+## Step 6 results: ball flight, players and reaction time calibrated (19 November 2026)
+
+`analytics/ball_flight.py` (0.1.0) makes targeted pitch control's physics explicit parameters; with its defaults it equals v1 exactly. `tools/plaiq_calibration.py` measures them on the seven IDSSE matches (25 Hz tracking with ball height; the league's intended recipient for each pass), fitting on four matches and testing on three, then checks SkillCorner's 20.
+
+| | v1 | Measured |
+|---|---|---|
+| Ball speed (2,685 received passes) | 5 m/s + 0.2 m/s per metre; on average 0.37 s late, median error 0.42 s | **8.5 m/s + 0.165 m/s per metre**; median error **0.20 s** held out |
+| The ball along a pass | Each point timed as its own pass (early points slow) | Slows steadily: 33%, 60%, 81% of the length at a quarter, half and three-quarters of the time |
+| Player top speed, peak acceleration (204 player-matches) | 9.0 m/s, 5.5 m/s² | Median **8.4 m/s, 4.7 m/s²** |
+| Completion AUC, held-out IDSSE matches | 0.719 | 0.739 (measured ball, reaction 0 s) |
+| Completion AUC, SkillCorner | 0.781 | 0.793 (SkillCorner's own model 0.896) |
+
+**Not adopted; v1 stays.** What the step shows:
+- **The ball-speed model was wrong, and is now measured** from physics alone. Real passes are 30% to 40% faster than v1 assumes up to 30 m.
+- **Correcting the physics alone does not improve completion ranking.** The faster ball at v1's 0.7 s reaction scores 0.715 against 0.719, and the measured slowing and player speeds both lower it.
+- **The best fit puts reaction time at 0 s,** which is not human. The parameter is absorbing errors in the availability formula, so it cannot be calibrated as a physical quantity in this formula.
+- **The gap to SkillCorner's model is structural, not in the constants:**
+  - interception counts any point a defender reaches first, with no ball height, reach or time to control;
+  - control at the receiver is a fixed sigmoid;
+  - neither is a probability (passes rated below 0.1 are still completed about 70% of the time).
+
+**Next (proposed):** a probabilistic, height-aware interception and control model. It would follow the published pitch-control method (Spearman 2018) and use the measured ball flight and player speeds, with reaction and control time fitted only inside it. It would be a candidate beside v1, measured on the same split.
 
 ## The models, what tests them now, and what to change
 
@@ -96,7 +119,7 @@ Expected value at the moment of the pass (`analytics/decision_quality_v2.py` 0.1
 |---|---|---|---|
 | **1v1 pressure** (1 to 10) | Hex-ring distance to the nearest opponent only | The league's pressure on each shot (IDSSE); SkillCorner's opponents within 5 m at reception; a blind judged sample against FIFA's three levels | Add the presser's angle (in front counts more than behind) and the number of pressers, as FIFA's EFI pressure does. Band the result into direct, indirect and no pressure, calibrated on a judged sample; this also settles the open "named high-pressure threshold" |
 | **Threat surface** (xT) | Geometric: goal-mouth angle × distance decay + a sigmoid progression bonus, normalised | Empirical goal probability by zone from Wyscout's 3.25 million events; SkillCorner's threat per pass; the league's expected goals per shot | A data-driven threat surface learned from Wyscout's possessions (the published expected-threat method), compared with the geometric one against SkillCorner's threat and shot outcomes |
-| **Control and interception** (targeted PCZ) | Kinematic arrival times with default player physics (9 m/s, 5.5 m/s², 0.7 s reaction) and a linear ball-speed model (5 m/s plus 0.2 m/s per metre) | Real pass completions (calibration and ranking); SkillCorner's expected pass completion; measured ball speeds and reception times in the league's 25 Hz tracking | Measure the ball-speed model and reaction time against real passes before changing anything. If they are off, calibrate them from data, scoped to the adult professional population as engine governance requires |
+| **Control and interception** (targeted PCZ) | Kinematic arrival times with default player physics (9 m/s, 5.5 m/s², 0.7 s reaction) and a linear ball-speed model (5 m/s plus 0.2 m/s per metre) | Real pass completions (calibration and ranking); SkillCorner's expected pass completion; measured ball speeds and reception times in the league's 25 Hz tracking | Measure the ball-speed model and reaction time against real passes before changing anything. If they are off, calibrate them from data, scoped to the adult professional population as engine governance requires. *(Measured 19 November 2026: the ball speed was off and is now measured; the constants are not where the completion gap lies. See "Step 6 results".)* |
 | **Pass option value** | xT × control × (1 − interception risk) × progressive factor × (1 − distance decay); hand-set factors | SkillCorner's passing-option lists, targeted player and "dangerous" flags; the founder's judged decisions | Split *availability* (control and interception) from *value*. Add unit awareness: the number of opposition lines the pass would break (P5), as FIFA values penetration. Replace the hand-set progressive factor with the data-driven threat surface |
 | **Decision quality** | POV of the actual receiver at the end of the pass over the best POV at the start; bands 0.55 / 0.80 / 0.95 | A blind judged sample (the replay method used for phases and possession); SkillCorner's targeted player against its options | Measure first: the expert agreement study engine governance already plans. Then the denominator should be the best *available* option, not the best of every team-mate |
 | **Failed-pass inference** | Walks the ball's line past the interception to the first team-mate who would have controlled it | SkillCorner's targeted player on unsuccessful passes | Score candidate targets by the pass's direction, speed, height and the runs being made, and validate against SkillCorner's targeted player. Keep the current inference for its present use until the new one is measured |
@@ -121,7 +144,7 @@ Each step is measured against the references with fit and held-out matches, and 
 3. **Option availability.** A team-mate is available when control and interception risk pass thresholds fitted to SkillCorner's option lists. It unblocks line-breaking options and gives decision quality a cleaner denominator.
 4. **Pressure version 2** (angle and count, three FIFA-style bands), calibrated on a judged sample.
 5. **A data-driven threat surface** from Wyscout, compared with the geometric one.
-6. **Kinematics calibrated from the league's 25 Hz tracking** (ball speed, reaction time), after step 1 shows whether they need it.
+6. **Kinematics calibrated from the league's 25 Hz tracking** (ball speed, reaction time), after step 1 shows whether they need it. *(Done 19 November 2026: ball flight and player speeds measured; reaction time not calibratable in the current formula; next is a probabilistic interception and control model. See "Step 6 results" above.)*
 7. **Unit-aware option value:** line-breaking (P5) as a component or as context for decision quality ("was a line-breaking option available, and was it taken?").
 8. **The decision-quality expert study**, run blind with the replay method on matches the bands were not tuned on. The founder's judgements can pilot it; analysts complete it for Gate 3b.
 
