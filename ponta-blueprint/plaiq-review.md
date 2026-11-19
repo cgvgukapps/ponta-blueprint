@@ -113,6 +113,32 @@ Expected value at the moment of the pass (`analytics/decision_quality_v2.py` 0.1
 
 **Next (proposed):** a probabilistic, height-aware interception and control model. It would follow the published pitch-control method (Spearman 2018) and use the measured ball flight and player speeds, with reaction and control time fitted only inside it. It would be a candidate beside v1, measured on the same split.
 
+## A probabilistic pass model, measured (19 November 2026)
+
+`analytics/pass_probability.py` (0.1.0), after Spearman (2018), is a candidate beside targeted pitch control. It models:
+- uncertain arrival for every player;
+- interception in flight along the measured ball flight;
+- a high ball reachable only near its ends;
+- control at the target;
+- separate reaction times for the passing team and the defenders;
+- optionally, the target projected along the receiver's run.
+
+It is fitted by likelihood on four IDSSE matches.
+
+| Completion | v1 availability (recalibrated) | Probabilistic model, projected target | SkillCorner's own model |
+|---|---|---|---|
+| IDSSE, 3 held-out matches: log-loss / AUC | 0.297 / 0.719 | 0.296 / **0.762** | — |
+| SkillCorner, 20 matches, fitted on the league: log-loss / AUC | 0.424 / 0.781 | **0.370 / 0.842** | 0.279 / 0.896 |
+| SkillCorner held out, refitted on its own matches | — | **0.321 / 0.859** | 0.283 / 0.894 |
+
+- **The structure was the gap, not the constants.** It closes about half the AUC gap to SkillCorner's model when transferred from the league, and two-thirds when refitted. Projecting the receiver along their run is the largest single gain.
+- **It is a probability:** refitted on a provider, predicted and observed completion agree within about 0.06 in every band. Fitted on the league it over-predicts SkillCorner's completion by about 6 points, so a published probability needs fitting per provider, or on pooled data.
+- **Not established:** that height helps (the two datasets disagree), that the measured player speeds help, or the parameters as physical quantities. One consistent pattern: defenders effectively start 0.5 to 0.75 s after the passing team.
+- **Not adopted; v1 stays.**
+- **Proposed for the founder:** a "pass completion probability" metric (0.1.0) beside v1, labelled estimated, fitted per provider. It would serve as:
+  - the availability half of the option split;
+  - the risk term of a narrower decision quality version 2 (v1's end-of-pass credit plus the risk at the pass).
+
 ## The models, what tests them now, and what to change
 
 | Model | How it works today | What can test it now | Proposed change |
