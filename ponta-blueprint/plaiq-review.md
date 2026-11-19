@@ -319,3 +319,21 @@ Evidence: `ponta-platform/PLAIQ_REFERENCES_REPORT.md`, "Decision quality version
   - one model with two outputs ([status.md](status.md)).
 
 Evidence: `ponta-platform/PLAIQ_REFERENCES_REPORT.md`, "Decision quality version 2 1.1.0 adopted".
+
+## Gain and Choice (19 November 2026)
+
+**Founder decisions:**
+- **Two scores, two names.** Version 1 (`dq_score`) is shown as **Gain**: how much of the best option's value the action realised, 0 to 1.5. Version 2 (`dq_v2_score`) is shown as **Choice**: how the option chosen compared with the best on offer when the pass was played, 0 to 1. "Decision quality" stays the family name.
+- **Version 1's bands get descriptive names,** with the same cut-offs and colours: **Full gain** (0.95 and above), **Most of the gain** (0.80 to 0.94), **Partial gain** (0.55 to 0.79), **Low gain** (below 0.55). They replace Optimal, Good, Suboptimal and Poor in the semantic events (schema 1.5), the match page payload (1.1), the Data check labels and the UI prototype. The website still shows the old names; its change list is in [status.md](status.md).
+
+**One model with two outputs, measured (not adopted).** Gain computed from Choice's own parts: the value realised where the ball arrived (0 for a failed pass) over the best expected value on offer at release. Then **Gain = Choice × execution**.
+- **Compared with version 1 on 9,909 completed SkillCorner passes:**
+  - It agrees more with SkillCorner's decision analogue: 0.38 against 0.31 on both halves, and more than the arrival threat alone (0.28).
+  - It predicts shots far better (0.73 against 0.60). **Most of that is location:** the threat where the ball arrived predicts a shot at 0.89 by itself, and this Gain follows it much more than version 1 does. Within the same arrival threat it edges version 1 (0.61 against 0.59).
+- **It is coherent with Choice:** one option set and one value surface, so the gap between the two is the execution and the run.
+- **It removes version 1's lenient failed-pass score:** a failed pass gains 0, and the decision behind it is Choice's to score.
+- **It keeps the credit for a run:** 39% of completed passes score above 1.0 (version 1: 44%).
+- **Recommended for the founder:** adopt it as the next version of Gain, beside version 1 first, labelled estimated.
+- **Not established:** anything beyond SkillCorner's 20 matches; the cut-offs were agreed for version 1 and are not re-measured for it.
+
+Evidence: `ponta-platform/PLAIQ_REFERENCES_REPORT.md`, "Gain and Choice".

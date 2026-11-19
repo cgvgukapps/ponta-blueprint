@@ -48,7 +48,7 @@ The product's trust position follows from this: *show your work, no black box* (
   },
   "spatial_intelligence": {
     "dq_score": 0.64,
-    "dq_band": "suboptimal",
+    "dq_band": "partial_gain",
     "chosen_option_pov": 0.27,
     "best_option_player_ref": "home_10",
     "best_option_pov": 0.42,
@@ -74,8 +74,9 @@ The product's trust position follows from this: *show your work, no black box* (
 
 Notes that differ from a naïve reading of this schema:
 
-- **`dq_score` is not a 0 to 1 ratio.** It ranges from 0.0 up to 1.5 in both golden matches (Metrica Sample Game 3, SkillCorner 1886347). The values in the example are illustrative. Interpret scores through `dq_band` (Optimal at or above 0.95 for the event-level bands), never by assuming a fixed maximum, and do not normalise or clip in the UI or the AI layer. Confirm band thresholds against `ANALYTICS_SPECIFICATION.md` before writing any prompt or UI that cites a scale.
+- **`dq_score` is not a 0 to 1 ratio.** It ranges from 0.0 up to 1.5 in both golden matches (Metrica Sample Game 3, SkillCorner 1886347). The values in the example are illustrative. Interpret scores through `dq_band` (`full_gain` at or above 0.95, `most_gain` 0.80 to 0.94, `partial_gain` 0.55 to 0.79, `low_gain` below 0.55; named `optimal`, `good`, `suboptimal` and `poor` before schema 1.5), never by assuming a fixed maximum, and do not normalise or clip in the UI or the AI layer. Confirm band thresholds against `ANALYTICS_SPECIFICATION.md` before writing any prompt or UI that cites a scale.
 
+- **Two scores, two names** *(19 November 2026)*. `dq_score` is shown and described as **Gain** (how much of the best option's value the action realised, 0 to 1.5); `dq_v2_score` as **Choice** (how the option chosen compared with the best on offer when the pass was played, 0 to 1). Band values describe the action, never the player: say "a pass with Partial gain", not "a poor pass". Never combine the two into one number; where they differ, say what each answers (for example, the right choice and a ball that arrived badly).
 - **`player_ref` is a pseudonym** (`home_2`), not a name. Names are rehydrated only in the client UI ([below](#pseudonymisation-and-llm-providers)).
 - **`spatial_intelligence.mode`** is `full_tracking` or `event_only`. Event-only scores are a different confidence class and are labelled as such in any output; they are never merged with full-tracking numbers on one band.
 - **`physiological_context` is `null` unless the match has a physiological source and the fields exist.** When populated (Tier 3, or Tier 2 workload views), its fields are things like rolling acceleration/deceleration load and acute sprint distance. Fields expressed *relative to a baseline* (e.g. "% of baseline") exist **only** when that player has enough multi-session history to define one; otherwise the field is absent, not estimated. These channels do not exist in the engine today (see [data-tiers.md](data-tiers.md#what-must-be-true-before-tier-3-can-ship)), so this section is a target schema, not a description of current output.
@@ -96,7 +97,7 @@ Notes that differ from a naïve reading of this schema:
 - **`inference_confidence`** is the engine's category for an inferred receiver (`strong`, `medium`, `weak`), not a number.
 - **`quality_gate`** carries `ball_detected` and `players_observed` for a single source. A per-frame confidence score exists only when Matrix reconciles two or more sources; it will be added for Tier 2 and 3.
 
-**Changed from the first draft of this schema:** `best_option_dq_score` dropped (it would always be 1.0 by construction), replaced by `best_option_pov` and `chosen_option_pov`; `opposition_pressure_index` (0 to 1) renamed `opposition_pressure` on the engine's scale; `frame_confidence` and `sensor_drift_detected` replaced by `ball_detected` and `players_observed` for single-source matches; `movement_value`, `not_scored` and `not_scored_reason` added; band names are lower case. Schema 1.1 (17 November 2026) added `match_context` (P1); 1.2 (19 November 2026) added `pass_completion`; 1.3 (19 November 2026) added `decision_quality_v2`; 1.4 (the same day) moved it to hex cells (1.1.0) and added its band.
+**Changed from the first draft of this schema:** `best_option_dq_score` dropped (it would always be 1.0 by construction), replaced by `best_option_pov` and `chosen_option_pov`; `opposition_pressure_index` (0 to 1) renamed `opposition_pressure` on the engine's scale; `frame_confidence` and `sensor_drift_detected` replaced by `ball_detected` and `players_observed` for single-source matches; `movement_value`, `not_scored` and `not_scored_reason` added; band names are lower case. Schema 1.1 (17 November 2026) added `match_context` (P1); 1.2 (19 November 2026) added `pass_completion`; 1.3 (19 November 2026) added `decision_quality_v2`; 1.4 (the same day) moved it to hex cells (1.1.0) and added its band; 1.5 (the same day) renamed version 1's band values to descriptive ones.
 
 ## Storage the AI layer reads
 

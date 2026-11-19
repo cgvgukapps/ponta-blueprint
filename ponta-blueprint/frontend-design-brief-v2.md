@@ -85,10 +85,10 @@ These were open in v1 and are now decided, either by the first prototype or by t
 ### Decision quality: the scale and the bands (from the engine, not the prototype)
 
 - The score is **the value where the ball arrived divided by the best option available when it was played**. It runs from **0 to 1.5**, not 0 to 1. A score above 1.0 means a run made the outcome better than any option at release.
-- Bands, unified across passes, carries and intercepted passes: **Poor below 0.55, Suboptimal 0.55 to 0.79, Good 0.80 to 0.94, Optimal 0.95 and above**. Source: `PONTA-PROTOTYPE/ANALYTICS_SPECIFICATION.md` section 7.1. Thresholds come from `src/lib/bands.ts`, never hard-coded.
+- Bands, unified across passes, carries and intercepted passes: **Poor below 0.55, Suboptimal 0.55 to 0.79, Good 0.80 to 0.94, Optimal 0.95 and above**. *(Renamed 19 November 2026, same cut-offs and colours: **Low gain, Partial gain, Most of the gain, Full gain**. The score is labelled **Gain**; the version 2 score beside it is **Choice**. Applied in the UI prototype, `docs/design-notes.md` section 18.)* Source: `PONTA-PROTOTYPE/ANALYTICS_SPECIFICATION.md` section 7.1. Thresholds come from `src/lib/bands.ts`, never hard-coded.
 - Wherever a score is shown large, show it on the 0 to 1.5 scale with the cut-offs marked. Never clip at 1.0 and never present the score as a percentage.
 - The working is shown as `V(at arrival) ÷ V(best at release) = a ÷ b = score`.
-- **Event-only** scores are a range with a dashed outline and ruled fill (`Estimate · Poor to Suboptimal`), never a point.
+- **Event-only** scores are a range with a dashed outline and ruled fill (`Estimate · Low gain to Partial gain`), never a point.
 - Goalkeepers and set pieces are shown as **Not scored**, with the reason.
 - *(Added 19 November 2026.)* **Decision quality version 2** (`dq_v2_score`, adopted beside version 1, labelled estimated) is a different scale: **0 to 1**. Show it only beside version 1, marked "Estimated", never with version 1's cut-offs or band names, and never as a percentage. Version 1 stays the headline score. *(Revised the same day: bands agreed.)* Its bands are **Best option** (0.95 and above), **Near best** (0.60 to 0.94), **Below best** (0.45 to 0.59) and **Well below best** (under 0.45), from `dq_v2_band`. They describe the choice against the best option, not the player, so they take **neutral steps of one hue, not the traffic-light colours** (version 1 keeps those), each with its text label.
 

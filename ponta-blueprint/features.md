@@ -120,7 +120,7 @@ Revised from the previous version to be explicit about what's a UI wrapper on ex
 
 - Team-level dashboards — average DQ by position/phase of play, which is a straightforward aggregation over the existing per-event Decision Quality output.
 - Opposition analysis — where an upcoming opponent's hex-value/pressure surfaces show they concede space, built from the same `hex_value` model already used for the home match view, applied across an opponent's recent matches.
-- "Coachable moments" — an auto-surfaced feed of a team's or player's Poor/Suboptimal-banded events (§7.1/§7.2 thresholds in `ANALYTICS_SPECIFICATION.md` already do this classification), essentially a pre-filtered highlight list for a training-ground review session.
+- "Coachable moments" — an auto-surfaced feed of a team's or player's Low gain / Partial gain events *(band names since 19 November 2026; were Poor / Suboptimal)* (§7.1/§7.2 thresholds in `ANALYTICS_SPECIFICATION.md` already do this classification), essentially a pre-filtered highlight list for a training-ground review session.
 
 ### Media / content
 
