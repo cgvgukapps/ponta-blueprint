@@ -80,6 +80,16 @@ Expected threat learned from 970 Wyscout matches (`analytics/xt_learned.py` 0.1.
 
 **Next (proposed):** a decision quality version 2 that scores the choice at the pass as expected value (the option split, availability × value). It would cover completed and failed passes alike, and be measured on the same three groundings with fit and held-out matches. Version 1 stays the default until it is measured.
 
+## Decision quality version 2, measured (19 November 2026)
+
+Expected value at the moment of the pass (`analytics/decision_quality_v2.py` 0.1.0), one formula for completed and failed passes, with the outcome never an input. On 12,112 SkillCorner passes:
+- **The failed-pass leniency goes:** optimal 19% of failed passes against version 1's 89%.
+- **But it becomes a measure of risk:** it predicts completion with AUC 0.69.
+- **It loses the link to chances and to SkillCorner's analogue:** shot AUC 0.51 against 0.60; rank correlation 0.15 against 0.31.
+- **Not adopted; version 1 stays.** Version 1's end-of-pass credit (playing the ball into a run) carries the signal.
+- **Plaiq's slow ball-speed model makes long forward passes look riskier than they are,** so calibrating it (step 6) comes before any risk-weighted decision quality.
+- **Failed-pass decision quality stays unreported** until fixed.
+
 ## The models, what tests them now, and what to change
 
 | Model | How it works today | What can test it now | Proposed change |
