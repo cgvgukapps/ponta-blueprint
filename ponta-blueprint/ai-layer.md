@@ -31,7 +31,7 @@ The product's trust position follows from this: *show your work, no black box* (
 
 ```json
 {
-  "schema_version": "1.0",
+  "schema_version": "1.2",
   "engine_version": "plaiq-0.1.0 / matrix-0.1.0",
   "event_id": "evt_metrica_3_01042",
   "match_id": "metrica_3",
@@ -58,9 +58,11 @@ The product's trust position follows from this: *show your work, no black box* (
     "pitch_zone": "right_half_space_middle_third",
     "mode": "full_tracking",
     "not_scored": false,
-    "not_scored_reason": null
+    "not_scored_reason": null,
+    "pass_completion": { "probability": 0.81, "status": "estimated", "parameters": "default-idsse-2026-11-19" }
   },
   "physiological_context": null,
+  "match_context": { "possession_chain_id": "metrica_3_ch0187", "possession_source": "observed", "score_diff": 1, "red_card_diff": 0 },
   "quality_gate": {
     "ball_detected": true,
     "players_observed": 22,
@@ -79,10 +81,14 @@ Notes that differ from a naïve reading of this schema:
 - **`engine_version` and `schema_version`** are carried on every row, consistent with [engine-governance.md](engine-governance.md#modelformula-versioning-and-backfill), so a brief can be traced to the exact math that produced it.
 - Goalkeepers and set-pieces are `not_scored` with a reason, per the population-validity rules in `engine-governance.md`.
 - **`opposition_pressure` is the engine's 1 to 10 scale** (1v1 pressure on the actor at the start frame), not a 0 to 1 index. Named thresholds shown to users must be stated on this scale.
+- **`pass_completion`** *(schema 1.2, added 19 November 2026; adopted by the founder the same day)* is the probability, known at the moment of the pass, that it reaches its logged target. The target is projected along the receiver's run, and the probability comes from a pitch-control model after Spearman (2018); see [plaiq-review.md](plaiq-review.md).
+  - **`status`** is `estimated` when a probability is given. Otherwise it gives the reason there is none (no logged target, which is every failed pass on most providers; a set piece; no tracking).
+  - **`parameters`** names the fitted parameter set: SkillCorner has its own; every other provider uses the default set fitted on the German league's tracking, and the Data check marks the metric Degraded there.
+  - It is measured against provider references, not analysts. Cite it as an estimate, and never as a measure of the passer's skill on its own: a low-probability pass that arrives is a hard pass completed.
 - **`inference_confidence`** is the engine's category for an inferred receiver (`strong`, `medium`, `weak`), not a number.
 - **`quality_gate`** carries `ball_detected` and `players_observed` for a single source. A per-frame confidence score exists only when Matrix reconciles two or more sources; it will be added for Tier 2 and 3.
 
-**Changed from the first draft of this schema:** `best_option_dq_score` dropped (it would always be 1.0 by construction), replaced by `best_option_pov` and `chosen_option_pov`; `opposition_pressure_index` (0 to 1) renamed `opposition_pressure` on the engine's scale; `frame_confidence` and `sensor_drift_detected` replaced by `ball_detected` and `players_observed` for single-source matches; `movement_value`, `not_scored` and `not_scored_reason` added; band names are lower case.
+**Changed from the first draft of this schema:** `best_option_dq_score` dropped (it would always be 1.0 by construction), replaced by `best_option_pov` and `chosen_option_pov`; `opposition_pressure_index` (0 to 1) renamed `opposition_pressure` on the engine's scale; `frame_confidence` and `sensor_drift_detected` replaced by `ball_detected` and `players_observed` for single-source matches; `movement_value`, `not_scored` and `not_scored_reason` added; band names are lower case. Schema 1.1 (17 November 2026) added `match_context` (P1); 1.2 (19 November 2026) added `pass_completion`.
 
 ## Storage the AI layer reads
 

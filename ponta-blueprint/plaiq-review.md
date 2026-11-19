@@ -133,11 +133,24 @@ It is fitted by likelihood on four IDSSE matches.
 
 - **The structure was the gap, not the constants.** It closes about half the AUC gap to SkillCorner's model when transferred from the league, and two-thirds when refitted. Projecting the receiver along their run is the largest single gain.
 - **It is a probability:** refitted on a provider, predicted and observed completion agree within about 0.06 in every band. Fitted on the league it over-predicts SkillCorner's completion by about 6 points, so a published probability needs fitting per provider, or on pooled data.
-- **Not established:** that height helps (the two datasets disagree), that the measured player speeds help, or the parameters as physical quantities. One consistent pattern: defenders effectively start 0.5 to 0.75 s after the passing team.
+- **Not established:** that height helps (the two datasets disagree), that the measured player speeds help, or the parameters as physical quantities. *(Corrected 19 November 2026: refitted on SkillCorner without the height flag the model scores 0.356 / 0.838 held out, against 0.321 / 0.859 with it, so height helps on SkillCorner; it is on the league's data that it does not.)* One consistent pattern: defenders effectively start 0.5 to 0.75 s after the passing team.
 - **Not adopted; v1 stays.**
 - **Proposed for the founder:** a "pass completion probability" metric (0.1.0) beside v1, labelled estimated, fitted per provider. It would serve as:
   - the availability half of the option split;
   - the risk term of a narrower decision quality version 2 (v1's end-of-pass credit plus the risk at the pass).
+
+## Pass completion probability adopted (19 November 2026)
+
+**Founder decision:** the probabilistic model ships as the **pass completion probability** (`pass_probability` 1.0.0): a new metric beside v1, labelled estimated, with parameters fitted per provider.
+- **Parameter sets:** SkillCorner's own (fitted on its 10 even matches), and a default fitted on the league's tracking for every other provider. The Data check marks the metric Degraded where the default is used.
+- **The shipped path, checked end to end on SkillCorner's 10 held-out matches** (7,749 passes): log-loss 0.327, **AUC 0.843**, predicted against observed completion within about 0.04 in every band.
+- **In the semantic events (schema 1.2):** `pass_completion_probability`, `pass_completion_status` and `pass_completion_parameters` ([ai-layer.md](ai-layer.md#the-semantic-football-event)).
+- **No probability without a logged target.** Most providers log none for a failed pass (Metrica logs none; SkillCorner logs one for most incomplete passes), and Plaiq's inferred receiver is not used.
+- **Follow-ups:**
+  - carry a provider's pass-height flag through Matrix and refit with it (worth 0.035 log-loss on SkillCorner);
+  - fit sets for Metrica and STATSports once data with failed-pass targets exists;
+  - use the metric as the option split's availability half and the risk term of a narrower decision quality version 2.
+- **Found on the way:** Matrix's Metrica CSV loader leaves second-half event coordinates unrotated (Games 1 and 2). The metric avoids it by using tracked positions; the loader fix is a separate decision ([status.md](status.md)).
 
 ## The models, what tests them now, and what to change
 
