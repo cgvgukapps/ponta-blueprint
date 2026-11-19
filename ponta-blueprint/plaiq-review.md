@@ -129,11 +129,11 @@ It is fitted by likelihood on four IDSSE matches.
 |---|---|---|---|
 | IDSSE, 3 held-out matches: log-loss / AUC | 0.297 / 0.719 | 0.296 / **0.762** | — |
 | SkillCorner, 20 matches, fitted on the league: log-loss / AUC | 0.424 / 0.781 | **0.370 / 0.842** | 0.279 / 0.896 |
-| SkillCorner held out, refitted on its own matches | — | **0.321 / 0.859** | 0.283 / 0.894 |
+| SkillCorner held out, refitted on its own matches | — | **0.321 / 0.859** *(leaks the outcome; without height 0.356 / 0.838)* | 0.283 / 0.894 |
 
-- **The structure was the gap, not the constants.** It closes about half the AUC gap to SkillCorner's model when transferred from the league, and two-thirds when refitted. Projecting the receiver along their run is the largest single gain.
+- **The structure was the gap, not the constants.** It closes about half the AUC gap to SkillCorner's model when transferred from the league, and two-thirds when refitted *(about half without SkillCorner's height flag, which leaks the outcome)*. Projecting the receiver along their run is the largest single gain.
 - **It is a probability:** refitted on a provider, predicted and observed completion agree within about 0.06 in every band. Fitted on the league it over-predicts SkillCorner's completion by about 6 points, so a published probability needs fitting per provider, or on pooled data.
-- **Not established:** that height helps (the two datasets disagree), that the measured player speeds help, or the parameters as physical quantities. *(Corrected 19 November 2026: refitted on SkillCorner without the height flag the model scores 0.356 / 0.838 held out, against 0.321 / 0.859 with it, so height helps on SkillCorner; it is on the league's data that it does not.)* One consistent pattern: defenders effectively start 0.5 to 0.75 s after the passing team.
+- **Not established:** that height helps (the two datasets disagree), that the measured player speeds help, or the parameters as physical quantities. *(Corrected 19 November 2026: refitted on SkillCorner without the height flag the model scores 0.356 / 0.838 held out, against 0.321 / 0.859 with it, so height helps on SkillCorner; it is on the league's data that it does not.)* *(Withdrawn the same day: SkillCorner logs `high_pass` on completed passes only, so the gain is the outcome leaking in. Height is not established; see "Pass height through Matrix" below.)* One consistent pattern: defenders effectively start 0.5 to 0.75 s after the passing team.
 - **Not adopted; v1 stays.**
 - **Proposed for the founder:** a "pass completion probability" metric (0.1.0) beside v1, labelled estimated, fitted per provider. It would serve as:
   - the availability half of the option split;
@@ -147,10 +147,26 @@ It is fitted by likelihood on four IDSSE matches.
 - **In the semantic events (schema 1.2):** `pass_completion_probability`, `pass_completion_status` and `pass_completion_parameters` ([ai-layer.md](ai-layer.md#the-semantic-football-event)).
 - **No probability without a logged target.** Most providers log none for a failed pass (Metrica logs none; SkillCorner logs one for most incomplete passes), and Plaiq's inferred receiver is not used.
 - **Follow-ups:**
-  - carry a provider's pass-height flag through Matrix and refit with it (worth 0.035 log-loss on SkillCorner);
+  - ~~carry a provider's pass-height flag through Matrix and refit with it (worth 0.035 log-loss on SkillCorner)~~ done; the refit is not adopted because the flag leaks the outcome (below);
   - fit sets for Metrica and STATSports once data with failed-pass targets exists;
   - use the metric as the option split's availability half and the risk term of a narrower decision quality version 2.
-- **Found on the way:** Matrix's Metrica CSV loader leaves second-half event coordinates unrotated (Games 1 and 2). The metric avoids it by using tracked positions; the loader fix is a separate decision ([status.md](status.md)).
+- **Found on the way:** Matrix's Metrica CSV loader leaves second-half event coordinates unrotated (Games 1 and 2). The metric avoids it by using tracked positions; the loader fix is a separate decision ([status.md](status.md)). *(Fixed 19 November 2026.)*
+
+## Pass height through Matrix (19 November 2026)
+
+**Built:** Matrix's events carry an optional `High Pass` flag (`True`, `False` or unknown). It comes from SkillCorner's `high_pass` and StatsBomb's `pass_height` ("High Pass" only). Metrica logs no height, and none is inferred.
+
+**Found: SkillCorner's flag records the outcome.** It is present on completed passes only: 986 high and 11,821 not high, all of them completed, and no failed pass carries it.
+- **The earlier "height helps on SkillCorner" (0.356 to 0.321) was this leak.** A missing flag was read as "not high", so every high pass in the fit was completed.
+- **The shipped path showed it again.** A with-height set took held-out log-loss from 0.327 to 0.305, almost all of it on high passes, which are all completed.
+- **Where height is logged on every pass** (the league's data), it made no difference.
+
+**Decision taken:**
+- **No with-height parameter set.** The pass completion probability does not read the flag (`pass_probability` stays 1.0.0, and a test pins it).
+- **The column stays** as a description of a pass, documented as known only for completed passes on SkillCorner, and never an input to a model of the outcome.
+- **Height stays not established.** It could still come from the tracking itself for providers that track ball height.
+
+Evidence: `ponta-platform/PLAIQ_REFERENCES_REPORT.md`, "Pass height through Matrix".
 
 ## The models, what tests them now, and what to change
 
