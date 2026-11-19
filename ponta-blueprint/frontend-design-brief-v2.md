@@ -90,6 +90,7 @@ These were open in v1 and are now decided, either by the first prototype or by t
 - The working is shown as `V(at arrival) ÷ V(best at release) = a ÷ b = score`.
 - **Event-only** scores are a range with a dashed outline and ruled fill (`Estimate · Poor to Suboptimal`), never a point.
 - Goalkeepers and set pieces are shown as **Not scored**, with the reason.
+- *(Added 19 November 2026.)* **Decision quality version 2** (`dq_v2_score`, adopted beside version 1, labelled estimated) is a different scale: **0 to 1, with no bands yet**. Show it only beside version 1, marked "Estimated", never with the traffic-light band colours or version 1's cut-offs, and never as a percentage. Version 1 stays the headline score.
 
 ### Ask inside a match (new, 16 November 2026)
 

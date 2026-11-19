@@ -62,7 +62,7 @@ Ponta is **one application**. **Matrix** is its data engine (Normalise → Recon
 ## Product hard rules (carry these into any spec, brief or copy you write)
 
 - No raw coordinates in any LLM context. Every AI claim cites `[event_id, timestamp_s, confidence_score]` plus `match_id` (what fills the confidence slot for single-source matches is still open). Parity first. No arbitrary SQL. Pseudonymised prompts.
-- Engine scales: decision quality runs from 0 to 1.5 (bands Poor below 0.55, Suboptimal 0.55 to 0.79, Good 0.80 to 0.94, Optimal 0.95 and above); pressure is 1v1 pressure on a 1 to 10 scale with no named threshold yet. Never present either as 0 to 1.
+- Engine scales: decision quality (version 1, the default) runs from 0 to 1.5 (bands Poor below 0.55, Suboptimal 0.55 to 0.79, Good 0.80 to 0.94, Optimal 0.95 and above); pressure is 1v1 pressure on a 1 to 10 scale with no named threshold yet. Never present either as 0 to 1. Decision quality version 2 (`dq_v2_score`, adopted beside version 1 on 19 November 2026, labelled estimated) runs from 0 to 1 with no bands: never put it on version 1's bands or merge the two.
 - No medical, injury or causal-fatigue claims. Association only ("coincided with", never "caused by").
 - No real player names in fixtures, mocks or generated artefacts.
 - Batch only. No real-time or live claims.

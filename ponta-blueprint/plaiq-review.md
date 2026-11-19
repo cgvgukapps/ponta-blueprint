@@ -194,9 +194,20 @@ Two candidates in `analytics/decision_quality_v2.py` 0.2.0, beside version 1 and
   - the goal link (89 goals; it falls on the held-out half);
   - the untuned bands on its 0 to 1 range.
 - **It inherits** Plaiq's threat surface for value, and pass completion's per-provider fit and need for a logged target.
-- **Not adopted; version 1 stays the default.** Projected (0.2.0) is a candidate for the founder: decision quality version 2 beside version 1, labelled estimated. If adopted, failed-pass decision quality could be reported for the first time.
+- **Not adopted; version 1 stays the default.** Projected (0.2.0) is a candidate for the founder: decision quality version 2 beside version 1, labelled estimated. If adopted, failed-pass decision quality could be reported for the first time. *(Corrected 19 November 2026: version 1 already reports a score for most failed passes, the lenient one above. What projected adds is a failed-pass score that is not lenient. Adopted the same day, below.)*
 
 Evidence: `ponta-platform/PLAIQ_REFERENCES_REPORT.md`, "Decision quality version 2 with the pass completion probability as its risk term".
+
+## Decision quality version 2 adopted beside version 1 (19 November 2026)
+
+**Founder decision:** projected ships as **decision quality version 2** (`decision_quality_v2` 1.0.0, the 0.2.0 maths unchanged), beside version 1, labelled estimated. **Version 1 stays the default** decision quality (`dq_score`, `dq_band`).
+- **In the engine:** `MatchAnalysis.decision_quality_v2`, one row per pass the pass completion probability covers. It reads the same moment of the pass (the tracked ball, else the passer; the players at the start frame), so the chosen pass's probability is the shipped pass completion probability.
+- **In the semantic events (schema 1.3):** `dq_v2_score`, `dq_v2_status`, `dq_v2_best_option_ref` and `dq_v2_version` ([ai-layer.md](ai-layer.md#the-semantic-football-event)). A failed pass that version 2 scores now gets a row even where version 1 has no failed-pass score.
+- **Scale: 0 to 1, no bands.** 1.0 means the best pass on offer was chosen. Version 1's bands are cut on its 0 to 1.5 scale and are not applied to version 2; bands for version 2 wait until they are measured and agreed.
+- **Not scored, with a reason:** goalkeepers and set pieces (as version 1), and any pass without a completion probability (no logged target, which is most failed passes on Metrica, or no tracking at the pass).
+- **In the Data check:** a 14th metric, "Decision quality v2 (expected value)". Degraded where pass completion uses the default parameter set, and, like version 1, where the events are derived from tracking.
+- **Checked end to end:** the measurement tool now reads the shipped property and reproduces the measured scores on SkillCorner's 20 matches (`ponta-platform/PLAIQ_REFERENCES_REPORT.md`, "Decision quality version 2 adopted").
+- **Still not established:** the goal link and any bands. Cite a version 2 score as an estimate, beside version 1, and never alone as a verdict on a player.
 
 ## The models, what tests them now, and what to change
 

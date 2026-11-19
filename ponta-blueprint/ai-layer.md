@@ -31,7 +31,7 @@ The product's trust position follows from this: *show your work, no black box* (
 
 ```json
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "engine_version": "plaiq-0.1.0 / matrix-0.1.0",
   "event_id": "evt_metrica_3_01042",
   "match_id": "metrica_3",
@@ -59,7 +59,8 @@ The product's trust position follows from this: *show your work, no black box* (
     "mode": "full_tracking",
     "not_scored": false,
     "not_scored_reason": null,
-    "pass_completion": { "probability": 0.81, "status": "estimated", "parameters": "default-idsse-2026-11-19" }
+    "pass_completion": { "probability": 0.81, "status": "estimated", "parameters": "default-idsse-2026-11-19" },
+    "decision_quality_v2": { "score": 0.58, "status": "estimated", "best_option_player_ref": "home_10", "version": "1.0.0" }
   },
   "physiological_context": null,
   "match_context": { "possession_chain_id": "metrica_3_ch0187", "possession_source": "observed", "score_diff": 1, "red_card_diff": 0 },
@@ -85,10 +86,15 @@ Notes that differ from a naïve reading of this schema:
   - **`status`** is `estimated` when a probability is given. Otherwise it gives the reason there is none (no logged target, which is every failed pass on most providers; a set piece; no tracking).
   - **`parameters`** names the fitted parameter set: SkillCorner has its own; every other provider uses the default set fitted on the German league's tracking, and the Data check marks the metric Degraded there.
   - It is measured against provider references, not analysts. Cite it as an estimate, and never as a measure of the passer's skill on its own: a low-probability pass that arrives is a hard pass completed.
+- **`decision_quality_v2`** *(schema 1.3, added 19 November 2026; adopted by the founder beside version 1 the same day)* judges the choice at the moment of the pass: every team-mate's pass into their run is weighed by its completion probability times its value, and the score is the chosen pass over the best one. Flat columns: `dq_v2_score`, `dq_v2_status`, `dq_v2_best_option_ref`, `dq_v2_version`. See [plaiq-review.md](plaiq-review.md).
+  - **It runs from 0 to 1 and has no bands.** 1.0 means the best pass on offer was chosen. Never put it on `dq_band`'s cut-offs, which belong to version 1's 0 to 1.5 scale, and never present version 1 as 0 to 1.
+  - **Version 1 (`dq_score`) stays the default.** Version 2 is cited beside it, as an estimate.
+  - **`status`** is `estimated` when there is a score. Otherwise it gives the reason (goalkeeper, set piece, no completion probability for the pass).
+  - **It scores completed and failed passes with one formula**, so a failed pass can carry a version 2 score where version 1 has none.
 - **`inference_confidence`** is the engine's category for an inferred receiver (`strong`, `medium`, `weak`), not a number.
 - **`quality_gate`** carries `ball_detected` and `players_observed` for a single source. A per-frame confidence score exists only when Matrix reconciles two or more sources; it will be added for Tier 2 and 3.
 
-**Changed from the first draft of this schema:** `best_option_dq_score` dropped (it would always be 1.0 by construction), replaced by `best_option_pov` and `chosen_option_pov`; `opposition_pressure_index` (0 to 1) renamed `opposition_pressure` on the engine's scale; `frame_confidence` and `sensor_drift_detected` replaced by `ball_detected` and `players_observed` for single-source matches; `movement_value`, `not_scored` and `not_scored_reason` added; band names are lower case. Schema 1.1 (17 November 2026) added `match_context` (P1); 1.2 (19 November 2026) added `pass_completion`.
+**Changed from the first draft of this schema:** `best_option_dq_score` dropped (it would always be 1.0 by construction), replaced by `best_option_pov` and `chosen_option_pov`; `opposition_pressure_index` (0 to 1) renamed `opposition_pressure` on the engine's scale; `frame_confidence` and `sensor_drift_detected` replaced by `ball_detected` and `players_observed` for single-source matches; `movement_value`, `not_scored` and `not_scored_reason` added; band names are lower case. Schema 1.1 (17 November 2026) added `match_context` (P1); 1.2 (19 November 2026) added `pass_completion`; 1.3 (19 November 2026) added `decision_quality_v2`.
 
 ## Storage the AI layer reads
 
