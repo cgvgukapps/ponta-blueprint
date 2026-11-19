@@ -250,3 +250,26 @@ Each step is measured against the references with fit and held-out matches, and 
 - **The specification lives in the frozen prototype.** Engine changes need a production copy of `ANALYTICS_SPECIFICATION.md` in `ponta-platform`, with the changelog discipline engine governance describes, before the first formula changes.
 - **The physical defaults are tuned for adult professional players** ([engine-governance.md](engine-governance.md#player-population-validity-scoping)). Calibration from the league's data keeps that scope.
 - **Public wording stays as it is:** "a defined, explainable score", with no claim that decision quality is accurate or predictive, until the study reports.
+
+## Candidate bands for decision quality version 2 (19 November 2026)
+
+Version 2 shipped 0 to 1 with no bands. Four cut-off sets were measured on the same 12,095 scored SkillCorner passes. The fitted sets were chosen on the even matches only; the table is the held-out odd matches. **Measured, not agreed.**
+
+| Candidate | Cut-offs | Shot rate by band, poor to optimal | Rises in held-out match resamples |
+|---|---|---|---|
+| Version 1's cut-offs | 0.55 / 0.80 / 0.95 | 3.2%, 6.3%, 7.6%, 9.3% | 56% |
+| Meaning (half, three-quarters, the best) | 0.50 / 0.75 / 0.95 | 3.1%, 5.4%, 7.8%, 9.3% | 80% |
+| Fitted | 0.45 / 0.60 / 0.90 | 2.8%, 4.9%, 6.4%, 9.4% | 94% |
+| **Fitted, top anchored** | **0.45 / 0.60 / 0.95** | **2.8%, 4.9%, 6.9%, 9.3%** | **94%** |
+| *Version 1's bands on version 1* | 0.55 / 0.80 / 0.95 | 1.8%, 1.4%, 5.3%, 8.8% | 35% |
+
+- **Every candidate rises band by band on both halves;** they differ in how reliably. Version 1's own bands do not rise on the held-out half.
+- **The overall ranking is the same for all** (band AUC 0.60). The cut-offs move the steps, not the signal.
+- **The steps:** the shot rate climbs to about 5% by 0.5 to 0.6, then flattens from about 0.7. Above 0.6 the data separates little except the best option itself.
+- **No failed-pass leniency in any candidate** (top anchored: optimal 29% of failed passes against 31% of completed; version 1: 88% against 59%).
+- **Goals do not separate** (31 goals on the held-out half).
+- **Recommended for the founder: the top-anchored set (0.45, 0.60, 0.95).** It is as stable as the free fit, keeps optimal as "the best option, within 5%", and puts the lower steps where the shot rate climbs. The meaning set is simpler to explain but less reliable between suboptimal and good.
+- **To decide with it:** whether version 2's bands reuse version 1's names. With different cut-offs on a different scale, the same names invite merging the two.
+- **Limits:** one provider and one outcome (a shot in the possession, which credits a pass for what follows it). Bands describe the score; they do not validate it.
+
+Evidence: `ponta-platform/PLAIQ_REFERENCES_REPORT.md`, "Candidate bands for decision quality version 2".
