@@ -149,7 +149,7 @@ It is fitted by likelihood on four IDSSE matches.
 - **Follow-ups:**
   - ~~carry a provider's pass-height flag through Matrix and refit with it (worth 0.035 log-loss on SkillCorner)~~ done; the refit is not adopted because the flag leaks the outcome (below);
   - fit sets for Metrica and STATSports once data with failed-pass targets exists;
-  - use the metric as the option split's availability half and the risk term of a narrower decision quality version 2.
+  - use the metric as the option split's availability half and the risk term of a narrower decision quality version 2 *(the risk term measured 19 November 2026, below)*.
 - **Found on the way:** Matrix's Metrica CSV loader leaves second-half event coordinates unrotated (Games 1 and 2). The metric avoids it by using tracked positions; the loader fix is a separate decision ([status.md](status.md)). *(Fixed 19 November 2026.)*
 
 ## Pass height through Matrix (19 November 2026)
@@ -167,6 +167,36 @@ It is fitted by likelihood on four IDSSE matches.
 - **Height stays not established.** It could still come from the tracking itself for providers that track ball height.
 
 Evidence: `ponta-platform/PLAIQ_REFERENCES_REPORT.md`, "Pass height through Matrix".
+
+## Decision quality version 2 with the pass completion probability as its risk term (19 November 2026)
+
+Two candidates in `analytics/decision_quality_v2.py` 0.2.0, beside version 1 and 0.1.0, which are unchanged. Both are measured on the same 12,112 SkillCorner passes and groundings.
+- **v1 with risk:** version 1's score times the chosen pass's completion probability.
+- **Projected:**
+  - each team-mate's option is a pass into their run, worth its completion probability times its value there;
+  - the score is the chosen option over the best one;
+  - one formula covers completed and failed passes, and the outcome is never an input.
+
+| | Version 1 | v1 with risk | **Projected** | 0.1.0 |
+|---|---|---|---|---|
+| Optimal share: completed / failed | 58% / 89% | 31% / 23% | **31% / 27%** | 30% / 19% |
+| Shot, completed passes, AUC | 0.60 | 0.42 | **0.62** | 0.51 |
+| Shot, all passes, AUC | 0.55 | 0.44 | **0.62** | 0.53 |
+| Rank correlation with SkillCorner's analogue | **0.31** | 0.09 | 0.29 | 0.15 |
+| Predicts completion, AUC | 0.23 | 0.64 | **0.51** | 0.69 |
+
+- **v1 with risk fails:** it becomes a measure of safety and reverses the link to chances. Dropped.
+- **Projected is the first version 2 to keep version 1's signal and remove its flaw.**
+  - It is level with or better than version 1 on chances, held on both halves.
+  - It is close on SkillCorner's analogue.
+  - Failed passes are no longer lenient, and it neither rewards nor penalises safety.
+- **Not established:**
+  - the goal link (89 goals; it falls on the held-out half);
+  - the untuned bands on its 0 to 1 range.
+- **It inherits** Plaiq's threat surface for value, and pass completion's per-provider fit and need for a logged target.
+- **Not adopted; version 1 stays the default.** Projected (0.2.0) is a candidate for the founder: decision quality version 2 beside version 1, labelled estimated. If adopted, failed-pass decision quality could be reported for the first time.
+
+Evidence: `ponta-platform/PLAIQ_REFERENCES_REPORT.md`, "Decision quality version 2 with the pass completion probability as its risk term".
 
 ## The models, what tests them now, and what to change
 
