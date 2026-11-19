@@ -90,7 +90,7 @@ These were open in v1 and are now decided, either by the first prototype or by t
 - The working is shown as `V(at arrival) ÷ V(best at release) = a ÷ b = score`.
 - **Event-only** scores are a range with a dashed outline and ruled fill (`Estimate · Poor to Suboptimal`), never a point.
 - Goalkeepers and set pieces are shown as **Not scored**, with the reason.
-- *(Added 19 November 2026.)* **Decision quality version 2** (`dq_v2_score`, adopted beside version 1, labelled estimated) is a different scale: **0 to 1, with no bands yet**. Show it only beside version 1, marked "Estimated", never with the traffic-light band colours or version 1's cut-offs, and never as a percentage. Version 1 stays the headline score.
+- *(Added 19 November 2026.)* **Decision quality version 2** (`dq_v2_score`, adopted beside version 1, labelled estimated) is a different scale: **0 to 1**. Show it only beside version 1, marked "Estimated", never with version 1's cut-offs or band names, and never as a percentage. Version 1 stays the headline score. *(Revised the same day: bands agreed.)* Its bands are **Best option** (0.95 and above), **Near best** (0.60 to 0.94), **Below best** (0.45 to 0.59) and **Well below best** (under 0.45), from `dq_v2_band`. They describe the choice against the best option, not the player, so they take **neutral steps of one hue, not the traffic-light colours** (version 1 keeps those), each with its text label.
 
 ### Ask inside a match (new, 16 November 2026)
 

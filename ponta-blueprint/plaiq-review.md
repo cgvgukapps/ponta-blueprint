@@ -302,3 +302,20 @@ Evidence: `ponta-platform/PLAIQ_REFERENCES_REPORT.md`, "Candidate bands for deci
 - **For the AI layer:** a 1 m² cell is effectively a coordinate. Cells are for storage, aggregation and the replay; the AI layer keeps receiving zones and player references.
 
 Evidence: `ponta-platform/PLAIQ_REFERENCES_REPORT.md`, "Decision quality version 2 on Plaiq's hex grid".
+
+## Decision quality version 2 1.1.0 adopted: hex cells with bands (19 November 2026)
+
+**Founder decision:** ring 1 becomes decision quality version 2 (`decision_quality_v2` 1.1.0), replacing the point-based 1.0.0, beside version 1, labelled estimated. **Version 1 stays the default.**
+- **The bands, agreed:** **Best option** 0.95 and above, **Near best** 0.60 to 0.94, **Below best** 0.45 to 0.59, **Well below best** under 0.45 (`dq_v2_band`, semantic events schema 1.4).
+  - The names say where the choice sat against the best option. They are not a verdict on the player, and they are never version 1's names.
+  - In the interface they take neutral steps of one hue, not version 1's traffic-light colours ([frontend-design-brief-v2.md](frontend-design-brief-v2.md)).
+- **Separate scales, not merged:** version 1 stays 0 to 1.5 with its own bands, version 2 0 to 1 with these. The two are never put on one band or combined into one number.
+- **Cells stay out of the AI layer.** The engine keeps the chosen and best cells for storage and the replay; the semantic events carry zones and player references only.
+- **Fixed on the way:** a run predicted to end off the pitch is now centred on the nearest cell on the pitch (54 passes changed at ring 1).
+- **Re-measured through the shipped score,** which equals the measured ring 1 exactly. On the held-out matches the bands give shots of 2.6%, 4.5%, 7.0% and 9.2% from Well below best to Best option, rising in 99% of match resamples. Failed and completed passes reach Best option equally often (31%).
+- **Still open:**
+  - display names for the two scores ("Choice", "Gain");
+  - descriptive band names for version 1;
+  - one model with two outputs ([status.md](status.md)).
+
+Evidence: `ponta-platform/PLAIQ_REFERENCES_REPORT.md`, "Decision quality version 2 1.1.0 adopted".
