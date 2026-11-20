@@ -1,6 +1,6 @@
 # Context Relationships, Movement and Space (P5, P6, P7) — Execution Task
 
-> **Status: in progress (20 November 2026).** Deliverable 1 built (P1 0.3.0), a ball-state field added at the founder's request (P1 0.4.0), deliverable 2 built (P5 0.2.0); see `CONTEXT_RELATIONSHIPS_REPORT.md`. Next: P6. Stage C of [context-packages.md](context-packages.md). Written after the Gate 2a round; the founder closed Gate 2a across the set the same day ([status.md](status.md)). It does not wait for Gate 2b (analysts), under decision 4a.
+> **Status: in progress (20 November 2026).** Deliverable 1 built (P1 0.3.0), a ball-state field added at the founder's request (P1 0.4.0), deliverable 2 built (P5 0.2.0), deliverable 3 built (P6 0.1.0); see `CONTEXT_RELATIONSHIPS_REPORT.md`. Next: a 50-run replay review, then P7. Stage C of [context-packages.md](context-packages.md). Written after the Gate 2a round; the founder closed Gate 2a across the set the same day ([status.md](status.md)). It does not wait for Gate 2b (analysts), under decision 4a.
 
 Self-contained task for a coding agent working in the `ponta-platform` monorepo. It completes context package P5 (relationships), builds P6 (movement types) and P7 (space, value and game-state context), and adds two smaller pieces that FIFA's definitions call for: in-contest possession from logged events (P1 0.3.0) and a FIFA-vocabulary view of phases (P4). Read [context-packages.md](context-packages.md) and [fifa-alignment.md](fifa-alignment.md) first.
 
