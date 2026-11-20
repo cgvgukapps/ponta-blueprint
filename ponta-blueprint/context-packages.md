@@ -191,7 +191,7 @@ Thresholds marked "agreed" are set in [Open decisions](#open-decisions). "Layer"
   - Result: 34 of 50 on the review; κ 0.610 pooled over SkillCorner's 20 matches.
   - A P1 bug was fixed on the way (P1 0.2.0): a set piece now starts only the taking team's chain.
 
-*(20 November 2026.)* **Stage C's execution spec is [context-relationships-task.md](context-relationships-task.md)**: P5 to P7 below, in contest from logged events (P1 0.3.0) and a FIFA view of phases, each measured against SkillCorner's line-break, run-type, goal-side and pressing labels.
+*(20 November 2026.)* **Stage C's execution spec is [context-relationships-task.md](context-relationships-task.md)**: P5 to P7 below, in contest from logged events (P1 0.3.0) and a FIFA view of phases, each measured against SkillCorner's line-break, run-type, goal-side and pressing labels. *Built by 20 November 2026:* P1 0.5.0 (FIFA's states, the ball state), P5 0.2.0, P6 0.2.0 and P7 0.1.0; the FIFA view of phases is next. Results are in the platform's `CONTEXT_RELATIONSHIPS_REPORT.md`.
 
 ### P5 Continuous relationships (Stage C, planned; layer 4)
 
@@ -224,6 +224,8 @@ Thresholds marked "agreed" are set in [Open decisions](#open-decisions). "Layer"
 ### P7 Space, value and game-state context (Stage C, planned; layer 6)
 
 **Depends on:** P1, P4, Plaiq.
+
+*(Revised 20 November 2026.)* **Built as P7 0.1.0** (`plaiq_engine/context/space_value.py`, on P1, P2 and Plaiq): the open share of each team's high-value space every 5 s, the most dangerous open zone as a lane and third, the game-state weight λ (a proposed judgement), and context-adjusted Choice beside Choice. On SkillCorner's 20 matches (score unknown, so λ is 1) the adjusted score leans to safety: completion AUC 0.67 against Choice's 0.49, shot AUC 0.56 against 0.61 held out. SkillCorner's direct-play share barely moves with the game state, so λ's direction has no support from that proxy. Per-cell storage for the replay is not built. The founder decides whether to keep the cost term at full weight.
 
 - Control and value per frame and per segment: each team's share of high-value space, the most dangerous uncontrolled zone.
 - A game-state risk weight as a versioned lookup by goal difference and time band.
