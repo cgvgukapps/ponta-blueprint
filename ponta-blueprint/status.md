@@ -173,7 +173,7 @@
 
 ## Next steps, in order
 
-0. ~~**Website: carry the Gain band names.**~~ Done 20 November 2026 in `Ponta-Website` `067c482` (launch-draft D5, ledger C30), pushed: band names and the Gain label on the worked examples, the meters show each segment's starting score. Noticed, not changed: the illustrative card's "opposition pressure of 0.84" is on a 0 to 1 scale, but the engine's pressure runs 1 to 10 (a copy decision for the website's ledger, C12).
+0. ~~**Website: carry the Gain band names.**~~ Done 20 November 2026 in `Ponta-Website` `067c482` (launch-draft D5, ledger C30), pushed: band names and the Gain label on the worked examples, the meters show each segment's starting score. The illustrative card's "opposition pressure of 0.84" (a 0 to 1 index) now reads "8.4 out of 10", on the engine's 1 to 10 scale (`Ponta-Website` `51f2956`, launch-draft D6, ledger C12; 20 November 2026, not pushed).
 1. **Track V (validation), now.** Discovery calls with the wedge, intercepted-pass and price questions (gate E1, at least 8 calls); check each prospect's vendor licence before taking a real export ([legal-compliance.md](legal-compliance.md#vendor-licence-check-before-the-first-real-export)).
 2. **Finish Gate 2a, then Stage C.**
    - **Open from the review:** long balls lost in flight, a goal kick credited to the receiving team while the ball is undetected (P1), goal kicks and free kicks without an event feed (goal kicks are hidden by broadcast tracking gaps), recycling backwards as build-up, and regains that gain under 15 m.
