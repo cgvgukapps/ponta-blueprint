@@ -1,6 +1,6 @@
 # Context Relationships, Movement and Space (P5, P6, P7) — Execution Task
 
-> **Status: next, startable (20 November 2026).** Stage C of [context-packages.md](context-packages.md). Written after the Gate 2a round; the founder closed Gate 2a across the set the same day ([status.md](status.md)). It does not wait for Gate 2b (analysts), under decision 4a.
+> **Status: in progress (20 November 2026).** Deliverable 1 built (P1 0.3.0, `CONTEXT_RELATIONSHIPS_REPORT.md`). Stage C of [context-packages.md](context-packages.md). Written after the Gate 2a round; the founder closed Gate 2a across the set the same day ([status.md](status.md)). It does not wait for Gate 2b (analysts), under decision 4a.
 
 Self-contained task for a coding agent working in the `ponta-platform` monorepo. It completes context package P5 (relationships), builds P6 (movement types) and P7 (space, value and game-state context), and adds two smaller pieces that FIFA's definitions call for: in-contest possession from logged events (P1 0.3.0) and a FIFA-vocabulary view of phases (P4). Read [context-packages.md](context-packages.md) and [fifa-alignment.md](fifa-alignment.md) first.
 
@@ -29,7 +29,7 @@ Self-contained task for a coding agent working in the `ponta-platform` monorepo.
 - **Metrica** Sample Games 1 to 3 (logged events) and **Wyscout** open events.
 - **The founder's judged moments:** the phase replay review (`tools/data/phase_review_*.json`) and the possession replay check on IDSSE (`CONTEXT_STRUCTURE_REPORT.md`, possession round).
 
-**Two review cases this stage should fix.** In the phase review a long ball intercepted in flight and a ball travelling after a loss were labelled for the team that had lost it. The cause is P1 holding the old team while the ball travels. The founder kept the tracking-based loose-ball rule off (`p1_loose_on_opponent_touch`); FIFA takes "in contest" from logged events, which is deliverable 1 below.
+**Two review cases this stage should fix.** In the phase review a long ball intercepted in flight and a ball travelling after a loss were labelled for the team that had lost it. The cause is P1 holding the old team while the ball travels. The founder kept the tracking-based loose-ball rule off (`p1_loose_on_opponent_touch`); FIFA takes "in contest" from logged events, which is deliverable 1 below. *(Corrected 20 November 2026, after deliverable 1: the two long-ball cases are a P4 phase question; the founder accepts `direct` there, and a pass in flight is in possession under FIFA's definitions too. In contest from events also misses most of the founder's "nobody has it yet" possession calls, which need a separate ball-state field: see the report.)*
 
 ## Research basis (summary)
 
