@@ -117,6 +117,8 @@ Thresholds marked "agreed" are set in [Open decisions](#open-decisions). "Layer"
 
 ### P1 Possession and game state (Stage A, committed; layer 1)
 
+*(20 November 2026, Stage C.)* P1 also carries FIFA's possession states (`p1_state`, in contest from logged events) and a **ball state** (`p1_ball_state`: controlled, in flight within one team's possession, loose, contested; a duel the same team keeps is its control). **The founder agreed the ball state as the AI layer's "who has the ball" field beside possession**, with the loose cap at 5 s. Evidence: `CONTEXT_RELATIONSHIPS_REPORT.md`, sections 1 and 2.
+
 **Depends on:** P0; event data where available.
 
 - Possession states: home, away, contested, dead ball.
