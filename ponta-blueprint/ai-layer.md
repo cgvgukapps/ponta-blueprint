@@ -16,7 +16,7 @@ The product's trust position follows from this: *show your work, no black box* (
 
 ## Hard rules (non-negotiable)
 
-1. **No raw coordinates in any LLM context.** Trajectory arrays never enter a prompt. All spatial math runs in the engines and context packages; the AI sees only semantic events, semantic states (episodes) and aggregates derived from them, as labelled fields.
+1. **No raw coordinates in any LLM context.** Trajectory arrays never enter a prompt, and neither do hex cell indices *(20 November 2026: a 1 m² cell is effectively a coordinate; the engines store cells, the AI receives zones)*. All spatial math runs in the engines and context packages; the AI sees only semantic events, semantic states (episodes) and aggregates derived from them, as labelled fields.
 2. **Every claim cites.** Every factual statement in an AI output carries a citation array of `[event_id, timestamp_s, confidence_score]` (plus `match_id`). A statement without a resolvable citation is not rendered; the generator is re-run or the claim dropped. *(Added 17 November 2026: a claim about a passage of play cites an episode instead, `[state_id, start_s, end_s]` plus `match_id`; the verifier checks it the same way.)* *(Open, 17 November 2026: single-source matches have no per-frame confidence, only `ball_detected` and `players_observed`, so what fills the confidence slot for Tier 1 must be decided before the AI layer is built. See [status.md](status.md#open-decisions).)*
 3. **Parity first.** Every AI call begins by reading the match's Parity Report and the relevant per-frame confidence. Degraded or Blocked metrics are disclosed in the output, never silently substituted or implied ([below](#parity-and-confidence-honesty)).
 4. **No arbitrary SQL.** The model calls a small set of typed, sandboxed tools; it cannot write free-form queries against the store.
@@ -31,7 +31,7 @@ The product's trust position follows from this: *show your work, no black box* (
 
 ```json
 {
-  "schema_version": "1.4",
+  "schema_version": "1.6",
   "engine_version": "plaiq-0.1.0 / matrix-0.1.0",
   "event_id": "evt_metrica_3_01042",
   "match_id": "metrica_3",
@@ -60,6 +60,7 @@ The product's trust position follows from this: *show your work, no black box* (
     "not_scored": false,
     "not_scored_reason": null,
     "pass_completion": { "probability": 0.81, "status": "estimated", "parameters": "default-idsse-2026-11-19" },
+    "gain_v2": { "score": 0.71, "band": "partial_gain", "status": "estimated", "version": "2.0.0" },
     "decision_quality_v2": { "score": 0.58, "band": "below_best", "status": "estimated", "best_option_player_ref": "home_10", "version": "1.1.0" }
   },
   "physiological_context": null,
@@ -94,10 +95,13 @@ Notes that differ from a naïve reading of this schema:
   - **Version 1 (`dq_score`) stays the default.** Version 2 is cited beside it, as an estimate.
   - **`status`** is `estimated` when there is a score. Otherwise it gives the reason (goalkeeper, set piece, no completion probability for the pass).
   - **It scores completed and failed passes with one formula**, so a failed pass can carry a version 2 score where version 1 has none.
+- **`gain_v2`** *(schema 1.6, 20 November 2026; adopted by the founder beside version 1)* is **Gain version 2**: the value realised where the ball arrived over Choice's best expected value on offer at release, 0 to 1.5, with version 1's cut-offs and band names (`gain_v2_band`). It comes from the same model as Choice, so Gain version 2 = Choice x execution. A failed pass gains 0; the decision behind it is Choice's to describe. Passes only. Flat columns: `gain_v2_score`, `gain_v2_band`, `gain_v2_status`, `gain_v2_version`.
+  - **Version 1 (`dq_score`) stays the default Gain.** Cite version 2 beside it, as an estimate, and never average the two.
+  - **Most of its link to shots is location** (where the ball arrived), so never describe it as a measure of decision-making on its own; Choice is that.
 - **`inference_confidence`** is the engine's category for an inferred receiver (`strong`, `medium`, `weak`), not a number.
 - **`quality_gate`** carries `ball_detected` and `players_observed` for a single source. A per-frame confidence score exists only when Matrix reconciles two or more sources; it will be added for Tier 2 and 3.
 
-**Changed from the first draft of this schema:** `best_option_dq_score` dropped (it would always be 1.0 by construction), replaced by `best_option_pov` and `chosen_option_pov`; `opposition_pressure_index` (0 to 1) renamed `opposition_pressure` on the engine's scale; `frame_confidence` and `sensor_drift_detected` replaced by `ball_detected` and `players_observed` for single-source matches; `movement_value`, `not_scored` and `not_scored_reason` added; band names are lower case. Schema 1.1 (17 November 2026) added `match_context` (P1); 1.2 (19 November 2026) added `pass_completion`; 1.3 (19 November 2026) added `decision_quality_v2`; 1.4 (the same day) moved it to hex cells (1.1.0) and added its band; 1.5 (the same day) renamed version 1's band values to descriptive ones.
+**Changed from the first draft of this schema:** `best_option_dq_score` dropped (it would always be 1.0 by construction), replaced by `best_option_pov` and `chosen_option_pov`; `opposition_pressure_index` (0 to 1) renamed `opposition_pressure` on the engine's scale; `frame_confidence` and `sensor_drift_detected` replaced by `ball_detected` and `players_observed` for single-source matches; `movement_value`, `not_scored` and `not_scored_reason` added; band names are lower case. Schema 1.1 (17 November 2026) added `match_context` (P1); 1.2 (19 November 2026) added `pass_completion`; 1.3 (19 November 2026) added `decision_quality_v2`; 1.4 (the same day) moved it to hex cells (1.1.0) and added its band; 1.5 (the same day) renamed version 1's band values to descriptive ones; 1.6 (20 November 2026) added `gain_v2`.
 
 ## Storage the AI layer reads
 

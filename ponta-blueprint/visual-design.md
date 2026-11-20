@@ -48,7 +48,7 @@ This is what pontahq.com actually is. Full copy and section order live in [websi
 
 **Hexagons.** The original restraint rule ("only where load-bearing") is relaxed in three shipped places, and only those: (1) the hero pitch honeycomb, (2) faint honeycomb section backdrops, (3) Plaiq diagrams, where the metrics are actually computed on a hexagonal grid. Still no hex-shaped buttons or hex-framed avatars.
 
-**Credibility artefacts sit in the body, not the hero.** Matrix proof is the `#proof` section (Metrica vs SkillCorner formats, then two separate after-normalisation tables — never one mixed table, because the fixtures differ). Plaiq proof is the `#plaiq-data` worked example: real scored decisions on Metrica Sample Game 3, drawn in code. Rating bands in that section use traffic-light colours (Poor red, Suboptimal amber, Good lime, Optimal green) — a departure from the monochrome-only rule, limited to this section.
+**Credibility artefacts sit in the body, not the hero.** Matrix proof is the `#proof` section (Metrica vs SkillCorner formats, then two separate after-normalisation tables — never one mixed table, because the fixtures differ). Plaiq proof is the `#plaiq-data` worked example: real scored decisions on Metrica Sample Game 3, drawn in code. Rating bands in that section use traffic-light colours (Poor red, Suboptimal amber, Good lime, Optimal green) — a departure from the monochrome-only rule, limited to this section. *(Renamed 19 November 2026, same colours: Low gain, Partial gain, Most of the gain, Full gain; the score is labelled Gain. The meters show each segment's starting score, not the names, which do not fit; the chip names the band.)*
 
 **Colour tokens (hero / dark chrome):**
 

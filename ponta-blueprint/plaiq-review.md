@@ -337,3 +337,20 @@ Evidence: `ponta-platform/PLAIQ_REFERENCES_REPORT.md`, "Decision quality version
 - **Not established:** anything beyond SkillCorner's 20 matches; the cut-offs were agreed for version 1 and are not re-measured for it.
 
 Evidence: `ponta-platform/PLAIQ_REFERENCES_REPORT.md`, "Gain and Choice".
+
+## Gain version 2 adopted beside version 1 (20 November 2026)
+
+**Founder decision:** the one-model Gain ships as **Gain version 2** (`decision_gain`, 2.0.0, `MatchAnalysis.gain_v2`), beside version 1, labelled estimated. **Version 1 stays the default Gain.**
+- **What it is:** the value realised where the ball arrived (0 for a failed pass) over Choice's best expected value on offer at release, 0 to 1.5. It shares Choice's moment, option set and value surface, so Gain version 2 = Choice x execution. Passes only (version 1 also scores carries).
+- **Bands: version 1's cut-offs and names, measured for it.** On the held-out matches the shot rate rises 0.2%, 3.3%, 7.0%, 10.9% from Low gain to Full gain, in 97 to 98% of match resamples. A fit on the even matches picks 0.55 / 0.75 / 1.15. It separates the top more sharply, but "Full gain" would then mean beating the best option by 15%, so one scale and one set of names is kept for both versions.
+- **In the semantic events (schema 1.6):** `gain_v2_score`, `gain_v2_band`, `gain_v2_status`, `gain_v2_version`. Not scored where Choice is not: goalkeeper, set piece, or no completion probability.
+- **In the Data check:** a 15th metric, "Decision quality: Gain (version 2)", with Choice's state.
+- **To cite carefully:** most of its link to shots is where the ball arrived. Beside it, Choice describes the decision.
+
+## The honeycomb as the platform's spatial language (20 November 2026)
+
+**Founder decision.** Plaiq's hexagonal grid is how Ponta stores, aggregates and draws space ([architecture.md](architecture.md#storage-hybrid-by-access-pattern)).
+- Models compute continuously where the physics needs it, then snap their outputs to cells.
+- They evaluate only cells selected for a reason, never every cell.
+- **Cell indices never enter an LLM context:** a 1 m² cell is effectively a coordinate, so the AI layer receives zones and player references.
+
