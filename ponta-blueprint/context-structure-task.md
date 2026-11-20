@@ -17,7 +17,7 @@
 > **Gate 2a round (20 November 2026):** both remaining gaps diagnosed (`CONTEXT_STRUCTURE_REPORT.md`, "The Gate 2a round").
 > - **The phase floor** fails because of the own-third build-up rule. A quarter of the pitch clears it everywhere (lowest half 0.524) and lifts pooled κ to 0.670 / 0.638.
 > - **Roles** miss on 1959846 because its home team plays a box midfield P2 has no template for; a template for it costs more than it fixes.
-> - **Proposed to the founder:** the quarter boundary and a set-level reading for roles (pooled 84.1% grouped, 89.0% merged). With both, Gate 2a is met across the set. Stage C: [context-relationships-task.md](context-relationships-task.md).
+> - **Agreed by the founder the same day:** the quarter boundary (P4 0.4.0, thresholds 0.12.0) and a set-level reading for roles (pooled 84.1% grouped, 89.0% merged). **Gate 2a is met across the set**: phases pooled κ 0.670 / 0.638 with no match below 0.50, roles pooled above both bars, formations everywhere. Stage C: [context-relationships-task.md](context-relationships-task.md).
 
 Self-contained task for a coding agent working in the `ponta-platform` monorepo. It builds context packages P2 (team structure), P3 (relative zones) and P4 (phase of play) on the framework from [context-foundations-task.md](context-foundations-task.md) (complete: context grid, registry, Data check entries, P1 possession and game state). Read [context-packages.md](context-packages.md) first.
 

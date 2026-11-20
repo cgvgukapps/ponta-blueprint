@@ -1,6 +1,6 @@
 # Context Relationships, Movement and Space (P5, P6, P7) — Execution Task
 
-> **Status: next (20 November 2026).** Stage C of [context-packages.md](context-packages.md). Written after the Gate 2a round of 19 and 20 November 2026 ([status.md](status.md)). Startable once the founder closes Gate 2a; it does not wait for Gate 2b (analysts), under decision 4a.
+> **Status: next, startable (20 November 2026).** Stage C of [context-packages.md](context-packages.md). Written after the Gate 2a round; the founder closed Gate 2a across the set the same day ([status.md](status.md)). It does not wait for Gate 2b (analysts), under decision 4a.
 
 Self-contained task for a coding agent working in the `ponta-platform` monorepo. It completes context package P5 (relationships), builds P6 (movement types) and P7 (space, value and game-state context), and adds two smaller pieces that FIFA's definitions call for: in-contest possession from logged events (P1 0.3.0) and a FIFA-vocabulary view of phases (P4). Read [context-packages.md](context-packages.md) and [fifa-alignment.md](fifa-alignment.md) first.
 
